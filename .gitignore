@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Vercel
+.vercel/
+
+# Dependencies (none today, but just in case)
+node_modules/
+
+# Local artifacts
+*.log
+.env
+.env.local
+uploads/
+
+# Claude Code session state
+.claude/
+
+# Admin-page export bundles (the extracted files belong in assets/, the zip does not)
+thinkcareer-media-*.zip
+thinkcareer-media-*/

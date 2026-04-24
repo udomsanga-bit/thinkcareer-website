@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ThinkCareer — Admin</title>
+<meta name="description" content="Admin-only settings page." />
+<meta name="robots" content="noindex, nofollow" />
+
+<link rel="icon" href="assets/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #0f2a44;
+    --navy-deep: #081a2c;
+    --sage: #7a9080;
+    --cream: #f6f1e8;
+    --cream-deep: #ebe4d5;
+    --ink: #141414;
+    --gold: #b89a5d;
+    --muted: #7b7166;
+    --border: color-mix(in oklab, var(--navy) 14%, transparent);
+    --f-sans: "Inter Tight", system-ui, -apple-system, sans-serif;
+    --f-display: "Fraunces", Georgia, serif;
+    --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--f-sans);
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ————— Gate ————— */
+  .gate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .gate__card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 12px 32px -12px rgba(15,42,68,0.12);
+  }
+  .gate__eyebrow {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .gate__eyebrow::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold);
+  }
+  .gate__title {
+    font-family: var(--f-display);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0 0 12px;
+    color: var(--navy);
+  }
+  .gate__sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+  .gate__label {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .gate__input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: var(--f-sans);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--cream);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .gate__input:focus { border-color: var(--navy); }
+  .gate__btn {
+    margin-top: 16px;
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-family: var(--f-sans);
+    font-weight: 500;
+    color: var(--cream);
+    background: var(--navy);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .gate__btn:hover { background: var(--navy-deep); }
+  .gate__err {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #c14a3a;
+    min-height: 18px;
+  }
+  .gate__hint {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ————— Admin ————— */
+  .admin { display: none; max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+  .admin.is-active { display: block; }
+
+  .admin__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .admin__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .admin__brand img { width: 40px; height: 40px; border-radius: 6px; }
+  .admin__brand-text strong {
+    display: block;
+    font-family: var(--f-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .admin__brand-text span {
+    display: block;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .admin__sign-out {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+  }
+  .admin__sign-out:hover { color: var(--navy); }
+
+  .admin__intro {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+  }
+  .admin__intro h2 {
+    font-family: var(--f-display);
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+  .admin__intro p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .slots {
+    display: grid;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  @media (min-width: 720px) {
+    .slots { grid-template-columns: 1fr 1fr; }
+    .slots .slot--wide { grid-column: 1 / -1; }
+  }
+
+  .slot {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .slot__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .slot__title {
+    font-family: var(--f-display);
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--navy);
+  }
+  .slot__kind {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .slot__desc {
+    margin: 0;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .slot__preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: var(--cream-deep);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .slot--logo .slot__preview { aspect-ratio: 1 / 1; max-width: 200px; }
+  .slot__preview img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .slot__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .slot__btn {
+    font-family: var(--f-sans);
+    font-size: 13px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--navy);
+    background: transparent;
+    color: var(--navy);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .slot__btn:hover { background: var(--navy); color: var(--cream); }
+  .slot__btn--danger {
+    border-color: color-mix(in oklab, #c14a3a 60%, var(--border));
+    color: #c14a3a;
+  }
+  .slot__btn--danger:hover { background: #c14a3a; color: #fff; border-color: #c14a3a; }
+  .slot input[type=file] { display: none; }
+  .slot__meta {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    color: var(--muted);
+    min-height: 14px;
+  }
+  .slot__meta--warn { color: #b89a5d; }
+
+  /* ————— Publish ————— */
+  .publish {
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 32px;
+  }
+  .publish h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 24px;
+    margin: 0 0 12px;
+    color: #fff;
+  }
+  .publish p {
+    margin: 0 0 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: color-mix(in oklab, var(--cream) 85%, transparent);
+  }
+  .publish ol {
+    margin: 0 0 24px;
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: color-mix(in oklab, var(--cream) 85%, transparent);
+  }
+  .publish ol li { margin-bottom: 6px; }
+  .publish code {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    padding: 2px 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 4px;
+  }
+  .publish__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+  .publish__btn {
+    font-family: var(--f-sans);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 20px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+  }
+  .publish__btn--primary {
+    background: var(--gold);
+    color: var(--navy-deep);
+  }
+  .publish__btn--primary:hover { background: color-mix(in oklab, var(--gold) 80%, #fff); }
+  .publish__btn--ghost {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .publish__btn--ghost:hover { border-color: var(--cream); }
+  .publish__status {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    color: color-mix(in oklab, var(--cream) 70%, transparent);
+  }
+  .publish__status--ok { color: #a6d4ad; }
+  .publish__status--err { color: #e8a89d; }
+
+  footer.admin__foot {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  footer.admin__foot a { color: var(--navy); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- ====== Gate ====== -->
+<div id="gate" class="gate">
+  <div class="gate__card">
+    <div class="gate__eyebrow">Restricted</div>
+    <h1 class="gate__title">ThinkCareer admin</h1>
+    <p class="gate__sub">Enter the admin passphrase to manage site imagery.</p>
+
+    <label class="gate__label" for="gate-input">Passphrase</label>
+    <input id="gate-input" class="gate__input" type="password" autocomplete="off" spellcheck="false" />
+    <button id="gate-btn" class="gate__btn">Unlock</button>
+    <div id="gate-err" class="gate__err" role="alert"></div>
+
+    <div class="gate__hint">
+      Forgot it? The admin passphrase is set inside <code>admin.html</code> in the
+      <code>ADMIN_PASSPHRASE</code> constant. Edit it and redeploy to change.
+    </div>
+  </div>
+</div>
+
+<!-- ====== Admin UI ====== -->
+<div id="admin" class="admin">
+  <header class="admin__head">
+    <div class="admin__brand">
+      <img src="assets/logo.jpg" alt="" />
+      <div class="admin__brand-text">
+        <strong>ThinkCareer</strong>
+        <span>Admin</span>
+      </div>
+    </div>
+    <button id="sign-out" class="admin__sign-out">Sign out</button>
+  </header>
+
+  <div class="admin__intro">
+    <h2>Site imagery</h2>
+    <p>
+      Upload replacement images for each slot below. Changes preview in your browser
+      immediately and persist locally. To make them live for everyone, download the
+      bundle at the bottom and redeploy.
+    </p>
+  </div>
+
+  <div class="slots" id="slots"></div>
+
+  <section class="publish">
+    <h2>Publish changes</h2>
+    <p>
+      The previews above are stored in your browser only. To make them live on the public site:
+    </p>
+    <ol>
+      <li>Click <strong>Download bundle</strong> — you get a zip containing the new image files under <code>assets/</code>.</li>
+      <li>Replace the matching files in your ThinkCareer Website folder.</li>
+      <li>Redeploy to Vercel (<code>npx vercel --prod</code> from the folder, or commit + push if you've wired up Git).</li>
+    </ol>
+    <div class="publish__row">
+      <button id="export-btn" class="publish__btn publish__btn--primary">Download bundle</button>
+      <button id="clear-btn" class="publish__btn publish__btn--ghost">Clear local previews</button>
+      <span id="publish-status" class="publish__status"></span>
+    </div>
+  </section>
+
+  <footer class="admin__foot">
+    <span>Admin only · not indexed</span>
+    <a href="index.html">← Back to site</a>
+  </footer>
+</div>
+
+<!-- JSZip for bundle export -->
+<script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
+
+<script>
+// ==========================================================================
+// Admin console
+// ==========================================================================
+
+// Change this passphrase to whatever you want, then redeploy.
+// SECURITY NOTE: this is obfuscation, not real security. Anyone who views the
+// source of this page can see the passphrase. For real protection, put this
+// page behind Vercel's password protection (Pro plan) or a serverless auth layer.
+const ADMIN_PASSPHRASE = "thinkcareer2026";
+
+// Slots users can populate. `filename` is where the image should live on disk
+// when exported — matches what index.html expects.
+const SLOTS = [
+  {
+    id: "logo",
+    title: "Logo",
+    kind: "Square · used in nav + footer",
+    desc: "Small mark that appears in the navigation bar and footer. Square crop looks best (we render it around 40–56px).",
+    filename: "assets/logo.jpg",
+    extraClass: "slot--logo",
+  },
+  {
+    id: "heroPortrait",
+    title: "Hero portrait",
+    kind: "Tall · 1200 × 1500 recommended",
+    desc: "The editorial image in the hero section, next to the 'Your coach' card. A warm 4:5 portrait works best.",
+    filename: "assets/hero-portrait.jpg",
+  },
+  {
+    id: "aboutMedia",
+    title: "About section image",
+    kind: "Tall · 4 × 5 aspect",
+    desc: "The image in the About section, alongside the founder bio. Another 4:5 editorial shot pairs well with the hero.",
+    filename: "assets/about-media.jpg",
+  },
+];
+
+const STORAGE_KEY = "tc-admin-overrides";
+const SESSION_KEY = "tc-admin-session";
+const SESSION_TTL_MS = 2 * 60 * 60 * 1000; // 2 hours
+
+// ————— Gate —————
+const gateEl = document.getElementById("gate");
+const adminEl = document.getElementById("admin");
+const gateInput = document.getElementById("gate-input");
+const gateBtn = document.getElementById("gate-btn");
+const gateErr = document.getElementById("gate-err");
+
+function tryUnlock() {
+  const v = gateInput.value;
+  if (v === ADMIN_PASSPHRASE) {
+    try {
+      sessionStorage.setItem(SESSION_KEY, String(Date.now()));
+    } catch (e) { /* ignore */ }
+    showAdmin();
+  } else {
+    gateErr.textContent = "Wrong passphrase.";
+    gateInput.value = "";
+    gateInput.focus();
+  }
+}
+function showGate() {
+  gateEl.style.display = "flex";
+  adminEl.classList.remove("is-active");
+  setTimeout(() => gateInput.focus(), 50);
+}
+function showAdmin() {
+  gateEl.style.display = "none";
+  adminEl.classList.add("is-active");
+  renderSlots();
+}
+function checkSession() {
+  try {
+    const t = Number(sessionStorage.getItem(SESSION_KEY) || 0);
+    if (t && (Date.now() - t) < SESSION_TTL_MS) {
+      showAdmin();
+      return;
+    }
+  } catch (e) { /* ignore */ }
+  showGate();
+}
+gateBtn.addEventListener("click", tryUnlock);
+gateInput.addEventListener("keydown", (e) => { if (e.key === "Enter") tryUnlock(); });
+document.getElementById("sign-out").addEventListener("click", () => {
+  try { sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
+  showGate();
+});
+
+// ————— Overrides store —————
+function readOverrides() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? (JSON.parse(raw) || {}) : {};
+  } catch (e) { return {}; }
+}
+function writeOverrides(obj) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+  } catch (e) {
+    alert("Could not save preview: " + e.message + "\n\nThis usually means storage is full. Large images over ~4MB may fail.");
+  }
+}
+function setOverride(id, dataUrl, mime, sizeBytes) {
+  const o = readOverrides();
+  o[id] = dataUrl;
+  o[id + "__meta"] = { mime: mime, size: sizeBytes, savedAt: new Date().toISOString() };
+  writeOverrides(o);
+}
+function clearOverride(id) {
+  const o = readOverrides();
+  delete o[id];
+  delete o[id + "__meta"];
+  writeOverrides(o);
+}
+function clearAllOverrides() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+}
+
+// ————— Render slots —————
+function renderSlots() {
+  const container = document.getElementById("slots");
+  container.innerHTML = "";
+  const overrides = readOverrides();
+
+  for (const slot of SLOTS) {
+    const override = overrides[slot.id];
+    const meta = overrides[slot.id + "__meta"];
+
+    const el = document.createElement("div");
+    el.className = "slot " + (slot.extraClass || "");
+    el.innerHTML = `
+      <div class="slot__head">
+        <h3 class="slot__title">${slot.title}</h3>
+        <span class="slot__kind">${slot.kind}</span>
+      </div>
+      <p class="slot__desc">${slot.desc}</p>
+      <div class="slot__preview">
+        ${override
+          ? `<img src="${override}" alt="" />`
+          : `<span>No upload · will fall back to ${slot.filename}</span>`
+        }
+      </div>
+      <div class="slot__actions">
+        <button class="slot__btn" data-action="upload" data-id="${slot.id}">
+          ${override ? "Replace image" : "Upload image"}
+        </button>
+        ${override
+          ? `<button class="slot__btn slot__btn--danger" data-action="clear" data-id="${slot.id}">Remove preview</button>`
+          : ""
+        }
+        <input type="file" accept="image/*" data-id="${slot.id}" />
+      </div>
+      <div class="slot__meta ${meta && meta.size > 2_500_000 ? 'slot__meta--warn' : ''}">
+        ${meta
+          ? `${meta.mime} · ${formatBytes(meta.size)} · saved ${formatRelative(meta.savedAt)}${meta.size > 2_500_000 ? ' — consider compressing before publishing' : ''}`
+          : "No image uploaded yet."
+        }
+      </div>
+    `;
+    container.appendChild(el);
+  }
+
+  // Wire up interactions
+  container.querySelectorAll('[data-action="upload"]').forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const input = container.querySelector(`input[type=file][data-id="${id}"]`);
+      input.click();
+    });
+  });
+  container.querySelectorAll('[data-action="clear"]').forEach(btn => {
+    btn.addEventListener("click", () => {
+      clearOverride(btn.dataset.id);
+      renderSlots();
+    });
+  });
+  container.querySelectorAll('input[type=file]').forEach(input => {
+    input.addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith("image/")) {
+        alert("Please select an image file.");
+        return;
+      }
+      if (file.size > 8_000_000) {
+        if (!confirm("That file is " + formatBytes(file.size) + ". Large images can make the site slow to load. Continue?")) return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        setOverride(input.dataset.id, reader.result, file.type, file.size);
+        renderSlots();
+      };
+      reader.onerror = () => alert("Could not read the file.");
+      reader.readAsDataURL(file);
+    });
+  });
+}
+
+// ————— Publish / export —————
+document.getElementById("clear-btn").addEventListener("click", () => {
+  if (!confirm("Clear all local image previews? This won't affect the deployed site.")) return;
+  clearAllOverrides();
+  renderSlots();
+});
+
+document.getElementById("export-btn").addEventListener("click", async () => {
+  const status = document.getElementById("publish-status");
+  const overrides = readOverrides();
+  const have = SLOTS.filter(s => overrides[s.id]);
+
+  if (have.length === 0) {
+    status.textContent = "Nothing to export — upload at least one image first.";
+    status.className = "publish__status publish__status--err";
+    return;
+  }
+
+  status.textContent = "Building bundle…";
+  status.className = "publish__status";
+
+  try {
+    const zip = new JSZip();
+    const assets = zip.folder("assets");
+    for (const slot of have) {
+      const dataUrl = overrides[slot.id];
+      const blob = await dataUrlToBlob(dataUrl);
+      const outName = slot.filename.replace(/^assets\//, "");
+      assets.file(outName, blob);
+    }
+    // Include a small README
+    zip.file("README.txt",
+      "ThinkCareer site image bundle\n" +
+      "Generated: " + new Date().toISOString() + "\n\n" +
+      "Files included:\n" +
+      have.map(s => "  - " + s.filename).join("\n") + "\n\n" +
+      "To publish:\n" +
+      "  1. Copy these files into your ThinkCareer Website folder, replacing the existing ones.\n" +
+      "  2. Redeploy:  npx vercel --prod\n" +
+      "     (or commit + push if Git deployment is set up)\n"
+    );
+
+    const content = await zip.generateAsync({ type: "blob" });
+    const url = URL.createObjectURL(content);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "thinkcareer-media-" + timestamp() + ".zip";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    status.textContent = "Bundle downloaded — drop the files into your site folder and redeploy.";
+    status.className = "publish__status publish__status--ok";
+  } catch (e) {
+    console.error(e);
+    status.textContent = "Export failed: " + e.message;
+    status.className = "publish__status publish__status--err";
+  }
+});
+
+// ————— Utilities —————
+async function dataUrlToBlob(dataUrl) {
+  const res = await fetch(dataUrl);
+  return await res.blob();
+}
+function formatBytes(n) {
+  if (n < 1024) return n + " B";
+  if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " KB";
+  return (n / (1024 * 1024)).toFixed(2) + " MB";
+}
+function formatRelative(iso) {
+  try {
+    const then = new Date(iso).getTime();
+    const diff = Date.now() - then;
+    if (diff < 60_000) return "just now";
+    if (diff < 3_600_000) return Math.floor(diff / 60_000) + "m ago";
+    if (diff < 86_400_000) return Math.floor(diff / 3_600_000) + "h ago";
+    return Math.floor(diff / 86_400_000) + "d ago";
+  } catch (e) { return "earlier"; }
+}
+function timestamp() {
+  const d = new Date();
+  const p = (n) => String(n).padStart(2, "0");
+  return d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + "-" + p(d.getHours()) + p(d.getMinutes());
+}
+
+// Boot
+checkSession();
+</script>
+</body>
+</html>

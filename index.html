@@ -1,0 +1,1438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ThinkCareer — Career Coaching &amp; Consultation</title>
+<meta name="description" content="Career coaching from a senior HR leader, Chevening Scholar and educator. Resume optimization, interview preparation, and office resilience for new graduates and young professionals." />
+
+<link rel="icon" href="assets/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#0f2a44" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Khmer:wght@300;400;500;600;700&family=Noto+Serif+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="src/styles.css" />
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<noscript><p style="padding:24px;font-family:sans-serif">This site needs JavaScript enabled.</p></noscript>
+
+<!-- early error banner -->
+<script>
+
+window.addEventListener("error", function(e) {
+  var root = document.getElementById("root");
+  if (root && !root.firstChild) {
+    root.innerHTML = '<div style="font-family:ui-monospace,Menlo,monospace;padding:24px;max-width:900px;margin:40px auto;background:#fff5f5;border:1px solid #e99;color:#700;white-space:pre-wrap;font-size:13px;line-height:1.5;border-radius:6px">'
+      + '<strong style="font-size:15px">Page failed to load</strong>\n\n'
+      + String(e.message || e.error || e) + '\n\n'
+      + (e.filename ? (e.filename + ':' + e.lineno + ':' + e.colno) : '')
+      + '</div>';
+  }
+});
+
+</script>
+
+<!-- admin media overrides (populated from admin.html via localStorage) -->
+<script>
+
+window.TC_MEDIA_OVERRIDES = {};
+try {
+  if (typeof localStorage !== 'undefined') {
+    var raw = localStorage.getItem('tc-admin-overrides');
+    if (raw) window.TC_MEDIA_OVERRIDES = JSON.parse(raw) || {};
+  }
+} catch (e) { /* opaque origin / parse error — ignore */ }
+window.TC_GET_MEDIA = function(slot, fallback) {
+  var o = window.TC_MEDIA_OVERRIDES || {};
+  return (o[slot] && typeof o[slot] === 'string') ? o[slot] : (fallback || '');
+};
+
+</script>
+
+<script>
+  window.TC_TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "palette": "heritage",
+    "headlineIndex": 2,
+    "density": "standard",
+    "headingFont": "display"
+  }/*EDITMODE-END*/;
+</script>
+
+<!-- ===== plain JS: design tokens ===== -->
+<script>
+// Design tokens — ThinkCareer
+// Derived from the logo: deep navy + sage mint, with cream & gold
+
+window.TC_PALETTES = {
+  heritage: {
+    name: "Heritage Navy",
+    navy: "#243B6B",
+    navyDeep: "#182950",
+    sage: "#8FBFB5",
+    sageDeep: "#6FA39A",
+    cream: "#F4F0E8",
+    creamDeep: "#E8E1D3",
+    ink: "#0F1A2E",
+    gold: "#C9A961",
+    muted: "#6B7A94",
+  },
+  executive: {
+    name: "Executive Mono",
+    navy: "#16202E",
+    navyDeep: "#0B111B",
+    sage: "#B8A47A",
+    sageDeep: "#9C8960",
+    cream: "#EFEBE3",
+    creamDeep: "#DDD6C5",
+    ink: "#0A0F18",
+    gold: "#B8A47A",
+    muted: "#6E7684",
+  },
+  academy: {
+    name: "Academy Forest",
+    navy: "#1F3A34",
+    navyDeep: "#142621",
+    sage: "#C9B892",
+    sageDeep: "#A89A78",
+    cream: "#F2EEE4",
+    creamDeep: "#E5DECE",
+    ink: "#0F1F1B",
+    gold: "#B08D4A",
+    muted: "#6B7A71",
+  },
+};
+
+window.TC_HEADLINES = [
+  {
+    eyebrow: "Think. Plan. Lead.",
+    title: "Engineering your professional breakthrough.",
+    sub: "ThinkCareer is your partner to the next level of professional growth — a premier career consultancy for career starters and young professionals ready to make waves in their industries.",
+  },
+  {
+    eyebrow: "Think. Plan. Lead.",
+    title: "The transition from student to professional shouldn't feel like a leap of faith.",
+    sub: "It should be a calculated move. We give you the insider's playbook to navigate the global job market with confidence — and the strategy to win.",
+  },
+  {
+    eyebrow: "Think. Plan. Lead.",
+    title: "A career doesn't happen by accident. It happens by design.",
+    sub: "One-on-one coaching with Udom Vuthy — Chevening Scholar, career strategist, and educator — for the pivotal years between your first job and your first real promotion.",
+  },
+];
+
+</script>
+
+<!-- ===== plain JS: i18n ===== -->
+<script>
+// i18n dictionary for ThinkCareer — English + Khmer
+// Khmer font is loaded via Google Fonts (Noto Sans Khmer + Moul for display)
+
+window.TC_I18N = {
+  en: {
+    // Nav
+    nav_about: "About",
+    nav_services: "Services",
+    nav_approach: "Approach",
+    nav_faq: "FAQ",
+    nav_brand_sub: "Career Coaching & Consultation",
+    nav_book: "Book a consultation",
+    nav_menu: "Menu",
+    lang_switch_aria: "Change language",
+
+    // Hero
+    hero_eyebrow: "Think. Plan. Lead.",
+    hero_book: "Book a consultation",
+    hero_packages: "See the programs",
+    hero_proof_1_h: "Think.",
+    hero_proof_1_b: "Search Optimization — resume, LinkedIn, recruiter-readiness",
+    hero_proof_2_h: "Plan.",
+    hero_proof_2_b: "Strategic Alignment — roadmap, pivots, promotions, negotiation",
+    hero_proof_3_h: "Lead.",
+    hero_proof_3_b: "Operational Resilience — Office IQ, conflict, burnout, culture",
+    portrait_eyebrow: "Your coach",
+    portrait_name: "Udom Vuthy",
+    portrait_role: "Founder · Career Strategist · Educator",
+    portrait_sticker: "Chevening\nScholar",
+    portrait_placeholder: "Founder portrait",
+    portrait_placeholder_meta: "1200 × 1500 · editorial · warm",
+    marquee_1: "Resume optimization",
+    marquee_2: "Interview preparation",
+    marquee_3: "Career strategy",
+    marquee_4: "Office resilience",
+    marquee_5: "Promotion readiness",
+    marquee_6: "Personal brand",
+    marquee_7: "Workplace communication",
+
+    // Hero headlines (3 variations)
+    headline_1_title: "Engineering your professional breakthrough.",
+    headline_1_sub: "ThinkCareer is your partner to the next level of professional growth — a premier career consultancy for career starters and young professionals ready to make waves in their industries.",
+    headline_2_title: "The transition from student to professional shouldn't feel like a leap of faith.",
+    headline_2_sub: "It should be a calculated move. We give you the insider's playbook to navigate the global job market with confidence — and the strategy to win.",
+    headline_3_title: "A career doesn't happen by accident. It happens by design.",
+    headline_3_sub: "One-on-one coaching with Udom Vuthy — Chevening Scholar, career strategist, and educator — for the pivotal years between your first job and your first real promotion.",
+
+    // Why / Methodology
+    why_eyebrow: "Our Methodology — Think. Plan. Lead.",
+    why_h2_pre: "A career built by ",
+    why_h2_em: "design",
+    why_h2_post: ", not by accident.",
+    why_lede: "ThinkCareer bridges the gap between potential and performance. Our work focuses on three pillars — so clients don't just get jobs, they build sustainable, high-growth trajectories.",
+    pillar_1_t: "Search Optimization",
+    pillar_1_b: "Resumes, LinkedIn, and the art of the recruiter scan. We bypass the algorithms, grab attention, and get you read by the people who actually decide.",
+    pillar_2_t: "Strategic Alignment",
+    pillar_2_b: "A long-term roadmap for your first decade. We map two moves out — the roles, the skills, the visibility plan — so your career compounds instead of drifts.",
+    pillar_3_t: "Operational Resilience",
+    pillar_3_b: "Office IQ, not just technical skill. Frameworks for office politics, conflict, burnout, and the difficult conversations nobody teaches you.",
+    pillar_4_t: "The Insider's Playbook",
+    pillar_4_b: "Udom is a Chevening Scholar with an MA from London Metropolitan University and a decade across academic leadership and professional development. Coaching is data-driven, recruiter-informed — and personal.",
+
+    // About
+    about_eyebrow: "About the founder",
+    about_caption_1: "Udom Vuthy, Founder & Career Strategist.",
+    about_caption_2: "ThinkCareer · 2026",
+    about_media_placeholder: "Editorial portrait",
+    about_media_placeholder_meta: "seated · desk · natural light",
+    about_h2: "From student to professional shouldn't feel like a leap of faith.",
+    about_p1: "Success in the modern workplace requires more than a degree — it requires a strategic playbook. Udom Vuthy founded ThinkCareer to give young professionals the high-level insights usually hidden behind corporate doors.",
+    about_p2_html: "A <strong>Chevening Scholar</strong> — the UK government's flagship award for future leaders — Udom holds an <strong>MA from London Metropolitan University</strong> and lectures at university level on <em>Communication & Ethics for Working Professionals</em>. With over a decade of experience across academic leadership and professional development, he has mastered the art of navigating high-pressure, international environments.",
+    about_p3: "He specialises in bridging the gap between raw talent and career-ready excellence. Udom doesn't just teach you how to find a job — he teaches you how to dominate the hidden job market and build the mental resilience to thrive in any office culture. His coaching is data-driven, recruiter-informed, and designed for those ready to make waves.",
+    about_quote: "\"My mission is to ensure your career doesn't happen by accident, but by design. Let's build your future, together.\"",
+    about_quote_attr: "— Udom Vuthy, Founder",
+    cred_1_l: "Founder",
+    cred_1_v: "ThinkCareer — Career Strategist",
+    cred_2_l: "Scholarship",
+    cred_2_v: "Chevening Scholar (UK Government)",
+    cred_3_l: "Education",
+    cred_3_v: "MA, London Metropolitan University",
+    cred_4_l: "Teaching",
+    cred_4_v: "University Lecturer — Communication & Ethics",
+    about_cta: "Work with Udom",
+
+    // Services
+    services_eyebrow: "Services",
+    services_h2: "Our Signature Programs.",
+    services_lede: "Three structured paths — each one-to-one with Udom. Recruiter-informed, data-driven, and designed for people ready to make waves. Start where you are; we'll tell you honestly which path fits.",
+    tier_duration: "Duration",
+    tier_format: "Format",
+    tier_best: "Best for",
+    tier_price_label: "Your investment",
+    tier_included: "What's included",
+    tier_outcomes: "What you'll walk away with",
+    tier_most_booked: " · Most booked",
+    tier_enquire: "Enquire about",
+    tier_fineprint: "Complimentary 20-minute intake call before any engagement begins.",
+
+    // Launchpad
+    t1_tag: "Program 01",
+    t1_name: "The Launchpad",
+    t1_pitch: "Turn your degree into a paycheck.",
+    t1_duration: "Intensive sprint",
+    t1_format: "1:1 · Virtual",
+    t1_price: "$150",
+    t1_price_note: "Consulting fee",
+    t1_summary: "Stop sending resumes into a black hole. A focused sprint that rebuilds your professional brand to bypass algorithms, grab recruiter attention, and master the art of the interview.",
+    t1_best: "New graduates and entry-level job seekers ready to sign their first contract.",
+    t1_inc_1: "Full Resume & LinkedIn transformation",
+    t1_inc_2: "2× intensive mock interview sessions",
+    t1_inc_3: "Job search automation strategy",
+    t1_inc_4: "Recruiter-eye review before you apply",
+    t1_inc_5: "ATS-safe and design-forward CV formats",
+    t1_out_1: "A CV that survives the 8-second scan",
+    t1_out_2: "A LinkedIn that gets inbound from recruiters",
+    t1_out_3: "Confidence in your first real interview",
+
+    // Career Catalyst
+    t2_tag: "Program 02",
+    t2_name: "The Career Catalyst",
+    t2_pitch: "Elevate your trajectory — and your salary.",
+    t2_duration: "3 months · Bi-weekly",
+    t2_format: "1:1 · Virtual",
+    t2_price: "$450",
+    t2_price_note: "Full 3-month engagement",
+    t2_summary: "Design your long-term roadmap and master the hidden job market. Whether you're pivoting to a new industry or negotiating a major promotion, this three-month partnership provides the high-level strategy to secure your worth.",
+    t2_best: "Professionals ready for a pivot, a promotion, or a meaningful raise.",
+    t2_inc_1: "3 months of bi-weekly 1-on-1 strategy sessions",
+    t2_inc_2: "Personalised career roadmap (two moves out)",
+    t2_inc_3: "Hidden Job Market networking framework",
+    t2_inc_4: "High-stakes negotiation tactics",
+    t2_inc_5: "Promotion-readiness audit & gap plan",
+    t2_out_1: "A promotion or pivot strategy you can defend",
+    t2_out_2: "Language and leverage for the salary conversation",
+    t2_out_3: "A trajectory you're steering, not one happening to you",
+
+    // Resilient Leader
+    t3_tag: "Program 03",
+    t3_name: "The Resilient Leader",
+    t3_pitch: "Thrive in the office — don't just survive it.",
+    t3_duration: "4 deep-dive intensives",
+    t3_format: "1:1 · Virtual · Priority support",
+    t3_price: "On request",
+    t3_price_note: "Contact for more info",
+    t3_summary: "Technical skills get you hired; Office IQ gets you promoted. A targeted intensive that equips high-performers with the mental toughness and communication frameworks to navigate office politics, resolve conflict, and prevent burnout.",
+    t3_best: "High-performers in high-pressure roles who refuse to drift into burnout.",
+    t3_inc_1: "4 deep-dive coaching intensives",
+    t3_inc_2: "Conflict resolution & time management frameworks",
+    t3_inc_3: "Difficult-conversation scripts for your situations",
+    t3_inc_4: "Burnout, boundaries & Office IQ playbook",
+    t3_inc_5: "30 days of priority WhatsApp / Slack support",
+    t3_out_1: "A calm, credible voice in difficult rooms",
+    t3_out_2: "Mental toughness you can actually name and use",
+    t3_out_3: "Conflict resolved before it becomes career damage",
+
+    // Contact
+    contact_eyebrow: "Book a consultation",
+    contact_h2: "The next five years of your career start with a twenty-minute call.",
+    contact_lede: "Share a little about where you are and what's in your way. I personally read every intake and reply within two working days with next steps, honest pricing, and — if we're not the right fit — a recommendation for someone who is.",
+    promise_1: "Complimentary 20-minute intake call, no pitch.",
+    promise_2: "Honest read on whether coaching is what you need.",
+    promise_3: "Clear engagement proposal within 48 hours.",
+    alt_phone: "Phone",
+    alt_linkedin: "LinkedIn",
+    alt_telegram: "Telegram",
+    alt_telegram_val: "Subscribe to our channel",
+
+    form_name: "Your name",
+    form_name_ph: "e.g. Dara Sok",
+    form_email: "Email",
+    form_email_ph: "you@domain.com",
+    form_stage: "Where are you in your career?",
+    form_tier: "Which program fits best?",
+    form_goal: "What's in your way?",
+    form_goal_hint: "A few honest lines. The more specific, the better.",
+    form_goal_ph: "e.g. I've applied to 40 roles with no interviews. I think my CV is the problem but I'm not sure.",
+    form_char: "characters",
+    form_consent: "I consent to ThinkCareer replying to this enquiry. Your information is kept confidential and never shared.",
+    form_send: "Send enquiry",
+    form_fineprint: "By sending, you'll receive a personal reply from Udom — no sequences, no automation.",
+    err_name: "Please share your name.",
+    err_email_required: "Email is required.",
+    err_email_invalid: "That doesn't look like a valid email.",
+    err_stage: "Pick the closest match.",
+    err_tier: "Pick a program — or 'Not sure'.",
+    err_goal: "A sentence or two helps me prepare.",
+    err_consent: "We need your consent to reply.",
+
+    stage_1: "Final-year student",
+    stage_2: "0–1 year in",
+    stage_3: "2–4 years in",
+    stage_4: "5+ years / first-time manager",
+    stage_5: "Career pivot / returning",
+    tier_pick_1: "🚀 The Launchpad",
+    tier_pick_2: "📈 The Career Catalyst",
+    tier_pick_3: "🛡 The Resilient Leader",
+    tier_pick_4: "Not sure — help me decide",
+
+    thanks_pre: "Thank you, ",
+    thanks_body: "Your enquiry is with me now. I'll personally read it and reply within two working days — usually sooner. In the meantime, two things that might help:",
+    thanks_1: "Pull together the most recent version of your CV and any active job description.",
+    thanks_2: "Write down the one career question you'd most want answered if you could only ask one.",
+    thanks_signoff: "— Udom",
+    thanks_again: "Send another enquiry",
+
+    // FAQ
+    faq_eyebrow: "FAQ",
+    faq_h2: "Questions people ask before booking.",
+    faq_1_q: "How much do the programs cost?",
+    faq_1_a: "The Launchpad is $150, The Career Catalyst is $450 for a full 3-month engagement, and The Resilient Leader is priced on request based on scope. Pricing is transparent and shared in full before any commitment.",
+    faq_2_q: "Is ThinkCareer only for people in Cambodia or Southeast Asia?",
+    faq_2_a: "No. The practice is based in Cambodia and a large part of the community is regional, but coaching is conducted virtually and the frameworks apply to any market — especially high-pressure international environments.",
+    faq_3_q: "I'm a student and I haven't worked yet. Am I too early?",
+    faq_3_a: "The opposite — you're on time. The Launchpad is built for final-year students and new graduates, and the work we do on your first CV and first interview sets the tone for every application after.",
+    faq_4_q: "How is this different from watching career content online?",
+    faq_4_a: "Free content tells you what generally works. Coaching tells you what will work for your CV, your interview, your manager, your situation. Udom is one person reading one candidate at a time — data-driven, recruiter-informed, personal.",
+    faq_5_q: "Do you offer workshops or corporate programs?",
+    faq_5_a: "Yes. ThinkCareer runs workshops for universities, graduate programmes, and early-career cohorts inside companies. Mention it in your enquiry and you'll get programme details and rates.",
+    faq_6_q: "Is what I share confidential?",
+    faq_6_a: "Completely. Nothing you share — CVs, salary, manager issues, employer names — is ever referenced outside our sessions. Confidentiality is the baseline the work depends on.",
+
+    // Footer
+    foot_explore: "Explore",
+    foot_about: "About Udom",
+    foot_services: "Services",
+    foot_approach: "Approach",
+    foot_faq: "FAQ",
+    foot_programs: "Programs",
+    foot_workshops: "Corporate workshops",
+    foot_hello: "Say hello",
+    foot_linkedin: "LinkedIn — /company/thinkcareer",
+    foot_telegram: "Telegram channel",
+    foot_rights: "© 2026 ThinkCareer. All rights reserved.",
+    foot_tagline: "Think. Plan. Lead.",
+
+    // Tweaks
+    tw_palette: "Palette",
+    tw_headline: "Hero headline",
+    tw_density: "Density",
+    tw_heading_font: "Heading family",
+    tw_density_1: "spacious",
+    tw_density_2: "standard",
+    tw_density_3: "compact",
+  },
+
+  km: {
+    // Nav
+    nav_about: "អំពីយើង",
+    nav_services: "សេវាកម្ម",
+    nav_approach: "វិធីសាស្ត្រ",
+    nav_faq: "សំណួរញឹកញាប់",
+    nav_brand_sub: "ការណែនាំ និងប្រឹក្សាអាជីព",
+    nav_book: "កក់ការប្រឹក្សា",
+    nav_menu: "ម៉ឺនុយ",
+    lang_switch_aria: "ប្តូរភាសា",
+
+    // Hero
+    hero_eyebrow: "គិត។ រៀបចំ។ ដឹកនាំ។",
+    hero_book: "កក់ការប្រឹក្សា",
+    hero_packages: "មើលកម្មវិធី",
+    hero_proof_1_h: "គិត។",
+    hero_proof_1_b: "ការបង្កើនប្រសិទ្ធភាពស្វែងរក — ប្រវត្តិរូប, LinkedIn, និងការត្រៀមខ្លួន",
+    hero_proof_2_h: "រៀបចំ។",
+    hero_proof_2_b: "ការរៀបចំយុទ្ធសាស្ត្រ — ផែនទីអាជីព, ការផ្លាស់ប្តូរ, ការចរចាប្រាក់ខែ",
+    hero_proof_3_h: "ដឹកនាំ។",
+    hero_proof_3_b: "ភាពធន់ក្នុងការងារ — Office IQ, ជម្លោះ, ការនឿយហត់, វប្បធម៌",
+    portrait_eyebrow: "គ្រូបង្វឹករបស់អ្នក",
+    portrait_name: "ឧត្តម វុទ្ធី",
+    portrait_role: "ស្ថាបនិក · អ្នកយុទ្ធសាស្ត្រអាជីព · គ្រូ",
+    portrait_sticker: "Chevening\nScholar",
+    portrait_placeholder: "រូបភាពស្ថាបនិក",
+    portrait_placeholder_meta: "1200 × 1500 · វិចិត្រសិល្ប៍ · កក់ក្តៅ",
+    marquee_1: "ការកែលម្អប្រវត្តិរូប",
+    marquee_2: "ការត្រៀមសម្ភាសន៍",
+    marquee_3: "យុទ្ធសាស្ត្រអាជីព",
+    marquee_4: "ភាពធន់ក្នុងការងារ",
+    marquee_5: "ការត្រៀមសម្រាប់ការឡើងឋានៈ",
+    marquee_6: "ម៉ាកផ្ទាល់ខ្លួន",
+    marquee_7: "ការប្រាស្រ័យទាក់ទងក្នុងការងារ",
+
+    // Hero headlines
+    headline_1_title: "រចនាការបែកផុសនៃវិជ្ជាជីវៈរបស់អ្នក។",
+    headline_1_sub: "ThinkCareer គឺជាដៃគូរបស់អ្នកក្នុងការឈានឡើងកម្រិតបន្ទាប់នៃវិជ្ជាជីវៈ — ការប្រឹក្សាយោបល់អាជីពដ៏លំដាប់ខ្ពស់ សម្រាប់អ្នកចាប់ផ្តើមអាជីព និងអ្នកវិជ្ជាជីវៈវ័យក្មេងដែលត្រៀមធ្វើរលកក្នុងឧស្សាហកម្ម។",
+    headline_2_title: "ការផ្លាស់ប្តូរពីនិស្សិតទៅអ្នកវិជ្ជាជីវៈមិនគួរជាការលោតផ្លោះដោយទុកចិត្តទេ។",
+    headline_2_sub: "វាគួរជាការផ្លាស់ទីដែលបានគិតគូរ។ យើងផ្តល់ឱ្យអ្នកនូវ playbook របស់អ្នកខាងក្នុង ដើម្បីរុករកទីផ្សារការងារសកលដោយទំនុកចិត្ត — និងយុទ្ធសាស្ត្រដើម្បីឈ្នះ។",
+    headline_3_title: "អាជីពមិនកើតឡើងដោយចៃដន្យទេ។ វាកើតឡើងដោយការរចនា។",
+    headline_3_sub: "ការបង្វឹកមួយទល់មួយជាមួយ ឧត្តម វុទ្ធី — Chevening Scholar, អ្នកយុទ្ធសាស្ត្រអាជីព, និងគ្រូ — សម្រាប់ឆ្នាំសំខាន់ៗរវាងការងារដំបូង និងការឡើងឋានៈដំបូងរបស់អ្នក។",
+
+    // Why
+    why_eyebrow: "វិធីសាស្ត្ររបស់យើង — គិត។ រៀបចំ។ ដឹកនាំ។",
+    why_h2_pre: "អាជីពដែលកសាងដោយ",
+    why_h2_em: "ការរចនា",
+    why_h2_post: ", មិនមែនដោយចៃដន្យ។",
+    why_lede: "ThinkCareer ភ្ជាប់ចន្លោះរវាងសក្តានុពល និងការសម្តែង។ ការងាររបស់យើងផ្តោតលើសសរស្តម្ភបី — ដើម្បីឱ្យអតិថិជនមិនត្រឹមតែទទួលបានការងារ ប៉ុន្តែកសាងផ្លូវអាជីពដែលមាននិរន្តរភាព និងរីកលូតលាស់ខ្ពស់។",
+    pillar_1_t: "ការបង្កើនប្រសិទ្ធភាពស្វែងរក",
+    pillar_1_b: "ប្រវត្តិរូប, LinkedIn, និងសិល្បៈនៃការមើលរបស់អ្នកជ្រើសរើសបុគ្គលិក។ យើងឆ្លងកាត់ algorithms ទាក់ទាញការចាប់អារម្មណ៍ ហើយធ្វើឱ្យអ្នកសម្រេចចិត្តពិតប្រាកដអាន។",
+    pillar_2_t: "ការរៀបចំយុទ្ធសាស្ត្រ",
+    pillar_2_b: "ផែនទីរយៈពេលវែងសម្រាប់ទសវត្សរ៍ដំបូងរបស់អ្នក។ យើងគូសផែនទីពីរជំហានមុន — តួនាទី, ជំនាញ, ផែនការភាពមើលឃើញ — ដើម្បីឱ្យអាជីពរបស់អ្នកបន្ថែមឡើង។",
+    pillar_3_t: "ភាពធន់ក្នុងការងារ",
+    pillar_3_b: "Office IQ មិនគ្រាន់តែជាជំនាញបច្ចេកទេសទេ។ ក្របខណ្ឌសម្រាប់នយោបាយការិយាល័យ, ជម្លោះ, ការនឿយហត់, និងការសន្ទនាលំបាកៗដែលគ្មាននរណាបង្រៀន។",
+    pillar_4_t: "Playbook របស់អ្នកខាងក្នុង",
+    pillar_4_b: "លោក ឧត្តម ជា Chevening Scholar ដែលមាន MA ពី London Metropolitan University និងបទពិសោធន៍មួយទសវត្សរ៍ផ្នែកភាពដឹកនាំក្នុងការអប់រំ។ ការបង្វឹកគឺផ្អែកលើទិន្នន័យ ផ្អែកលើចំណេះដឹងរបស់អ្នកជ្រើសរើសបុគ្គលិក — និងមានលក្ខណៈផ្ទាល់ខ្លួន។",
+
+    // About
+    about_eyebrow: "អំពីស្ថាបនិក",
+    about_caption_1: "ឧត្តម វុទ្ធី, ស្ថាបនិក និងអ្នកយុទ្ធសាស្ត្រអាជីព។",
+    about_caption_2: "ThinkCareer · ២០២៦",
+    about_media_placeholder: "រូបភាពវិចិត្រសិល្ប៍",
+    about_media_placeholder_meta: "អង្គុយ · តុ · ពន្លឺធម្មជាតិ",
+    about_h2: "ពីនិស្សិតទៅអ្នកវិជ្ជាជីវៈ មិនគួរមានអារម្មណ៍ថាជាការលោតផ្លោះដោយទុកចិត្តទេ។",
+    about_p1: "ភាពជោគជ័យក្នុងកន្លែងធ្វើការសម័យទំនើបត្រូវការច្រើនជាងសញ្ញាបត្រ — វាត្រូវការ playbook យុទ្ធសាស្ត្រ។ ឧត្តម វុទ្ធី បានបង្កើត ThinkCareer ដើម្បីផ្តល់ឱ្យអ្នកវិជ្ជាជីវៈវ័យក្មេងនូវការយល់ដឹងកម្រិតខ្ពស់ដែលជាធម្មតាត្រូវបានលាក់នៅក្រោយទ្វារសាជីវកម្ម។",
+    about_p2_html: "ជា <strong>Chevening Scholar</strong> — ពានរង្វាន់ដ៏លេចធ្លោរបស់រដ្ឋាភិបាលចក្រភពអង់គ្លេសសម្រាប់អ្នកដឹកនាំអនាគត — លោកឧត្តមកាន់ <strong>MA ពី London Metropolitan University</strong> ហើយបង្រៀននៅកម្រិតសាកលវិទ្យាល័យលើមុខវិជ្ជា <em>ការប្រាស្រ័យទាក់ទង និងក្រមសីលធម៌សម្រាប់អ្នកវិជ្ជាជីវៈ</em>។ ជាមួយបទពិសោធន៍ជាងមួយទសវត្សរ៍ក្នុងភាពជាអ្នកដឹកនាំ លោកបានស្ទាត់ជំនាញក្នុងការរុករកបរិយាកាសអន្តរជាតិដែលមានសម្ពាធខ្ពស់។",
+    about_p3: "លោកមានជំនាញពិសេសក្នុងការភ្ជាប់ចន្លោះរវាងទេពកោសល្យ និងភាពល្អបំផុតនៃវិជ្ជាជីវៈ។ ឧត្តមមិនគ្រាន់តែបង្រៀនអ្នកពីរបៀបស្វែងរកការងារទេ — លោកបង្រៀនអ្នកពីរបៀបគ្រប់គ្រងទីផ្សារការងារដែលលាក់ និងកសាងភាពធន់នៃផ្លូវចិត្តដើម្បីរីកចម្រើនក្នុងវប្បធម៌ការងារណាមួយ។",
+    about_quote: "\"បេសកកម្មរបស់ខ្ញុំគឺធានាថា អាជីពរបស់អ្នកមិនកើតឡើងដោយចៃដន្យ ប៉ុន្តែដោយការរចនា។ ចូរយើងកសាងអនាគតរបស់អ្នកជាមួយគ្នា។\"",
+    about_quote_attr: "— ឧត្តម វុទ្ធី, ស្ថាបនិក",
+    cred_1_l: "ស្ថាបនិក",
+    cred_1_v: "ThinkCareer — អ្នកយុទ្ធសាស្ត្រអាជីព",
+    cred_2_l: "អាហារូបករណ៍",
+    cred_2_v: "Chevening Scholar (រដ្ឋាភិបាលចក្រភពអង់គ្លេស)",
+    cred_3_l: "ការអប់រំ",
+    cred_3_v: "MA, London Metropolitan University",
+    cred_4_l: "ការបង្រៀន",
+    cred_4_v: "សាស្ត្រាចារ្យសាកលវិទ្យាល័យ — ការប្រាស្រ័យទាក់ទង និងក្រមសីលធម៌",
+    about_cta: "ធ្វើការជាមួយលោកឧត្តម",
+
+    // Services
+    services_eyebrow: "សេវាកម្ម",
+    services_h2: "កម្មវិធីហត្ថលេខារបស់យើង។",
+    services_lede: "ផ្លូវដែលមានរចនាសម្ព័ន្ធបី — នីមួយៗជាការប្រឹក្សាមួយទល់មួយជាមួយលោកឧត្តម។ ផ្អែកលើទិន្នន័យ និងរចនាឡើងសម្រាប់អ្នកដែលត្រៀមធ្វើរលក។ ចាប់ផ្តើមពីកន្លែងដែលអ្នកនៅ យើងនឹងប្រាប់អ្នកដោយស្មោះត្រង់ថាផ្លូវមួយណាសមនឹងអ្នក។",
+    tier_duration: "រយៈពេល",
+    tier_format: "ទម្រង់",
+    tier_best: "ល្អបំផុតសម្រាប់",
+    tier_price_label: "ការវិនិយោគរបស់អ្នក",
+    tier_included: "អ្វីដែលរួមបញ្ចូល",
+    tier_outcomes: "អ្វីដែលអ្នកនឹងទទួលបាន",
+    tier_most_booked: " · កក់ច្រើនបំផុត",
+    tier_enquire: "សួរអំពី",
+    tier_fineprint: "ការហៅទូរស័ព្ទស្គាល់គ្នា២០នាទីឥតគិតថ្លៃ មុននឹងការចូលរួមណាមួយចាប់ផ្តើម។",
+
+    t1_tag: "កម្មវិធី ០១",
+    t1_name: "The Launchpad",
+    t1_pitch: "ប្រែសញ្ញាបត្ររបស់អ្នកជាប្រាក់ខែ។",
+    t1_duration: "វគ្គខ្លីខ្លាំង",
+    t1_format: "១ទល់១ · អនឡាញ",
+    t1_price: "$150",
+    t1_price_note: "ថ្លៃប្រឹក្សា",
+    t1_summary: "ឈប់ផ្ញើប្រវត្តិរូបចូលទៅក្នុង \"រន្ធខ្មៅ\"។ វគ្គផ្តោតអារម្មណ៍ដែលកសាងម៉ាកវិជ្ជាជីវៈឡើងវិញ ដើម្បីឆ្លងកាត់ algorithms ទាក់ទាញអ្នកជ្រើសរើសបុគ្គលិក និងស្ទាត់ជំនាញសម្ភាសន៍។",
+    t1_best: "និស្សិតដែលរៀបនឹងបញ្ចប់ និងបេក្ខជនការងារថ្មីត្រៀមចុះហត្ថលេខាកុងត្រាដំបូង។",
+    t1_inc_1: "ការបំប្លែងប្រវត្តិរូប និង LinkedIn ពេញលេញ",
+    t1_inc_2: "វគ្គសម្ភាសន៍គំរូ ២ ដង",
+    t1_inc_3: "យុទ្ធសាស្ត្រស្វ័យប្រវត្តិកម្មការស្វែងរកការងារ",
+    t1_inc_4: "ការពិនិត្យមើលក្នុងទស្សនៈអ្នកជ្រើសរើសមុនអ្នកដាក់ពាក្យ",
+    t1_inc_5: "ទម្រង់ CV សម្រាប់ ATS និងរចនាទាន់សម័យ",
+    t1_out_1: "CV ដែលអាចរួចផុតពីការមើលរយៈពេល ៨ វិនាទី",
+    t1_out_2: "LinkedIn ដែលទទួលបានការទាក់ទងពីអ្នកជ្រើសរើស",
+    t1_out_3: "ទំនុកចិត្តក្នុងការសម្ភាសន៍ពិតប្រាកដដំបូង",
+
+    t2_tag: "កម្មវិធី ០២",
+    t2_name: "The Career Catalyst",
+    t2_pitch: "លើកកម្ពស់ផ្លូវអាជីព — និងប្រាក់ខែរបស់អ្នក។",
+    t2_duration: "៣ ខែ · ពីរសប្តាហ៍ម្តង",
+    t2_format: "១ទល់១ · អនឡាញ",
+    t2_price: "$450",
+    t2_price_note: "ការចូលរួមពេញ ៣ ខែ",
+    t2_summary: "រចនាផែនទីរយៈពេលវែងរបស់អ្នក និងស្ទាត់ជំនាញទីផ្សារការងារដែលលាក់។ មិនថាអ្នកកំពុងផ្លាស់ប្តូរឧស្សាហកម្ម ឬចរចាការឡើងឋានៈធំ ភាពជាដៃគូ៣ខែនេះផ្តល់នូវយុទ្ធសាស្ត្រកម្រិតខ្ពស់។",
+    t2_best: "អ្នកវិជ្ជាជីវៈដែលត្រៀមផ្លាស់ប្តូរ ឡើងឋានៈ ឬដំឡើងប្រាក់ខែដ៏មានន័យ។",
+    t2_inc_1: "វគ្គយុទ្ធសាស្ត្រ ១ទល់១ ពីរសប្តាហ៍ម្តងរយៈពេល ៣ ខែ",
+    t2_inc_2: "ផែនទីអាជីពផ្ទាល់ខ្លួន (ពីរជំហានមុន)",
+    t2_inc_3: "ក្របខណ្ឌបណ្តាញទីផ្សារការងារដែលលាក់",
+    t2_inc_4: "យុទ្ធសាស្ត្រចរចាកម្រិតខ្ពស់",
+    t2_inc_5: "ការពិនិត្យត្រៀមការឡើងឋានៈ និងផែនការបំពេញចន្លោះ",
+    t2_out_1: "យុទ្ធសាស្ត្រឡើងឋានៈ ឬផ្លាស់ប្តូរដែលអ្នកអាចការពារបាន",
+    t2_out_2: "ភាសា និងឧបករណ៍សម្រាប់ការសន្ទនាប្រាក់ខែ",
+    t2_out_3: "ផ្លូវអាជីពដែលអ្នកដឹកនាំ មិនមែនដែលកើតឡើងចំពោះអ្នក",
+
+    t3_tag: "កម្មវិធី ០៣",
+    t3_name: "The Resilient Leader",
+    t3_pitch: "រីកចម្រើនក្នុងការិយាល័យ — មិនគ្រាន់តែរស់រានមានជីវិត។",
+    t3_duration: "វគ្គស៊ីជម្រៅ ៤ ដង",
+    t3_format: "១ទល់១ · អនឡាញ · ជំនួយអាទិភាព",
+    t3_price: "តាមការសុំ",
+    t3_price_note: "ទាក់ទងសម្រាប់ព័ត៌មានបន្ថែម",
+    t3_summary: "ជំនាញបច្ចេកទេសធ្វើឱ្យអ្នកត្រូវជួល; Office IQ ធ្វើឱ្យអ្នកឡើងឋានៈ។ វគ្គផ្តោតអារម្មណ៍ដែលផ្តល់ឱ្យអ្នកនូវភាពរឹងមាំផ្លូវចិត្ត និងក្របខណ្ឌទំនាក់ទំនង ដើម្បីរុករកនយោបាយការិយាល័យ ដោះស្រាយជម្លោះ និងការពារការនឿយហត់។",
+    t3_best: "អ្នកសម្តែងកម្រិតខ្ពស់ក្នុងតួនាទីមានសម្ពាធខ្ពស់ ដែលមិនព្រមធ្លាក់ចូលការនឿយហត់។",
+    t3_inc_1: "វគ្គបង្វឹកស៊ីជម្រៅ ៤ ដង",
+    t3_inc_2: "ក្របខណ្ឌដោះស្រាយជម្លោះ និងការគ្រប់គ្រងពេលវេលា",
+    t3_inc_3: "ស្គ្រីបការសន្ទនាលំបាកសម្រាប់ស្ថានភាពរបស់អ្នក",
+    t3_inc_4: "Playbook អំពីការនឿយហត់ ព្រំដែន និង Office IQ",
+    t3_inc_5: "ជំនួយ WhatsApp / Slack អាទិភាពរយៈពេល ៣០ ថ្ងៃ",
+    t3_out_1: "សំឡេងដ៏ស្ងប់ស្ងាត់ និងគួរឱ្យទុកចិត្តក្នុងបន្ទប់ពិបាក",
+    t3_out_2: "ភាពរឹងមាំផ្លូវចិត្តដែលអ្នកអាចដាក់ឈ្មោះ និងប្រើបាន",
+    t3_out_3: "ជម្លោះត្រូវបានដោះស្រាយ មុនពេលវាក្លាយជាការខូចខាតអាជីព",
+
+    // Contact
+    contact_eyebrow: "កក់ការប្រឹក្សា",
+    contact_h2: "ប្រាំឆ្នាំខាងមុខនៃអាជីពរបស់អ្នក ចាប់ផ្តើមដោយការហៅទូរស័ព្ទម្ភៃនាទី។",
+    contact_lede: "ចែករំលែកបន្តិចអំពីកន្លែងដែលអ្នកនៅ និងអ្វីដែលរាំងស្ទះអ្នក។ ខ្ញុំផ្ទាល់អានរាល់ការសួរ និងឆ្លើយក្នុងរយៈពេលពីរថ្ងៃធ្វើការ ជាមួយជំហានបន្ទាប់ តម្លៃដោយស្មោះត្រង់ — ហើយបើមិនសមគ្នា ខ្ញុំនឹងណែនាំនរណាម្នាក់ផ្សេងទៀតដែលសមរម្យ។",
+    promise_1: "ការហៅទូរស័ព្ទស្គាល់គ្នាម្ភៃនាទីឥតគិតថ្លៃ មិនមានការផ្សព្វផ្សាយ។",
+    promise_2: "ការអានដោយស្មោះត្រង់ថាតើការបង្វឹកគឺជាអ្វីដែលអ្នកត្រូវការ។",
+    promise_3: "សំណើចូលរួមច្បាស់លាស់ក្នុងរយៈពេល ៤៨ ម៉ោង។",
+    alt_phone: "ទូរស័ព្ទ",
+    alt_linkedin: "LinkedIn",
+    alt_telegram: "Telegram",
+    alt_telegram_val: "ជាវឆានែលរបស់យើង",
+
+    form_name: "ឈ្មោះរបស់អ្នក",
+    form_name_ph: "ឧ. ដារ៉ា សុខ",
+    form_email: "អ៊ីមែល",
+    form_email_ph: "you@domain.com",
+    form_stage: "អ្នកនៅកន្លែងណាក្នុងអាជីពរបស់អ្នក?",
+    form_tier: "កម្មវិធីណាមួយសមបំផុត?",
+    form_goal: "អ្វីរាំងស្ទះអ្នក?",
+    form_goal_hint: "បន្ទាត់ពីរបីដោយស្មោះត្រង់។ កាន់តែច្បាស់ កាន់តែប្រសើរ។",
+    form_goal_ph: "ឧ. ខ្ញុំបានដាក់ពាក្យ ៤០ ការងារ តែមិនមានសម្ភាសន៍ទេ។ ខ្ញុំគិតថា CV គឺជាបញ្ហា តែមិនប្រាកដ។",
+    form_char: "តួអក្សរ",
+    form_consent: "ខ្ញុំយល់ព្រមឱ្យ ThinkCareer ឆ្លើយតបទៅនឹងការសួរនេះ។ ព័ត៌មានរបស់អ្នកត្រូវបានរក្សាសម្ងាត់ ហើយមិនដែលត្រូវបានចែករំលែក។",
+    form_send: "ផ្ញើការសួរ",
+    form_fineprint: "ដោយផ្ញើ អ្នកនឹងទទួលបានការឆ្លើយតបផ្ទាល់ខ្លួនពីលោកឧត្តម — គ្មានស្វ័យប្រវត្តិកម្មទេ។",
+    err_name: "សូមប្រាប់ឈ្មោះរបស់អ្នក។",
+    err_email_required: "ត្រូវការអ៊ីមែល។",
+    err_email_invalid: "អ៊ីមែលនេះមើលទៅមិនត្រឹមត្រូវ។",
+    err_stage: "ជ្រើសរើសអ្វីដែលសមជិតបំផុត។",
+    err_tier: "ជ្រើសរើសកម្មវិធី — ឬ 'មិនប្រាកដ'។",
+    err_goal: "បន្ទាត់ពីរបីជួយខ្ញុំត្រៀម។",
+    err_consent: "យើងត្រូវការការយល់ព្រមរបស់អ្នកដើម្បីឆ្លើយតប។",
+
+    stage_1: "និស្សិតឆ្នាំចុងក្រោយ",
+    stage_2: "០–១ ឆ្នាំ",
+    stage_3: "២–៤ ឆ្នាំ",
+    stage_4: "៥ ឆ្នាំ+ / ប្រធានដំបូង",
+    stage_5: "ផ្លាស់ប្តូរអាជីព / ត្រឡប់មកវិញ",
+    tier_pick_1: "🚀 The Launchpad",
+    tier_pick_2: "📈 The Career Catalyst",
+    tier_pick_3: "🛡 The Resilient Leader",
+    tier_pick_4: "មិនប្រាកដ — ជួយខ្ញុំសម្រេច",
+
+    thanks_pre: "សូមអរគុណ ",
+    thanks_body: "ការសួររបស់អ្នកនៅជាមួយខ្ញុំហើយ។ ខ្ញុំនឹងផ្ទាល់អាន និងឆ្លើយក្នុងរយៈពេលពីរថ្ងៃធ្វើការ — ជាធម្មតាលឿនជាងនេះ។ ក្នុងពេលនេះ មានពីរកិច្ចការដែលអាចជួយបាន៖",
+    thanks_1: "ប្រមូលប្រវត្តិរូបកំណែថ្មីបំផុត និងការពិពណ៌នាការងារដែលកំពុងសកម្ម។",
+    thanks_2: "សរសេរសំណួរអាជីពមួយដែលអ្នកចង់ឱ្យឆ្លើយបំផុត បើអាចសួរបានតែមួយ។",
+    thanks_signoff: "— ឧត្តម",
+    thanks_again: "ផ្ញើការសួរទៀត",
+
+    // FAQ
+    faq_eyebrow: "សំណួរញឹកញាប់",
+    faq_h2: "សំណួរដែលមនុស្សសួរមុនកក់។",
+    faq_1_q: "កម្មវិធីមានតម្លៃប៉ុន្មាន?",
+    faq_1_a: "The Launchpad តម្លៃ $150, The Career Catalyst តម្លៃ $450 សម្រាប់ការចូលរួម ៣ ខែពេញ និង The Resilient Leader តម្លៃតាមការសុំ។ តម្លៃមានតម្លាភាព ហើយចែករំលែកពេញលេញមុននឹងការទទួលយក។",
+    faq_2_q: "ThinkCareer សម្រាប់តែមនុស្សនៅកម្ពុជា ឬអាស៊ីអាគ្នេយ៍ប៉ុណ្ណោះឬ?",
+    faq_2_a: "មិនមែនទេ។ ការអនុវត្តតាំងនៅកម្ពុជា ហើយសហគមន៍មួយចំនួនធំគឺតាមតំបន់ ប៉ុន្តែការបង្វឹកធ្វើឡើងតាមអនឡាញ ហើយក្របខណ្ឌអាចអនុវត្តទៅគ្រប់ទីផ្សារ — ជាពិសេសបរិយាកាសអន្តរជាតិដែលមានសម្ពាធខ្ពស់។",
+    faq_3_q: "ខ្ញុំជានិស្សិត ហើយមិនទាន់ធ្វើការទេ។ ខ្ញុំលឿនពេកឬទេ?",
+    faq_3_a: "ផ្ទុយទៅវិញ — អ្នកទាន់ពេលវេលា។ The Launchpad ត្រូវបានកសាងសម្រាប់និស្សិតឆ្នាំចុងក្រោយ និងអ្នកបញ្ចប់ការសិក្សាថ្មី។",
+    faq_4_q: "តើវាខុសពីការមើលមាតិកាអាជីពអនឡាញយ៉ាងដូចម្តេច?",
+    faq_4_a: "មាតិកាឥតគិតថ្លៃប្រាប់អ្នកអំពីអ្វីដែលជាទូទៅដំណើរការ។ ការបង្វឹកប្រាប់អ្នកអំពីអ្វីដែលនឹងដំណើរការសម្រាប់ស្ថានភាពជាក់លាក់របស់អ្នក។ ឧត្តមជាមនុស្សម្នាក់អានបេក្ខជនម្នាក់នៅពេលតែមួយ។",
+    faq_5_q: "តើអ្នកផ្តល់សិក្ខាសាលា ឬកម្មវិធីសាជីវកម្មឬទេ?",
+    faq_5_a: "មានទេ។ ThinkCareer រៀបចំសិក្ខាសាលាសម្រាប់សាកលវិទ្យាល័យ កម្មវិធីបណ្ឌិត និងក្រុមអ្នកចាប់ផ្តើមអាជីពក្នុងក្រុមហ៊ុន។ រៀបរាប់នៅក្នុងការសួររបស់អ្នក ហើយអ្នកនឹងទទួលបានព័ត៌មានលម្អិត និងតម្លៃ។",
+    faq_6_q: "អ្វីដែលខ្ញុំចែករំលែកសម្ងាត់ឬ?",
+    faq_6_a: "សម្ងាត់ទាំងស្រុង។ គ្មានអ្វីដែលអ្នកចែករំលែក — CV, ប្រាក់ខែ, បញ្ហាប្រធាន, ឈ្មោះនិយោជក — ត្រូវបានយោងនៅក្រៅវគ្គរបស់យើងទេ។",
+
+    // Footer
+    foot_explore: "រុករក",
+    foot_about: "អំពីលោកឧត្តម",
+    foot_services: "សេវាកម្ម",
+    foot_approach: "វិធីសាស្ត្រ",
+    foot_faq: "សំណួរញឹកញាប់",
+    foot_programs: "កម្មវិធី",
+    foot_workshops: "សិក្ខាសាលាសាជីវកម្ម",
+    foot_hello: "ទាក់ទងយើង",
+    foot_linkedin: "LinkedIn — /company/thinkcareer",
+    foot_telegram: "ឆានែល Telegram",
+    foot_rights: "© ២០២៦ ThinkCareer។ រក្សាសិទ្ធិគ្រប់យ៉ាង។",
+    foot_tagline: "គិត។ រៀបចំ។ ដឹកនាំ។",
+
+    // Tweaks
+    tw_palette: "ពណ៌",
+    tw_headline: "ចំណងជើង Hero",
+    tw_density: "ដង់ស៊ីតេ",
+    tw_heading_font: "ពុម្ពអក្សរចំណងជើង",
+    tw_density_1: "ធំទូលាយ",
+    tw_density_2: "ស្តង់ដារ",
+    tw_density_3: "តូច",
+  },
+};
+
+// Simple context-free hook via a global store
+window.TC_LANG = (function() {
+  const listeners = new Set();
+  // Reading localStorage can throw SecurityError in opaque-origin contexts
+  // (file://, private mode, sandboxed iframes, some browsers). Guard it.
+  let current = 'en';
+  try {
+    if (typeof localStorage !== 'undefined') {
+      const stored = localStorage.getItem('tc-lang');
+      if (stored) current = stored;
+    }
+  } catch (e) { /* opaque origin / private mode — ignore */ }
+  return {
+    get: () => current,
+    set: (lang) => {
+      current = lang;
+      try { localStorage.setItem('tc-lang', lang); } catch (e) {}
+      document.documentElement.setAttribute('lang', lang);
+      document.documentElement.setAttribute('data-lang', lang);
+      listeners.forEach(fn => fn(lang));
+    },
+    subscribe: (fn) => { listeners.add(fn); return () => listeners.delete(fn); },
+    t: (key) => (window.TC_I18N[current] && window.TC_I18N[current][key]) || window.TC_I18N.en[key] || key,
+  };
+})();
+
+// React hook
+window.useLang = function useLang() {
+  const [, force] = React.useReducer(x => x + 1, 0);
+  React.useEffect(() => window.TC_LANG.subscribe(() => force()), []);
+  return {
+    lang: window.TC_LANG.get(),
+    t: window.TC_LANG.t,
+    setLang: window.TC_LANG.set,
+  };
+};
+
+</script>
+
+<!-- ===== single JSX block: all components + app entry, shared scope ===== -->
+<script type="text/babel" data-presets="react">
+// === Nav ===
+
+// Sticky top navigation with scroll progress + language toggle
+const { useState, useEffect } = React;
+
+function Nav({ onBook }) {
+  const { lang, t, setLang } = window.useLang();
+  const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      const total = h.scrollHeight - h.clientHeight;
+      const p = total > 0 ? (h.scrollTop / total) * 100 : 0;
+      setProgress(p);
+      setScrolled(h.scrollTop > 24);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const links = [
+    [t("nav_about"), "#about"],
+    [t("nav_services"), "#services"],
+    [t("nav_approach"), "#approach"],
+    [t("nav_faq"), "#faq"],
+  ];
+
+  const LangToggle = () => (
+    <div className="tc-lang" role="group" aria-label={t("lang_switch_aria")}>
+      <button
+        className={`tc-lang__btn ${lang === "en" ? "is-on" : ""}`}
+        onClick={() => setLang("en")}
+        aria-pressed={lang === "en"}
+      >EN</button>
+      <button
+        className={`tc-lang__btn tc-lang__btn--km ${lang === "km" ? "is-on" : ""}`}
+        onClick={() => setLang("km")}
+        aria-pressed={lang === "km"}
+      >ខ្មែរ</button>
+    </div>
+  );
+
+  return (
+    <header className={`tc-nav ${scrolled ? "tc-nav--scrolled" : ""}`}>
+      <div className="tc-nav__progress" style={{ width: `${progress}%` }} />
+      <div className="tc-nav__inner">
+        <a href="#top" className="tc-nav__brand" aria-label="ThinkCareer home">
+          <img src={window.TC_GET_MEDIA("logo", "assets/logo.jpg")} alt="" className="tc-nav__logo" />
+          <span className="tc-nav__wordmark">
+            <span className="tc-nav__wordmark-main">ThinkCareer</span>
+            <span className="tc-nav__wordmark-sub">{t("nav_brand_sub")}</span>
+          </span>
+        </a>
+
+        <nav className="tc-nav__links" aria-label="Primary">
+          {links.map(([label, href]) => (
+            <a key={href} href={href}>{label}</a>
+          ))}
+        </nav>
+
+        <div className="tc-nav__cta">
+          <LangToggle />
+          <a href="#contact" className="tc-btn tc-btn--primary tc-btn--sm" onClick={onBook}>
+            {t("nav_book")}
+            <span aria-hidden>→</span>
+          </a>
+        </div>
+
+        <button
+          className="tc-nav__menu"
+          aria-label={t("nav_menu")}
+          aria-expanded={open}
+          onClick={() => setOpen(!open)}
+        >
+          <span /><span /><span />
+        </button>
+      </div>
+
+      {open && (
+        <div className="tc-nav__mobile">
+          {links.map(([label, href]) => (
+            <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>
+          ))}
+          <LangToggle />
+          <a href="#contact" onClick={() => setOpen(false)} className="tc-btn tc-btn--primary">
+            {t("nav_book")} →
+          </a>
+        </div>
+      )}
+    </header>
+  );
+}
+
+
+// === Hero + Why ===
+
+// Hero + Why ThinkCareer
+const { useState: useStateH } = React;
+
+function Hero({ headlineIndex = 0, onBook }) {
+  const { t, lang } = window.useLang();
+  const titleKey = `headline_${headlineIndex + 1}_title`;
+  const subKey = `headline_${headlineIndex + 1}_sub`;
+  const title = t(titleKey);
+  const sub = t(subKey);
+
+  // For Khmer, don't split on '.' (different punctuation).
+  const lines = lang === "en"
+    ? title.split(".").map(s => s.trim()).filter(Boolean).map(s => s + ".")
+    : [title];
+
+  return (
+    <section className="tc-hero" id="top">
+      <div className="tc-hero__grid">
+        <div className="tc-hero__copy">
+          <div className="tc-eyebrow">
+            <span className="tc-eyebrow__dot" />
+            {t("hero_eyebrow")}
+          </div>
+
+          <h1 className="tc-hero__title">
+            {lines.map((line, i) => (
+              <span key={i} className="tc-hero__line">{line}</span>
+            ))}
+          </h1>
+
+          <p className="tc-hero__sub">{sub}</p>
+
+          <div className="tc-hero__actions">
+            <a href="#contact" className="tc-btn tc-btn--primary" onClick={onBook}>
+              {t("hero_book")}
+              <span aria-hidden>→</span>
+            </a>
+            <a href="#services" className="tc-btn tc-btn--ghost">
+              {t("hero_packages")}
+            </a>
+          </div>
+
+          <dl className="tc-hero__proof">
+            <div>
+              <dt>{t("hero_proof_1_h")}</dt>
+              <dd>{t("hero_proof_1_b")}</dd>
+            </div>
+            <div>
+              <dt>{t("hero_proof_2_h")}</dt>
+              <dd>{t("hero_proof_2_b")}</dd>
+            </div>
+            <div>
+              <dt>{t("hero_proof_3_h")}</dt>
+              <dd>{t("hero_proof_3_b")}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <aside className="tc-hero__art" aria-hidden="true">
+          <div className="tc-portrait">
+            <div className="tc-portrait__frame">
+              <div className="tc-placeholder">
+                <span className="tc-placeholder__label">{t("portrait_placeholder")}</span>
+                <span className="tc-placeholder__meta">{t("portrait_placeholder_meta")}</span>
+              </div>
+              <img
+                src={window.TC_GET_MEDIA("heroPortrait", "assets/hero-portrait.jpg")}
+                alt=""
+                className="tc-portrait__img"
+                onError={(e) => { e.currentTarget.style.display = "none"; }}
+              />
+            </div>
+            <div className="tc-portrait__card">
+              <span className="tc-portrait__card-eyebrow">{t("portrait_eyebrow")}</span>
+              <span className="tc-portrait__card-name">{t("portrait_name")}</span>
+              <span className="tc-portrait__card-role">{t("portrait_role")}</span>
+            </div>
+            <div className="tc-portrait__sticker">
+              {t("portrait_sticker").split("\n").map((l, i) => (
+                <React.Fragment key={i}>{l}{i === 0 ? <br/> : null}</React.Fragment>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div className="tc-hero__marquee" role="presentation">
+        <div className="tc-hero__marquee-inner">
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className="tc-hero__marquee-track">
+              {[1,2,3,4,5,6,7].map(n => (
+                <React.Fragment key={n}>
+                  <span>{t(`marquee_${n}`)}</span><span>·</span>
+                </React.Fragment>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Why() {
+  const { t } = window.useLang();
+  return (
+    <section className="tc-why" id="approach">
+      <div className="tc-section__head">
+        <div className="tc-eyebrow">
+          <span className="tc-eyebrow__dot" />
+          {t("why_eyebrow")}
+        </div>
+        <h2 className="tc-h2">
+          {t("why_h2_pre")}<em>{t("why_h2_em")}</em>{t("why_h2_post")}
+        </h2>
+        <p className="tc-section__lede">{t("why_lede")}</p>
+      </div>
+
+      <div className="tc-why__grid">
+        {[1,2,3,4].map(n => (
+          <article key={n} className="tc-pillar">
+            <span className="tc-pillar__n">{String(n).padStart(2,"0")}</span>
+            <h3 className="tc-pillar__title">{t(`pillar_${n}_t`)}</h3>
+            <p className="tc-pillar__body">{t(`pillar_${n}_b`)}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+
+
+// === About + Services ===
+
+// About the founder + Services
+const { useState: useStateA } = React;
+
+function About() {
+  const { t } = window.useLang();
+  return (
+    <section className="tc-about" id="about">
+      <div className="tc-about__grid">
+        <div className="tc-about__media">
+          <div className="tc-about__media-frame">
+            <div className="tc-placeholder tc-placeholder--tall">
+              <span className="tc-placeholder__label">{t("about_media_placeholder")}</span>
+              <span className="tc-placeholder__meta">{t("about_media_placeholder_meta")}</span>
+            </div>
+            <img
+              src={window.TC_GET_MEDIA("aboutMedia", "assets/about-media.jpg")}
+              alt=""
+              className="tc-about__img"
+              onError={(e) => { e.currentTarget.style.display = "none"; }}
+            />
+          </div>
+          <div className="tc-about__caption">
+            <span>{t("about_caption_1")}</span>
+            <span>{t("about_caption_2")}</span>
+          </div>
+        </div>
+
+        <div className="tc-about__copy">
+          <div className="tc-eyebrow">
+            <span className="tc-eyebrow__dot" />
+            {t("about_eyebrow")}
+          </div>
+          <h2 className="tc-h2 tc-about__h2">{t("about_h2")}</h2>
+
+          <div className="tc-about__prose">
+            <p className="tc-lede">{t("about_p1")}</p>
+            <p dangerouslySetInnerHTML={{ __html: t("about_p2_html") }} />
+            <p>{t("about_p3")}</p>
+            <p className="tc-about__quote">
+              {t("about_quote")}
+              <span className="tc-about__quote-attr">{t("about_quote_attr")}</span>
+            </p>
+          </div>
+
+          <ul className="tc-cred">
+            {[1,2,3,4].map(n => (
+              <li key={n}>
+                <span className="tc-cred__label">{t(`cred_${n}_l`)}</span>
+                <span className="tc-cred__val">{t(`cred_${n}_v`)}</span>
+              </li>
+            ))}
+          </ul>
+
+          <a href="#contact" className="tc-btn tc-btn--ghost tc-about__cta">
+            {t("about_cta")}
+            <span aria-hidden>→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Services() {
+  const { t } = window.useLang();
+  const [active, setActive] = useStateA(0);
+
+  const tierKeys = [
+    { key: "t1", icon: "🚀", featured: false },
+    { key: "t2", icon: "📈", featured: true },
+    { key: "t3", icon: "🛡", featured: false },
+  ];
+
+  return (
+    <section className="tc-services" id="services">
+      <div className="tc-section__head">
+        <div className="tc-eyebrow tc-eyebrow--light">
+          <span className="tc-eyebrow__dot" />
+          {t("services_eyebrow")}
+        </div>
+        <h2 className="tc-h2 tc-h2--light">{t("services_h2")}</h2>
+        <p className="tc-section__lede tc-section__lede--light">{t("services_lede")}</p>
+      </div>
+
+      <div className="tc-services__tabs" role="tablist">
+        {tierKeys.map((tk, i) => (
+          <button
+            key={tk.key}
+            role="tab"
+            aria-selected={active === i}
+            className={`tc-services__tab ${active === i ? "is-active" : ""}`}
+            onClick={() => setActive(i)}
+          >
+            <span className="tc-services__tab-tag">{t(`${tk.key}_tag`)}</span>
+            <span className="tc-services__tab-name">{t(`${tk.key}_name`)}</span>
+          </button>
+        ))}
+      </div>
+
+      <div className="tc-services__panel">
+        {tierKeys.map((tk, i) => (
+          <div
+            key={tk.key}
+            className={`tc-tier ${active === i ? "is-active" : ""}`}
+            role="tabpanel"
+            aria-hidden={active !== i}
+          >
+            <div className="tc-tier__head">
+              <div>
+                <span className="tc-tier__tag">{t(`${tk.key}_tag`)}{tk.featured ? t("tier_most_booked") : ""}</span>
+                <h3 className="tc-tier__name">
+                  <span className="tc-tier__icon" aria-hidden>{tk.icon}</span>
+                  {t(`${tk.key}_name`)}
+                </h3>
+                <p className="tc-tier__pitch">{t(`${tk.key}_pitch`)}</p>
+              </div>
+              <div className="tc-tier__price">
+                <span className="tc-tier__price-label">{t("tier_price_label")}</span>
+                <span className="tc-tier__price-val">{t(`${tk.key}_price`)}</span>
+                <span className="tc-tier__price-note">{t(`${tk.key}_price_note`)}</span>
+              </div>
+            </div>
+
+            <dl className="tc-tier__meta tc-tier__meta--row">
+              <div><dt>{t("tier_duration")}</dt><dd>{t(`${tk.key}_duration`)}</dd></div>
+              <div><dt>{t("tier_format")}</dt><dd>{t(`${tk.key}_format`)}</dd></div>
+              <div><dt>{t("tier_best")}</dt><dd>{t(`${tk.key}_best`)}</dd></div>
+            </dl>
+
+            <p className="tc-tier__summary">{t(`${tk.key}_summary`)}</p>
+
+            <div className="tc-tier__columns">
+              <div>
+                <h4 className="tc-tier__subhead">{t("tier_included")}</h4>
+                <ul className="tc-tier__list">
+                  {[1,2,3,4,5].map(n => <li key={n}>{t(`${tk.key}_inc_${n}`)}</li>)}
+                </ul>
+              </div>
+              <div>
+                <h4 className="tc-tier__subhead">{t("tier_outcomes")}</h4>
+                <ul className="tc-tier__list tc-tier__list--outcomes">
+                  {[1,2,3].map(n => <li key={n}>{t(`${tk.key}_out_${n}`)}</li>)}
+                </ul>
+              </div>
+            </div>
+
+            <div className="tc-tier__cta-row">
+              <a href="#contact" className="tc-btn tc-btn--gold">
+                {t("tier_enquire")} {t(`${tk.key}_name`)}
+                <span aria-hidden>→</span>
+              </a>
+              <span className="tc-tier__fineprint">{t("tier_fineprint")}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+
+
+// === Contact + FAQ + Footer ===
+
+// Contact + Booking form with real validation, FAQ accordion, Footer
+const { useState: useStateC } = React;
+
+function Contact() {
+  const { t } = window.useLang();
+  const [step, setStep] = useStateC(0);
+  const [form, setForm] = useStateC({ name:"", email:"", stage:"", tier:"", goal:"", consent:false });
+  const [errors, setErrors] = useStateC({});
+  const [touched, setTouched] = useStateC({});
+
+  const stages = [t("stage_1"), t("stage_2"), t("stage_3"), t("stage_4"), t("stage_5")];
+  const tiers = [t("tier_pick_1"), t("tier_pick_2"), t("tier_pick_3"), t("tier_pick_4")];
+
+  const validate = (f) => {
+    const e = {};
+    if (!f.name.trim() || f.name.trim().length < 2) e.name = t("err_name");
+    if (!f.email.trim()) e.email = t("err_email_required");
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = t("err_email_invalid");
+    if (!f.stage) e.stage = t("err_stage");
+    if (!f.tier) e.tier = t("err_tier");
+    if (!f.goal.trim() || f.goal.trim().length < 12) e.goal = t("err_goal");
+    if (!f.consent) e.consent = t("err_consent");
+    return e;
+  };
+
+  const set = (k, v) => {
+    const next = { ...form, [k]: v };
+    setForm(next);
+    if (touched[k]) setErrors(validate(next));
+  };
+  const blur = (k) => { setTouched({ ...touched, [k]: true }); setErrors(validate(form)); };
+  const submit = (ev) => {
+    ev.preventDefault();
+    const e = validate(form);
+    setErrors(e);
+    setTouched({ name:true, email:true, stage:true, tier:true, goal:true, consent:true });
+    if (Object.keys(e).length === 0) setStep(1);
+  };
+
+  return (
+    <section className="tc-contact" id="contact">
+      <div className="tc-contact__grid">
+        <div className="tc-contact__copy">
+          <div className="tc-eyebrow"><span className="tc-eyebrow__dot" />{t("contact_eyebrow")}</div>
+          <h2 className="tc-h2">{t("contact_h2")}</h2>
+          <p className="tc-contact__lede">{t("contact_lede")}</p>
+
+          <ul className="tc-contact__promise">
+            <li><span>01</span><p>{t("promise_1")}</p></li>
+            <li><span>02</span><p>{t("promise_2")}</p></li>
+            <li><span>03</span><p>{t("promise_3")}</p></li>
+          </ul>
+
+          <div className="tc-contact__alt">
+            <div>
+              <span className="tc-contact__alt-label">{t("alt_phone")}</span>
+              <a href="tel:+85570719991">+855 70 71 99 91</a>
+            </div>
+            <div>
+              <span className="tc-contact__alt-label">{t("alt_linkedin")}</span>
+              <a href="https://www.linkedin.com/company/thinkcareer/" target="_blank" rel="noreferrer">/company/thinkcareer</a>
+            </div>
+            <div>
+              <span className="tc-contact__alt-label">{t("alt_telegram")}</span>
+              <a href="#" onClick={(e) => e.preventDefault()}>{t("alt_telegram_val")}</a>
+            </div>
+          </div>
+        </div>
+
+        <form className="tc-form" onSubmit={submit} noValidate aria-live="polite">
+          {step === 0 && (
+            <>
+              <div className="tc-form__row">
+                <label className={`tc-field ${errors.name && touched.name ? "has-error" : ""}`}>
+                  <span className="tc-field__label">{t("form_name")}</span>
+                  <input type="text" value={form.name} onChange={(e) => set("name", e.target.value)} onBlur={() => blur("name")} placeholder={t("form_name_ph")} autoComplete="name" />
+                  {errors.name && touched.name && <span className="tc-field__err">{errors.name}</span>}
+                </label>
+                <label className={`tc-field ${errors.email && touched.email ? "has-error" : ""}`}>
+                  <span className="tc-field__label">{t("form_email")}</span>
+                  <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} onBlur={() => blur("email")} placeholder={t("form_email_ph")} autoComplete="email" />
+                  {errors.email && touched.email && <span className="tc-field__err">{errors.email}</span>}
+                </label>
+              </div>
+
+              <fieldset className={`tc-field ${errors.stage && touched.stage ? "has-error" : ""}`}>
+                <legend className="tc-field__label">{t("form_stage")}</legend>
+                <div className="tc-chips">
+                  {stages.map((s) => (
+                    <button type="button" key={s} className={`tc-chip ${form.stage === s ? "is-on" : ""}`} onClick={() => { set("stage", s); blur("stage"); }}>{s}</button>
+                  ))}
+                </div>
+                {errors.stage && touched.stage && <span className="tc-field__err">{errors.stage}</span>}
+              </fieldset>
+
+              <fieldset className={`tc-field ${errors.tier && touched.tier ? "has-error" : ""}`}>
+                <legend className="tc-field__label">{t("form_tier")}</legend>
+                <div className="tc-chips">
+                  {tiers.map((s) => (
+                    <button type="button" key={s} className={`tc-chip ${form.tier === s ? "is-on" : ""}`} onClick={() => { set("tier", s); blur("tier"); }}>{s}</button>
+                  ))}
+                </div>
+                {errors.tier && touched.tier && <span className="tc-field__err">{errors.tier}</span>}
+              </fieldset>
+
+              <label className={`tc-field ${errors.goal && touched.goal ? "has-error" : ""}`}>
+                <span className="tc-field__label">
+                  {t("form_goal")}
+                  <span className="tc-field__hint">{t("form_goal_hint")}</span>
+                </span>
+                <textarea rows={5} value={form.goal} onChange={(e) => set("goal", e.target.value)} onBlur={() => blur("goal")} placeholder={t("form_goal_ph")} />
+                <span className="tc-field__count">{form.goal.length} {t("form_char")}</span>
+                {errors.goal && touched.goal && <span className="tc-field__err">{errors.goal}</span>}
+              </label>
+
+              <label className={`tc-consent ${errors.consent && touched.consent ? "has-error" : ""}`}>
+                <input type="checkbox" checked={form.consent} onChange={(e) => { set("consent", e.target.checked); blur("consent"); }} />
+                <span>{t("form_consent")}</span>
+              </label>
+              {errors.consent && touched.consent && <span className="tc-field__err tc-field__err--block">{errors.consent}</span>}
+
+              <button type="submit" className="tc-btn tc-btn--primary tc-btn--block">
+                {t("form_send")}<span aria-hidden>→</span>
+              </button>
+              <p className="tc-form__fineprint">{t("form_fineprint")}</p>
+            </>
+          )}
+
+          {step === 1 && (
+            <div className="tc-form__thanks" role="status">
+              <div className="tc-form__thanks-mark" aria-hidden>✓</div>
+              <h3>{t("thanks_pre")}{form.name.split(" ")[0]}.</h3>
+              <p>{t("thanks_body")}</p>
+              <ul>
+                <li>{t("thanks_1")}</li>
+                <li>{t("thanks_2")}</li>
+              </ul>
+              <p className="tc-form__signoff">{t("thanks_signoff")}</p>
+              <button type="button" className="tc-btn tc-btn--ghost" onClick={() => { setStep(0); setForm({ name:"", email:"", stage:"", tier:"", goal:"", consent:false }); setErrors({}); setTouched({}); }}>
+                {t("thanks_again")}
+              </button>
+            </div>
+          )}
+        </form>
+      </div>
+    </section>
+  );
+}
+
+function FAQ() {
+  const { t } = window.useLang();
+  const [open, setOpen] = useStateC(0);
+  const items = [1,2,3,4,5,6].map(n => ({ q: t(`faq_${n}_q`), a: t(`faq_${n}_a`) }));
+  return (
+    <section className="tc-faq" id="faq">
+      <div className="tc-section__head">
+        <div className="tc-eyebrow"><span className="tc-eyebrow__dot" />{t("faq_eyebrow")}</div>
+        <h2 className="tc-h2">{t("faq_h2")}</h2>
+      </div>
+      <div className="tc-faq__list">
+        {items.map((it, i) => (
+          <details key={it.q} open={open === i} onToggle={(e) => { if (e.target.open) setOpen(i); }} className="tc-faq__item">
+            <summary>
+              <span className="tc-faq__n">{String(i+1).padStart(2,"0")}</span>
+              <span className="tc-faq__q">{it.q}</span>
+              <span className="tc-faq__icon" aria-hidden>+</span>
+            </summary>
+            <p className="tc-faq__a">{it.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  const { t } = window.useLang();
+  return (
+    <footer className="tc-footer">
+      <div className="tc-footer__grid">
+        <div className="tc-footer__brand">
+          <img src={window.TC_GET_MEDIA("logo", "assets/logo.jpg")} alt="" />
+          <div>
+            <strong>ThinkCareer</strong>
+            <span>{t("nav_brand_sub")}</span>
+          </div>
+        </div>
+        <nav className="tc-footer__col">
+          <h4>{t("foot_explore")}</h4>
+          <a href="#about">{t("foot_about")}</a>
+          <a href="#services">{t("foot_services")}</a>
+          <a href="#approach">{t("foot_approach")}</a>
+          <a href="#faq">{t("foot_faq")}</a>
+        </nav>
+        <nav className="tc-footer__col">
+          <h4>{t("foot_programs")}</h4>
+          <a href="#services">🚀 {t("t1_name")}</a>
+          <a href="#services">📈 {t("t2_name")}</a>
+          <a href="#services">🛡 {t("t3_name")}</a>
+          <a href="#contact">{t("foot_workshops")}</a>
+        </nav>
+        <div className="tc-footer__col">
+          <h4>{t("foot_hello")}</h4>
+          <a href="tel:+85570719991">+855 70 71 99 91</a>
+          <a href="https://www.linkedin.com/company/thinkcareer/" target="_blank" rel="noreferrer">{t("foot_linkedin")}</a>
+          <a href="#" onClick={(e)=>e.preventDefault()}>{t("foot_telegram")}</a>
+        </div>
+      </div>
+      <div className="tc-footer__base">
+        <span>{t("foot_rights")}</span>
+        <span>{t("foot_tagline")}</span>
+      </div>
+    </footer>
+  );
+}
+
+
+
+
+// === Tweaks ===
+
+// Tweaks panel — toggles palette / headline / density live
+const { useState: useStateT, useEffect: useEffectT } = React;
+
+function TweaksPanel({ state, setState }) {
+  const { t } = window.useLang();
+  const [available, setAvailable] = useStateT(false);
+  const [shown, setShown] = useStateT(false);
+
+  useEffectT(() => {
+    const onMsg = (e) => {
+      const d = e.data || {};
+      if (d.type === "__activate_edit_mode") setShown(true);
+      if (d.type === "__deactivate_edit_mode") setShown(false);
+    };
+    window.addEventListener("message", onMsg);
+    window.parent.postMessage({ type: "__edit_mode_available" }, "*");
+    setAvailable(true);
+    return () => window.removeEventListener("message", onMsg);
+  }, []);
+
+  const update = (patch) => {
+    const next = { ...state, ...patch };
+    setState(next);
+    window.parent.postMessage({ type: "__edit_mode_set_keys", edits: patch }, "*");
+  };
+
+  if (!shown) return null;
+
+  return (
+    <aside className="tc-tweaks" role="dialog" aria-label="Tweaks">
+      <div className="tc-tweaks__head">
+        <span className="tc-eyebrow">
+          <span className="tc-eyebrow__dot" />
+          Tweaks
+        </span>
+        {/* title stays EN — toolbar label is fixed */}
+        <button className="tc-tweaks__close" onClick={() => setShown(false)} aria-label="Close">×</button>
+      </div>
+
+      <div className="tc-tweaks__group">
+        <label className="tc-tweaks__label">{t("tw_palette")}</label>
+        <div className="tc-tweaks__swatches">
+          {Object.entries(window.TC_PALETTES).map(([key, p]) => (
+            <button
+              key={key}
+              className={`tc-tweaks__swatch ${state.palette === key ? "is-on" : ""}`}
+              onClick={() => update({ palette: key })}
+              title={p.name}
+            >
+              <span style={{ background: p.navy }} />
+              <span style={{ background: p.sage }} />
+              <span style={{ background: p.cream }} />
+              <em>{p.name}</em>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="tc-tweaks__group">
+        <label className="tc-tweaks__label">{t("tw_headline")}</label>
+        <div className="tc-tweaks__stack">
+          {[0,1,2].map((i) => (
+            <button
+              key={i}
+              className={`tc-tweaks__opt ${state.headlineIndex === i ? "is-on" : ""}`}
+              onClick={() => update({ headlineIndex: i })}
+            >
+              <span className="tc-tweaks__opt-n">{String(i+1).padStart(2,"0")}</span>
+              <span className="tc-tweaks__opt-t">{t(`headline_${i+1}_title`)}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="tc-tweaks__group">
+        <label className="tc-tweaks__label">{t("tw_density")}</label>
+        <div className="tc-tweaks__segmented">
+          {[["spacious",t("tw_density_1")],["standard",t("tw_density_2")],["compact",t("tw_density_3")]].map(([d,label]) => (
+            <button
+              key={d}
+              className={`tc-tweaks__seg ${state.density === d ? "is-on" : ""}`}
+              onClick={() => update({ density: d })}
+            >{label}</button>
+          ))}
+        </div>
+      </div>
+
+      <div className="tc-tweaks__group">
+        <label className="tc-tweaks__label">{t("tw_heading_font")}</label>
+        <div className="tc-tweaks__segmented">
+          {[
+            ["serif", "Instrument Serif"],
+            ["display", "Fraunces"],
+            ["sans", "Inter Tight"],
+          ].map(([key, name]) => (
+            <button
+              key={key}
+              className={`tc-tweaks__seg ${state.headingFont === key ? "is-on" : ""}`}
+              onClick={() => update({ headingFont: key })}
+            >{name}</button>
+          ))}
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+
+
+// === App glue ===
+function applyPalette(key) {
+  const p = window.TC_PALETTES[key] || window.TC_PALETTES.heritage;
+  const root = document.documentElement;
+  root.style.setProperty("--navy", p.navy);
+  root.style.setProperty("--navy-deep", p.navyDeep);
+  root.style.setProperty("--sage", p.sage);
+  root.style.setProperty("--sage-deep", p.sageDeep);
+  root.style.setProperty("--cream", p.cream);
+  root.style.setProperty("--cream-deep", p.creamDeep);
+  root.style.setProperty("--ink", p.ink);
+  root.style.setProperty("--gold", p.gold);
+  root.style.setProperty("--muted", p.muted);
+}
+
+function App() {
+  const [state, setState] = useState(window.TC_TWEAK_DEFAULTS);
+
+  useEffect(() => {
+    applyPalette(state.palette);
+    document.documentElement.setAttribute("data-density", state.density);
+    document.documentElement.setAttribute("data-heading-font", state.headingFont);
+    document.documentElement.setAttribute("lang", window.TC_LANG.get());
+    document.documentElement.setAttribute("data-lang", window.TC_LANG.get());
+  }, [state.palette, state.density, state.headingFont]);
+
+  return (
+    <>
+      <Nav />
+      <main>
+        <Hero headlineIndex={state.headlineIndex} />
+        <Why />
+        <About />
+        <Services />
+        <Contact />
+        <FAQ />
+      </main>
+      <Footer />
+      <TweaksPanel state={state} setState={setState} />
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>
+</body>
+</html>
