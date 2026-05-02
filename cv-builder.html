@@ -484,15 +484,19 @@ textarea{resize:vertical;min-height:80px;line-height:1.55}
 
 /* Print */
 @media print{
-  .app-header,.topnav,.layout-body,.editor,.preview-toolbar{display:none !important}
-  body{overflow:visible !important;height:auto !important}
-  #cv-doc{
-    width:100%;box-shadow:none !important;
-    transform:none !important;
-    border-radius:0;
-  }
+  .app-header,.topnav,.editor,.preview-toolbar,.ats-panel,.export-panel,.btn-export-bar{display:none !important}
+  body{overflow:visible !important;height:auto !important;margin:0;padding:0;background:#fff !important}
+  .app{display:block !important;height:auto !important;overflow:visible !important}
+  .layout-body{display:block !important;height:auto !important;overflow:visible !important}
+  .preview{display:block !important;width:100% !important;height:auto !important;overflow:visible !important;border:none !important;background:#fff !important}
   .preview-scroll{
-    padding:0 !important;overflow:visible !important;
+    padding:0 !important;overflow:visible !important;height:auto !important;
+  }
+  #cv-doc{
+    width:100% !important;max-width:210mm;box-shadow:none !important;
+    transform:none !important;
+    border-radius:0;margin:0 auto;
+    page-break-inside:avoid;
   }
 }
 </style>
@@ -1267,7 +1271,7 @@ async function exportDocx() {
 function buildDocxBlob(cv) {
   const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
     AlignmentType, BorderStyle, WidthType, ShadingType, LevelFormat,
-    VerticalAlign, TabStopType, PageNumber, PageNumberElement, Footer } = docx;
+    VerticalAlign, TabStopType, Footer } = docx;
 
   const NAVY='0D2B45', TEAL='0B7A8A', GOLD='C8973A', GRAY='6B7280', WHT='FFFFFF';
 
@@ -1567,14 +1571,11 @@ function buildDocxBlob(cv) {
     children: [new Paragraph({
       border: {top: {style: BorderStyle.SINGLE, size: 4, color: TEAL, space: 4}},
       spacing: {before: 80},
-      tabStops: [{type: TabStopType.RIGHT, position: TW}],
       children: [
         new TextRun({text: 'Think',   bold: true, size: 16, color: NAVY, font: 'Calibri'}),
         new TextRun({text: 'Careers', bold: true, size: 16, color: TEAL, font: 'Calibri'}),
         new TextRun({text: '  \u00b7  Career Coaching & Consultation  \u00b7  thinkcareers.net',
           size: 14, color: GRAY, font: 'Calibri'}),
-        new TextRun({text: '\tPage ', size: 14, color: GRAY, font: 'Calibri'}),
-        new PageNumberElement({type: PageNumber.CURRENT}),
       ]
     })]
   });
