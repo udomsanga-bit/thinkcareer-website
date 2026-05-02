@@ -43,12 +43,11 @@ body{font-family:'Inter',sans-serif;background:var(--tc-bg);color:var(--tc-text)
 }
 .brand{display:flex;align-items:center;gap:0.6rem}
 .brand-mark{
-  width:30px;height:30px;border-radius:6px;
-  background:linear-gradient(135deg,var(--tc-teal),var(--tc-navy));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Lora',serif;font-weight:700;color:#fff;font-size:13px;
-  border:1px solid rgba(200,151,58,0.4);
+  width:34px;height:34px;border-radius:6px;
+  overflow:hidden;flex-shrink:0;
+  border:1px solid rgba(200,151,58,0.35);
 }
+.brand-mark img{width:100%;height:100%;object-fit:cover;display:block}
 .brand-name{font-family:'Lora',serif;font-size:1.05rem;font-weight:700;
   color:#fff;letter-spacing:-0.01em}
 .brand-name span{color:var(--tc-gold)}
@@ -96,9 +95,23 @@ body{font-family:'Inter',sans-serif;background:var(--tc-bg);color:var(--tc-text)
 
 /* ── Editor Panel ───────────────────────────── */
 .editor{
-  width:360px;flex-shrink:0;background:#fff;
-  border-right:1px solid var(--tc-lgray);
+  width:360px;min-width:220px;max-width:600px;flex-shrink:0;background:#fff;
   display:flex;flex-direction:column;overflow:hidden;
+}
+
+/* ── Resizer ────────────────────────────────── */
+.resizer{
+  width:6px;flex-shrink:0;background:var(--tc-lgray);
+  cursor:col-resize;position:relative;z-index:10;
+  transition:background 0.15s;
+  display:flex;align-items:center;justify-content:center;
+}
+.resizer:hover,.resizer.dragging{background:var(--tc-teal)}
+.resizer::after{
+  content:'';display:block;
+  width:2px;height:32px;border-radius:2px;
+  background:rgba(255,255,255,0.6);
+  box-shadow:0 0 0 1px rgba(0,0,0,0.08);
 }
 .editor-tabs{
   display:flex;border-bottom:1px solid var(--tc-lgray);flex-shrink:0;
@@ -471,12 +484,14 @@ textarea{resize:vertical;min-height:80px;line-height:1.55}
 
 /* Responsive */
 @media(max-width:900px){
-  .editor{width:320px}
+  .editor{width:300px}
   #cv-doc{width:680px}
 }
 @media(max-width:700px){
   .layout-body{flex-direction:column}
-  .editor{width:100%;height:50vh;border-right:none;border-bottom:1px solid var(--tc-lgray)}
+  .editor{width:100% !important;min-width:0;max-width:none;height:50vh;border-bottom:1px solid var(--tc-lgray)}
+  .resizer{width:100%;height:6px;cursor:row-resize}
+  .resizer::after{width:32px;height:2px}
   .preview{height:50vh}
   #cv-doc{width:600px}
   .btn-ghost .btn-label{display:none}
@@ -508,7 +523,7 @@ textarea{resize:vertical;min-height:80px;line-height:1.55}
   <!-- Top Nav -->
   <nav class="topnav">
     <a href="index.html" class="brand" style="text-decoration:none">
-      <div class="brand-mark">TC</div>
+      <div class="brand-mark"><img src="assets/logo.jpg" alt="ThinkCareer"></div>
       <div>
         <div class="brand-name">Think<span>Career</span> <span style="font-size:0.72rem;font-weight:400;color:rgba(255,255,255,0.45);font-family:Inter,sans-serif">CV Builder</span></div>
         <div class="brand-tagline">Career Coaching & Consultation</div>
@@ -656,6 +671,9 @@ textarea{resize:vertical;min-height:80px;line-height:1.55}
       </div>
     </aside>
 
+    <!-- ── Resizer ───────────────────────────────────── -->
+    <div class="resizer" id="resizer" title="Drag to resize"></div>
+
     <!-- ── Preview ───────────────────────────────────── -->
     <main class="preview">
       <div class="preview-toolbar">
@@ -685,8 +703,8 @@ textarea{resize:vertical;min-height:80px;line-height:1.55}
                 <div class="cv-title" id="cv-title">Professional Title</div>
               </div>
               <div class="cv-brand-badge">
-                <div class="cv-brand-name">Think<span>Careers</span></div>
-                <span class="cv-brand-tag">Career Coaching & Consultation</span>
+                <img src="assets/logo.jpg" alt="ThinkCareers" style="width:52px;height:52px;object-fit:cover;border-radius:6px;border:1px solid rgba(200,151,58,0.4);display:block;margin-left:auto;margin-bottom:4px">
+                <span class="cv-brand-tag" style="color:rgba(255,255,255,0.55)">Career Coaching & Consultation</span>
                 <span class="cv-brand-url">thinkcareers.net</span>
               </div>
             </div>
@@ -1216,6 +1234,107 @@ function applyZoom() {
   g('zoom-label').textContent = zoomPct+'%';
 }
 window.addEventListener('resize', () => { fitZoom(); });
+
+// ══════════════════════════════════════════════════════════
+//  Resizable panel (drag handle between editor & preview)
+// ══════════════════════════════════════════════════════════
+(function() {
+  var resizer  = document.getElementById('resizer');
+  var editor   = document.querySelector('.editor');
+  var layoutBody = document.querySelector('.layout-body');
+  if (!resizer || !editor) return;
+
+  var isMobile = false;
+  var startPos, startSize;
+
+  function checkMobile() {
+    isMobile = window.innerWidth <= 700;
+  }
+  checkMobile();
+  window.addEventListener('resize', checkMobile);
+
+  function onMouseMove(e) {
+    if (isMobile) {
+      // vertical: resize editor height
+      var delta = e.clientY - startPos;
+      var newH  = Math.max(120, Math.min(window.innerHeight - 180, startSize + delta));
+      editor.style.height = newH + 'px';
+    } else {
+      // horizontal: resize editor width
+      var rect  = layoutBody.getBoundingClientRect();
+      var newW  = e.clientX - rect.left;
+      newW = Math.max(220, Math.min(600, newW));
+      editor.style.width = newW + 'px';
+    }
+    fitZoom();
+  }
+
+  function onMouseUp() {
+    resizer.classList.remove('dragging');
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup',  onMouseUp);
+    document.body.style.cursor   = '';
+    document.body.style.userSelect = '';
+  }
+
+  resizer.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    resizer.classList.add('dragging');
+    if (isMobile) {
+      startPos  = e.clientY;
+      startSize = editor.offsetHeight;
+      document.body.style.cursor = 'row-resize';
+    } else {
+      startPos  = e.clientX;
+      startSize = editor.offsetWidth;
+      document.body.style.cursor = 'col-resize';
+    }
+    document.body.style.userSelect = 'none';
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup',  onMouseUp);
+  });
+
+  // Touch support
+  resizer.addEventListener('touchstart', function(e) {
+    var t = e.touches[0];
+    resizer.classList.add('dragging');
+    if (isMobile) {
+      startPos  = t.clientY;
+      startSize = editor.offsetHeight;
+    } else {
+      startPos  = t.clientX;
+      startSize = editor.offsetWidth;
+    }
+    document.body.style.userSelect = 'none';
+  }, {passive:true});
+
+  resizer.addEventListener('touchmove', function(e) {
+    var t = e.touches[0];
+    if (isMobile) {
+      var delta = t.clientY - startPos;
+      var newH  = Math.max(120, Math.min(window.innerHeight - 180, startSize + delta));
+      editor.style.height = newH + 'px';
+    } else {
+      var rect  = layoutBody.getBoundingClientRect();
+      var newW  = t.clientX - rect.left;
+      newW = Math.max(220, Math.min(600, newW));
+      editor.style.width = newW + 'px';
+    }
+    fitZoom();
+  }, {passive:true});
+
+  resizer.addEventListener('touchend', function() {
+    resizer.classList.remove('dragging');
+    document.body.style.userSelect = '';
+  });
+
+  // Double-click resets to default width
+  resizer.addEventListener('dblclick', function() {
+    editor.style.width  = isMobile ? '' : '360px';
+    editor.style.height = isMobile ? '50vh' : '';
+    fitZoom();
+  });
+})();
 
 // ══════════════════════════════════════════════════════════
 //  Modal helpers
