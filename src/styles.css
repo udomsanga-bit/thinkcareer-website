@@ -59,6 +59,75 @@ a { color: inherit; }
 button { font: inherit; cursor: pointer; }
 ::selection { background: var(--navy); color: var(--cream); }
 
+/* ——— CV Builder Banner ——— */
+.tc-cv-banner {
+  background: linear-gradient(90deg, var(--navy-deep) 0%, var(--navy) 60%, color-mix(in oklab, var(--sage-deep) 60%, var(--navy)) 100%);
+  border-top: 2px solid var(--gold);
+  border-bottom: 1px solid color-mix(in oklab, var(--navy) 70%, transparent);
+}
+.tc-cv-banner__inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0.85rem var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.tc-cv-banner__badge {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--navy);
+  background: var(--gold);
+  padding: 3px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.tc-cv-banner__text {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.tc-cv-banner__text strong {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tc-cv-banner__text span {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+.tc-cv-banner__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--gold);
+  color: var(--navy-deep);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.tc-cv-banner__cta:hover {
+  background: #e0aa45;
+  transform: translateY(-1px);
+}
+@media (max-width: 640px) {
+  .tc-cv-banner__text span { display: none; }
+  .tc-cv-banner__inner { gap: 0.75rem; }
+}
+
 /* ——— Layout helpers ——— */
 .tc-container {
   max-width: var(--container);

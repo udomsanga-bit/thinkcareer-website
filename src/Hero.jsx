@@ -129,5 +129,25 @@ function Why() {
   );
 }
 
+function CVBuilderBanner() {
+  const { lang } = window.useLang();
+  const isKm = lang === "km";
+  return (
+    <div className="tc-cv-banner">
+      <div className="tc-cv-banner__inner">
+        <div className="tc-cv-banner__badge">FREE TOOL</div>
+        <div className="tc-cv-banner__text">
+          <strong>{isKm ? "ស្ថាបនា CV ប្រកបដោយ AI" : "AI-Powered CV Builder"}</strong>
+          <span>{isKm ? "បង្កើត CV ជាក់ស្ដែង ដោយ ATS-safe — ដោយឥតគិតថ្លៃ" : "Build an ATS-optimised, professionally branded CV in minutes — no account needed."}</span>
+        </div>
+        <a href="cv-builder.html" className="tc-cv-banner__cta">
+          {isKm ? "ចូលទៅ CV Builder" : "Open CV Builder"} →
+        </a>
+      </div>
+    </div>
+  );
+}
+
 window.Hero = Hero;
 window.Why = Why;
+window.CVBuilderBanner = CVBuilderBanner;

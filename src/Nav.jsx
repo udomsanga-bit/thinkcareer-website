@@ -27,6 +27,8 @@ function Nav({ onBook }) {
     [t("nav_faq"), "#faq"],
   ];
 
+  const cvBuilderLabel = lang === "km" ? "CV Builder" : "CV Builder";
+
   const LangToggle = () => (
     <div className="tc-lang" role="group" aria-label={t("lang_switch_aria")}>
       <button
@@ -61,6 +63,9 @@ function Nav({ onBook }) {
         </nav>
 
         <div className="tc-nav__cta">
+          <a href="cv-builder.html" className="tc-btn tc-btn--ghost tc-btn--sm" style={{marginRight:"4px"}} target="_self">
+            <span style={{fontSize:"0.8em"}}>✦</span> {cvBuilderLabel}
+          </a>
           <LangToggle />
           <a href="#contact" className="tc-btn tc-btn--primary tc-btn--sm" onClick={onBook}>
             {t("nav_book")}
@@ -83,6 +88,7 @@ function Nav({ onBook }) {
           {links.map(([label, href]) => (
             <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>
           ))}
+          <a href="cv-builder.html" onClick={() => setOpen(false)}>✦ {cvBuilderLabel}</a>
           <LangToggle />
           <a href="#contact" onClick={() => setOpen(false)} className="tc-btn tc-btn--primary">
             {t("nav_book")} →
