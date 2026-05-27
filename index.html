@@ -1088,12 +1088,20 @@ function Services() {
 // Contact + Booking form with real validation, FAQ accordion, Footer
 const { useState: useStateC } = React;
 
+// ─── Contact API endpoint ─────────────────────────────────────────────────────
+// Calls the Vercel serverless function at api/contact.js which sends the
+// enquiry via Resend. No changes needed here.
+const FORMSPREE_ENDPOINT = "/api/contact";
+// ─────────────────────────────────────────────────────────────────────────────
+
 function Contact() {
   const { t } = window.useLang();
   const [step, setStep] = useStateC(0);
   const [form, setForm] = useStateC({ name:"", email:"", stage:"", tier:"", goal:"", consent:false });
   const [errors, setErrors] = useStateC({});
   const [touched, setTouched] = useStateC({});
+  const [submitting, setSubmitting] = useStateC(false);
+  const [submitError, setSubmitError] = useStateC("");
 
   const stages = [t("stage_1"), t("stage_2"), t("stage_3"), t("stage_4"), t("stage_5")];
   const tiers = [t("tier_pick_1"), t("tier_pick_2"), t("tier_pick_3"), t("tier_pick_4")];
@@ -1116,12 +1124,38 @@ function Contact() {
     if (touched[k]) setErrors(validate(next));
   };
   const blur = (k) => { setTouched({ ...touched, [k]: true }); setErrors(validate(form)); };
-  const submit = (ev) => {
+  const submit = async (ev) => {
     ev.preventDefault();
     const e = validate(form);
     setErrors(e);
     setTouched({ name:true, email:true, stage:true, tier:true, goal:true, consent:true });
-    if (Object.keys(e).length === 0) setStep(1);
+    if (Object.keys(e).length > 0) return;
+
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          career_stage: form.stage,
+          program: form.tier,
+          message: form.goal,
+        }),
+      });
+      if (res.ok) {
+        setStep(1);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setSubmitError(data.error || "Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      setSubmitError("Could not send — please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -1202,8 +1236,9 @@ function Contact() {
               </label>
               {errors.consent && touched.consent && <span className="tc-field__err tc-field__err--block">{errors.consent}</span>}
 
-              <button type="submit" className="tc-btn tc-btn--primary tc-btn--block">
-                {t("form_send")}<span aria-hidden>→</span>
+              {submitError && <p className="tc-field__err" style={{marginBottom:"0.5rem"}}>{submitError}</p>}
+              <button type="submit" className="tc-btn tc-btn--primary tc-btn--block" disabled={submitting}>
+                {submitting ? "Sending…" : <>{t("form_send")}<span aria-hidden>→</span></>}
               </button>
               <p className="tc-form__fineprint">{t("form_fineprint")}</p>
             </>
