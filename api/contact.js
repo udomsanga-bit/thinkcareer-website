@@ -6,7 +6,7 @@
 //
 // Addresses (edit here if needed):
 const FROM = "ThinkCareer <hello@thinkcareers.net>";
-const TO   = "udom@thinkcareers.net";
+const TO   = "udomsanga@gmail.com";
 
 export default async function handler(req, res) {
   // Only accept POST
