@@ -63,7 +63,7 @@ function Nav({ onBook }) {
         </nav>
 
         <div className="tc-nav__cta">
-          <a href="cv-builder.html" className="tc-btn tc-btn--ghost tc-btn--sm" style={{marginRight:"4px"}} target="_self">
+          <a href="cv-builder.html" className="tc-btn tc-btn--ghost tc-btn--sm" style={{marginRight:"4px"}} target="_blank" rel="noopener noreferrer">
             <span style={{fontSize:"0.8em"}}>✦</span> {cvBuilderLabel}
           </a>
           <LangToggle />
@@ -88,7 +88,7 @@ function Nav({ onBook }) {
           {links.map(([label, href]) => (
             <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>
           ))}
-          <a href="cv-builder.html" onClick={() => setOpen(false)}>✦ {cvBuilderLabel}</a>
+          <a href="cv-builder.html" onClick={() => setOpen(false)} target="_blank" rel="noopener noreferrer">✦ {cvBuilderLabel}</a>
           <LangToggle />
           <a href="#contact" onClick={() => setOpen(false)} className="tc-btn tc-btn--primary">
             {t("nav_book")} →
