@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>HR Solutions Intake Form — ThinkCareer</title>
+<link rel="canonical" href="https://www.thinkcareers.net/hr-intake">
+<link rel="icon" href="assets/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1B2D57;
+  --navy-deep:#14224A;
+  --mint:#8FBFB5;
+  --mint-hover:#A5CDC4;
+  --ink:#0F1A2E;
+  --muted:#4A5873;
+  --bg:#FFFFFF;
+  --mist:#F1F4F9;
+  --on-navy:#F4F6FB;
+  --on-navy-muted:#C9D3E6;
+  --border-solid:#E1E6EF;
+  --danger:#B3261E;
+  --danger-soft:#FBEAE8;
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:18px;
+  --display:"Sora","Kantumruy Pro",system-ui,sans-serif;
+  --sans:"Kantumruy Pro","Noto Sans Khmer",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#0C1426; --mist:#1A2748; --ink:#EEF3FB; --muted:#AAB7CD; --border-solid:#28365A; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --bg:#0C1426; --mist:#1A2748; --ink:#EEF3FB; --muted:#AAB7CD; --border-solid:#28365A; color-scheme:dark; }
+
+*{box-sizing:border-box;}
+body{margin:0; font-family:var(--sans); font-size:16px; background:var(--bg); color:var(--ink);}
+a{color:var(--navy);}
+.page{min-height:100vh; display:flex; flex-direction:column;}
+
+.header{position:sticky; top:0; z-index:20; background:var(--navy); color:#fff;}
+.header-inner{padding:14px 24px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; max-width:720px; margin:0 auto;}
+.brand-dot{width:9px; height:9px; border-radius:50%; background:var(--mint); flex-shrink:0;}
+.brand-name{font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:0.2px;}
+.brand-sub{font-size:13px; color:var(--on-navy-muted); margin-left:auto;}
+.progress-track{height:4px; background:rgba(255,255,255,0.18);}
+.progress-fill{height:100%; background:var(--mint); transition:width .4s cubic-bezier(.22,1,.36,1);}
+
+.container{flex:1 1 auto; width:100%; max-width:720px; margin:0 auto; padding:30px 20px 70px; box-sizing:border-box;}
+.card{background:var(--bg); border-radius:var(--radius-lg); padding:clamp(22px,5vw,44px); box-shadow:0 1px 3px rgba(15,26,46,0.07),0 10px 28px rgba(15,26,46,0.06); box-sizing:border-box; overflow:hidden; min-height:420px; display:flex; flex-direction:column;}
+
+@keyframes stepIn{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+.step-anim{animation:stepIn .28s cubic-bezier(.22,1,.36,1) both; flex:1 1 auto; display:flex; flex-direction:column;}
+@keyframes choiceIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+@keyframes choicePulse{ 0%{transform:scale(1);} 45%{transform:scale(1.015);} 100%{transform:scale(1);} }
+@keyframes checkPop{ from{opacity:0; transform:scale(.4) rotate(-8deg);} to{opacity:1; transform:scale(1) rotate(0);} }
+@keyframes btnConfirmFlash{ 0%{background:var(--navy);} 40%{background:var(--mint);} 100%{background:var(--navy);} }
+@media (prefers-reduced-motion: reduce){ .step-anim,.choice-item,.choice-check,.btn,.btn-back,.btn-skip{animation:none!important;} .progress-fill{transition:none;} .choice-item,.btn,.btn-back,.btn-skip{transition:none;} .btn::after{display:none;} .btn svg,.btn-back svg{transition:none; transform:none!important;} .choice-list.is-committing .choice-item:not(.is-selected){opacity:1!important;} .cf-icon-ring,.cf-icon-core,.cf-rise{animation:none!important; opacity:1!important; transform:none!important;} .cf-check-path{animation:none!important; stroke-dashoffset:0!important;} .cf-icon-pulse,.cf-confetti{display:none!important;} }
+
+.q-eyebrow-group{display:inline-flex; align-items:center; background:var(--mist); color:var(--navy); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:16px; width:fit-content;}
+.q-title-en{font-family:var(--display); font-size:24px; font-weight:700; color:var(--navy); margin:0 0 7px; line-height:1.32;}
+.q-title-kh{font-size:15px; color:var(--muted); margin:0 0 28px; line-height:1.65;}
+.required-mark{color:var(--danger); margin-left:4px;}
+
+.field-input,.field-textarea{width:100%; min-height:48px; padding:13px 15px; border-radius:var(--radius-sm); border:1.5px solid var(--border-solid); font-size:16px; font-family:inherit; background:var(--bg); color:var(--ink); transition:border-color .15s ease, box-shadow .15s ease;}
+.field-input:focus,.field-textarea:focus{outline:none; border-color:var(--mint); box-shadow:0 0 0 3px rgba(143,191,181,0.3);}
+.field-input.err,.field-textarea.err{border-color:var(--danger);}
+.field-textarea{min-height:110px; resize:vertical;}
+.error-text{color:var(--danger); font-size:13.5px; margin-top:8px; display:flex; align-items:center; gap:5px;}
+.error-text svg{width:14px; height:14px; flex-shrink:0;}
+.error-banner{background:var(--danger-soft); color:var(--danger); border-radius:var(--radius-sm); padding:12px 14px; font-size:13.5px; margin-top:16px;}
+
+.choice-list{display:flex; flex-direction:column; gap:10px;}
+.choice-item{width:100%; display:flex; align-items:center; gap:14px; text-align:left; padding:15px 17px; border-radius:var(--radius-md); border:1.5px solid var(--border-solid); background:var(--bg); font-family:inherit; font-size:15.5px; color:var(--ink); cursor:pointer; transition:border-color .15s ease, background .15s ease, transform .08s ease; animation:choiceIn .26s ease both;}
+.choice-list .choice-item:nth-child(1){animation-delay:0ms;}
+.choice-list .choice-item:nth-child(2){animation-delay:35ms;}
+.choice-list .choice-item:nth-child(3){animation-delay:70ms;}
+.choice-list .choice-item:nth-child(4){animation-delay:105ms;}
+.choice-list .choice-item:nth-child(5){animation-delay:140ms;}
+.choice-list .choice-item:nth-child(6){animation-delay:175ms;}
+.choice-item:hover{border-color:var(--mint-hover); background:var(--mist);}
+.choice-item:active{transform:scale(0.99);}
+.choice-item.is-selected{border-color:var(--navy); background:var(--mist);}
+.choice-item.is-committing{animation:choicePulse .22s ease .1s;}
+.choice-list.is-committing .choice-item:not(.is-selected){opacity:.4; pointer-events:none; transition:opacity .15s ease;}
+.choice-badge{width:30px; height:30px; border-radius:50%; background:var(--mist); color:var(--navy); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0;}
+.choice-item.is-selected .choice-badge{background:var(--navy); color:var(--on-navy);}
+.choice-label{flex:1 1 auto; line-height:1.4;}
+.choice-check{width:19px; height:19px; flex-shrink:0; color:var(--navy); animation:checkPop .22s cubic-bezier(.34,1.56,.64,1) both;}
+
+.doc-row{display:flex; align-items:flex-start; gap:12px; padding:13px 0; border-bottom:1px solid var(--mist); cursor:pointer;}
+.doc-row input{margin-top:3px; width:19px; height:19px; accent-color:var(--navy); flex-shrink:0;}
+.doc-en{display:block; font-weight:500; color:var(--ink); font-size:15px;}
+.doc-kh{display:block; font-size:13px; color:var(--muted); margin-top:2px;}
+
+.consent-box{background:var(--mist); border:1px solid var(--border-solid); border-radius:var(--radius-md); padding:18px; display:flex; gap:12px; align-items:flex-start; margin-top:4px;}
+.consent-box input{margin-top:3px; width:19px; height:19px; accent-color:var(--navy); flex-shrink:0;}
+
+.nav-row{display:flex; align-items:center; margin-top:30px; gap:10px;}
+.nav-spacer{flex:1 1 auto;}
+.btn{position:relative; overflow:hidden; border-radius:var(--radius-sm); padding:13px 24px; min-height:48px; font-size:15.5px; font-weight:600; cursor:pointer; font-family:inherit; border:none; display:inline-flex; align-items:center; gap:7px; transition:background .15s ease, transform .1s ease;}
+.btn::after{content:''; position:absolute; inset:0; background:radial-gradient(circle, rgba(255,255,255,.4) 0%, transparent 70%); opacity:0; transform:scale(.3); pointer-events:none; transition:opacity .4s ease, transform .4s ease;}
+.btn:active::after{opacity:1; transform:scale(1); transition:none;}
+.btn:active{transform:scale(0.97);}
+.btn svg{width:16px; height:16px; transition:transform .18s ease;}
+.btn:hover svg{transform:translateX(3px);}
+.btn-primary{background:var(--navy); color:#fff;}
+.btn-primary:hover{background:var(--navy-deep);}
+.btn.is-committing{animation:choicePulse .22s ease, btnConfirmFlash .5s ease; pointer-events:none;}
+.btn[disabled]{opacity:.65; pointer-events:none;}
+.btn-back{background:none; border:none; color:var(--muted); font-size:14.5px; cursor:pointer; font-family:inherit; display:inline-flex; align-items:center; gap:6px; padding:10px 6px; transition:color .15s ease, transform .1s ease;}
+.btn-back:hover{color:var(--navy);}
+.btn-back:active{transform:scale(0.96);}
+.btn-back svg{width:16px; height:16px; transition:transform .18s ease;}
+.btn-back:hover svg{transform:translateX(-3px);}
+.btn-skip{background:none; border:none; color:var(--muted); font-size:14.5px; cursor:pointer; font-family:inherit; text-decoration:underline; padding:10px 6px; transition:color .15s ease, transform .1s ease;}
+.btn-skip:hover{color:var(--navy);}
+.btn-skip:active{transform:scale(0.96);}
+
+.multiselect-list{display:flex; flex-direction:column; gap:10px;}
+.multiselect-item{width:100%; display:flex; align-items:center; gap:14px; text-align:left; padding:14px 16px; border-radius:var(--radius-md); border:1.5px solid var(--border-solid); background:var(--bg); font-family:inherit; font-size:15px; color:var(--ink); cursor:pointer; transition:border-color .15s ease, background .15s ease, transform .08s ease, opacity .15s ease;}
+.multiselect-item:hover{border-color:var(--mint-hover); background:var(--mist);}
+.multiselect-item:active{transform:scale(0.99);}
+.multiselect-item.is-selected{border-color:var(--navy); background:var(--mist);}
+.multiselect-item.is-disabled{opacity:.4; pointer-events:none;}
+.ms-check{width:20px; height:20px; border-radius:5px; border:1.5px solid var(--border-solid); flex-shrink:0; display:flex; align-items:center; justify-content:center; background:var(--bg);}
+.multiselect-item.is-selected .ms-check{background:var(--navy); border-color:var(--navy);}
+.ms-check svg{width:13px; height:13px; color:#fff; opacity:0; transition:opacity .12s ease;}
+.multiselect-item.is-selected .ms-check svg{opacity:1;}
+.ms-label{flex:1 1 auto; line-height:1.4;}
+.ms-helper{font-size:13px; color:var(--muted); margin:-6px 0 16px;}
+.ms-other-input{margin-top:4px;}
+
+.cf-icon-wrap{position:relative; width:110px; height:110px; margin:4px auto 26px;}
+.cf-icon-ring{position:absolute; inset:0; border-radius:50%; background:var(--mist); opacity:0; transform:scale(.4); animation:cfRingIn .42s cubic-bezier(.34,1.56,.64,1) .05s both;}
+.cf-icon-core{position:absolute; inset:14px; border-radius:50%; background:var(--navy); opacity:0; transform:scale(.3); animation:cfCoreIn .4s cubic-bezier(.34,1.56,.64,1) .22s both; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 26px rgba(27,45,87,.28);}
+.cf-icon-pulse{position:absolute; inset:14px; border-radius:50%; border:2px solid var(--mint); opacity:0; animation:cfPulseRing 1s cubic-bezier(.2,.6,.2,1) .95s both;}
+.cf-check-svg{width:46px; height:46px;}
+.cf-check-path{fill:none; stroke:var(--on-navy); stroke-width:4.5; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:1; stroke-dashoffset:1; animation:cfDrawCheck .5s cubic-bezier(.65,0,.35,1) .62s forwards;}
+.cf-confetti{position:absolute; inset:0; pointer-events:none;}
+.cf-dot{position:absolute; top:50%; left:50%; border-radius:50%; opacity:0; animation:cfBurst .95s cubic-bezier(.19,1,.22,1) both;}
+.cf-rise{opacity:0; transform:translateY(10px); animation:cfRiseIn .42s ease both;}
+.cf-d1{animation-delay:.98s;}
+.cf-d2{animation-delay:1.1s;}
+.cf-d3{animation-delay:1.26s;}
+.cf-d4{animation-delay:1.38s;}
+@keyframes cfRingIn{ to{opacity:1; transform:scale(1);} }
+@keyframes cfCoreIn{ to{opacity:1; transform:scale(1);} }
+@keyframes cfDrawCheck{ to{stroke-dashoffset:0;} }
+@keyframes cfRiseIn{ to{opacity:1; transform:translateY(0);} }
+@keyframes cfPulseRing{ 0%{opacity:.55; transform:scale(1);} 100%{opacity:0; transform:scale(1.55);} }
+@keyframes cfBurst{
+  0%{ transform:translate(-50%,-50%) scale(.3); opacity:0; }
+  18%{ opacity:1; }
+  100%{ transform:translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1); opacity:0; }
+}
+
+.section-icon{width:58px; height:58px; border-radius:50%; background:var(--mist); display:flex; align-items:center; justify-content:center; margin-bottom:22px;}
+.section-icon svg{width:27px; height:27px; color:var(--navy);}
+
+.intro-p{font-size:15.5px; line-height:1.6; color:var(--ink); margin:0 0 12px;}
+.intro-p-kh{font-size:14.5px; line-height:1.7; color:var(--muted); margin:0 0 20px;}
+.intro-box{background:var(--mist); border-radius:var(--radius-md); padding:18px; margin:20px 0 28px;}
+.intro-box-title{font-weight:700; color:var(--navy); font-size:14px; margin-bottom:6px; display:flex; align-items:center; gap:6px;}
+.intro-box-title svg{width:15px; height:15px; flex-shrink:0;}
+.intro-time{display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); margin:14px 0 0;}
+.intro-time svg{width:14px; height:14px; flex-shrink:0;}
+
+.next-table{width:100%; border-collapse:collapse; margin-top:16px;}
+.next-table td{padding:12px 0; border-bottom:1px solid var(--mist); font-size:14px; vertical-align:top;}
+.next-table td.step-num{width:28px; font-weight:700; color:var(--navy);}
+.next-kh{color:var(--muted); display:block; margin-top:3px;}
+
+.hp-field{position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;}
+</style>
+</head>
+<body>
+<div class="page" id="app"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  function bigCountOptions() { return [["0", "0"], ["1_5", "1–5"], ["6_20", "6–20"], ["21_50", "21–50"], ["50_plus", "50+"]]; }
+  function smallCountOptions() { return [["none", "None · គ្មាន"], ["1_5", "1–5"], ["6_20", "6–20"], ["21_plus", "21+"]]; }
+  function checklistOptions() {
+    return [
+      ["yes", "Yes (written down) · មាន (ជាលាយលក្ខណ៍អក្សរ)"],
+      ["informal", "Informal (done, not written) · មិនផ្លូវការ (ធ្វើ តែមិនមានឯកសារ)"],
+      ["no", "No · គ្មាន"],
+      ["not_sure", "Not sure · មិនប្រាកដ"],
+    ];
+  }
+
+  function buildQuestions() {
+    return [
+      { id: "full_name", kind: "text", type: "text", required: true, section: "About you · អំពីលោកអ្នក", en: "Full name", kh: "ឈ្មោះពេញ" },
+      { id: "position", kind: "single", required: true, section: "About you · អំពីលោកអ្នក", en: "What is your position?", kh: "តួនាទី", options: [["owner", "Owner · ម្ចាស់"], ["cofounder", "Co-founder · សហស្ថាបនិក"], ["manager", "Manager · អ្នកគ្រប់គ្រង"], ["other", "Other · ផ្សេងៗ"]] },
+      { id: "phone", kind: "text", type: "tel", required: true, section: "About you · អំពីលោកអ្នក", en: "Phone / Telegram", kh: "លេខទូរស័ព្ទ / Telegram" },
+      { id: "email", kind: "text", type: "email", required: false, section: "About you · អំពីលោកអ្នក", en: "Email", kh: "អ៊ីមែល" },
+      { id: "meeting_language", kind: "single", required: true, section: "About you · អំពីលោកអ្នក", en: "Preferred meeting language", kh: "ភាសាដែលពេញចិត្តសម្រាប់កិច្ចប្រជុំ", options: [["khmer", "Khmer · ខ្មែរ"], ["english", "English · អង់គ្លេស"], ["either", "Either · ទាំងពីរ"]] },
+
+      { id: null, kind: "section", en: "Your business", kh: "អំពីអាជីវកម្ម" },
+
+      { id: "company_name", kind: "text", type: "text", required: true, section: "Your business · អំពីអាជីវកម្ម", en: "Company name / trading name", kh: "ឈ្មោះក្រុមហ៊ុន / ឈ្មោះពាណិជ្ជកម្ម" },
+      { id: "legal_form", kind: "single", required: true, section: "Your business · អំពីអាជីវកម្ម", en: "Legal form", kh: "ទម្រង់គតិយុត្ត", options: [["sole_proprietor", "Sole proprietor · សហគ្រាសឯកបុគ្គល"], ["co_ltd", "Co., Ltd · ក្រុមហ៊ុនឯកជនទទួលខុសត្រូវមានកម្រិត"], ["other", "Other · ផ្សេងៗ"], ["not_sure", "Not sure · មិនប្រាកដ"]] },
+      { id: "industry", kind: "textarea", required: true, section: "Your business · អំពីអាជីវកម្ម", en: "Industry and main products or services", kh: "វិស័យ និងផលិតផល ឬសេវាកម្មចម្បង" },
+      { id: "year_started", kind: "single", required: false, section: "Your business · អំពីអាជីវកម្ម", en: "Year started", kh: "ឆ្នាំចាប់ផ្តើមប្រតិបត្តិការ", options: [["before_2010", "Before 2010"], ["2010_2015", "2010–2015"], ["2016_2020", "2016–2020"], ["2021_2023", "2021–2023"], ["2024_2026", "2024–2026"], ["not_sure", "Not sure · មិនប្រាកដ"]] },
+      { id: "locations", kind: "text", type: "text", required: false, section: "Your business · អំពីអាជីវកម្ម", en: "Locations / branches", kh: "ទីតាំង / សាខា" },
+      { id: "growth_12m", kind: "single", required: true, section: "Your business · អំពីអាជីវកម្ម", en: "Growth in the last 12 months", kh: "កំណើនក្នុងរយៈពេល ១២ ខែចុងក្រោយ", options: [["shrinking", "Shrinking · ថយចុះ"], ["flat", "Flat · ដដែល"], ["growing", "Growing · កើនឡើង"]] },
+      { id: "plans_2y", kind: "textarea", required: false, section: "Your business · អំពីអាជីវកម្ម", en: "Plans for the next 2 years", kh: "ផែនការសម្រាប់ ២ ឆ្នាំខាងមុខ" },
+      { id: "decision_maker", kind: "text", type: "text", required: true, section: "Your business · អំពីអាជីវកម្ម", en: "Who decides on hiring, pay and dismissal?", kh: "តើនរណាជាអ្នកសម្រេចលើការជ្រើសរើស ប្រាក់ខែ និងការបញ្ឈប់បុគ្គលិក?" },
+
+      { id: null, kind: "section", en: "Your team", kh: "ក្រុមការងារ" },
+
+      { id: "staff_fulltime", kind: "single", required: true, section: "Your team · ក្រុមការងារ", en: "Full-time staff today", kh: "បុគ្គលិកពេញម៉ោងបច្ចុប្បន្ន", options: bigCountOptions() },
+      { id: "staff_parttime", kind: "single", required: false, section: "Your team · ក្រុមការងារ", en: "Part-time staff today", kh: "បុគ្គលិកក្រៅម៉ោងបច្ចុប្បន្ន", options: smallCountOptions() },
+      { id: "staff_daily", kind: "single", required: false, section: "Your team · ក្រុមការងារ", en: "Daily workers today", kh: "កម្មករប្រចាំថ្ងៃបច្ចុប្បន្ន", options: smallCountOptions() },
+      { id: "staff_12m", kind: "single", required: false, section: "Your team · ក្រុមការងារ", en: "Expected staff in 12 months", kh: "ចំនួនបុគ្គលិករំពឹងទុកក្នុង ១២ ខែខាងមុខ", options: bigCountOptions() },
+      { id: "leavers_12m", kind: "single", required: false, section: "Your team · ក្រុមការងារ", en: "Staff who left in the last 12 months", kh: "ចំនួនបុគ្គលិកដែលបានចាកចេញក្នុង ១២ ខែចុងក្រោយ", options: smallCountOptions() },
+      { id: "hard_roles", kind: "text", type: "text", required: false, section: "Your team · ក្រុមការងារ", en: "Roles that are hardest to fill", kh: "តួនាទីដែលពិបាកជ្រើសរើសបំផុត" },
+      { id: "family_staff", kind: "single", required: false, section: "Your team · ក្រុមការងារ", en: "Any family members working in the business?", kh: "មានសមាជិកគ្រួសារធ្វើការក្នុងអាជីវកម្មដែរឬទេ?", options: [["yes", "Yes · មាន"], ["no", "No · គ្មាន"]] },
+      { id: "hr_owner", kind: "single", required: true, section: "Your team · ក្រុមការងារ", en: "Who handles HR today?", kh: "តើនរណាជាអ្នកទទួលបន្ទុកការងារធនធានមនុស្សបច្ចុប្បន្ន?", options: [["owner", "Owner · ម្ចាស់"], ["admin_accountant", "Admin or accountant · បុគ្គលិករដ្ឋបាល ឬគណនេយ្យ"], ["hr_staff", "HR staff · បុគ្គលិកធនធានមនុស្ស"], ["outsourced", "Outsourced · ជួលក្រៅ"], ["nobody", "Nobody · គ្មាន"]] },
+
+      { id: null, kind: "section", en: "HR checklist", kh: "បញ្ជីត្រួតពិនិត្យការងារធនធានមនុស្ស" },
+
+      { id: "hr_molvt", kind: "single", required: true, section: "Legal compliance · ត្រូវតាមច្បាប់", en: "Registered with the Ministry of Labour (MoLVT)", kh: "បានចុះបញ្ជីនៅក្រសួងការងារ និងបណ្តុះបណ្តាលវិជ្ជាជីវៈ", options: checklistOptions() },
+      { id: "hr_nssf", kind: "single", required: true, section: "Legal compliance · ត្រូវតាមច្បាប់", en: "Staff registered with NSSF", kh: "បុគ្គលិកបានចុះឈ្មោះនៅ បសស (NSSF)", options: checklistOptions() },
+      { id: "hr_contracts", kind: "single", required: true, section: "Legal compliance · ត្រូវតាមច្បាប់", en: "Written employment contracts for all staff", kh: "កិច្ចសន្យាការងារជាលាយលក្ខណ៍អក្សរសម្រាប់បុគ្គលិកទាំងអស់", options: checklistOptions() },
+      { id: "hr_work_rules", kind: "single", required: true, section: "Legal compliance · ត្រូវតាមច្បាប់", en: "Internal Work Rules", kh: "បទបញ្ជាផ្ទៃក្នុង", options: checklistOptions() },
+      { id: "hr_payslips", kind: "single", required: true, section: "Legal compliance · ត្រូវតាមច្បាប់", en: "Payslips every pay period", kh: "ប័ណ្ណបើកប្រាក់ខែរាល់ពេលបើកប្រាក់ខែ", options: checklistOptions() },
+      { id: "hr_seniority", kind: "single", required: true, section: "Legal compliance · ត្រូវតាមច្បាប់", en: "Seniority payment paid on schedule", kh: "ប្រាក់អតីតភាពការងារបើកតាមកាលកំណត់", options: checklistOptions() },
+      { id: "hr_time_leave", kind: "single", required: true, section: "Legal compliance · ត្រូវតាមច្បាប់", en: "Rules for working hours, overtime and leave, and records kept", kh: "គោលការណ៍ម៉ោងធ្វើការ ម៉ោងបន្ថែម និងច្បាប់ឈប់សម្រាក ព្រមទាំងការកត់ត្រា", options: checklistOptions() },
+      { id: "hr_jds", kind: "single", required: true, section: "Foundations · មូលដ្ឋានគ្រឹះ", en: "Job descriptions for each role", kh: "ការពិពណ៌នាការងារសម្រាប់តួនាទីនីមួយៗ", options: checklistOptions() },
+      { id: "hr_pay_rules", kind: "single", required: true, section: "Foundations · មូលដ្ឋានគ្រឹះ", en: "Clear pay rules for each role (salary, bonus, allowances)", kh: "គោលការណ៍ប្រាក់បៀវត្សច្បាស់លាស់ (ប្រាក់ខែ ប្រាក់រង្វាន់ ប្រាក់ឧបត្ថម្ភ)", options: checklistOptions() },
+      { id: "hr_performance", kind: "single", required: true, section: "Performance and growth · សមិទ្ធកម្ម និងការលូតលាស់", en: "Staff goals and performance reviews", kh: "គោលដៅការងារ និងការវាយតម្លៃលទ្ធផលការងារ", options: checklistOptions() },
+      { id: "hr_onboarding", kind: "single", required: true, section: "Performance and growth · សមិទ្ធកម្ម និងការលូតលាស់", en: "Onboarding for new staff", kh: "ការណែនាំបុគ្គលិកថ្មី", options: checklistOptions() },
+      { id: "hr_discipline", kind: "single", required: true, section: "Performance and growth · សមិទ្ធកម្ម និងការលូតលាស់", en: "Warning and disciplinary process", kh: "នីតិវិធីព្រមាន និងវិន័យ", options: checklistOptions() },
+
+      { id: null, kind: "section", en: "Priorities and budget", kh: "អាទិភាព និងថវិកា" },
+
+      { id: "trigger", kind: "textarea", required: true, section: "Priorities and budget · អាទិភាព និងថវិកា", en: "What made you look for HR help now?", kh: "ហេតុអ្វីបានជាលោកអ្នកស្វែងរកជំនួយផ្នែកធនធានមនុស្សនៅពេលនេះ?" },
+      { id: "top_problems", kind: "multiselect", required: true, maxSelect: 3, helper: "Choose up to 3 · ជ្រើសបានដល់ ៣", section: "Priorities and budget · អាទិភាព និងថវិកា", en: "Your top 3 people problems today", kh: "បញ្ហាធំៗទាក់ទងនឹងបុគ្គលិក ៣ ចំណុចបច្ចុប្បន្ន", options: [
+        ["turnover", "High staff turnover · ការលាលែងពីការងាររបស់បុគ្គលិកច្រើន"],
+        ["hiring", "Difficulty hiring the right people · ពិបាកក្នុងការជ្រើសរើសបុគ្គលិកដែលត្រឹមត្រូវ"],
+        ["morale", "Low staff motivation or morale · ស្មារតី ឬការលើកទឹកចិត្តការងាររបស់បុគ្គលិកទាប"],
+        ["attendance", "Absenteeism or lateness · អវត្តមាន ឬការមកធ្វើការយឺត"],
+        ["unclear_roles", "Unclear roles or job expectations · តួនាទី ឬការរំពឹងទុកការងារមិនច្បាស់លាស់"],
+        ["performance", "Performance issues not being addressed · បញ្ហាផលិតភាពការងារមិនត្រូវបានដោះស្រាយ"],
+        ["pay_complaints", "Pay or benefits complaints · ពាក្យបណ្តឹងអំពីប្រាក់ខែ ឬអត្ថប្រយោជន៍"],
+        ["conflicts", "Conflicts between staff or with managers · ជម្លោះរវាងបុគ្គលិក ឬជាមួយអ្នកគ្រប់គ្រង"],
+        ["compliance_gaps", "Compliance or paperwork gaps (contracts, NSSF, records) · ចន្លោះខាងឯកសារ ឬការអនុលោមតាមច្បាប់ (កិច្ចសន្យា NSSF កំណត់ត្រា)"],
+        ["training_gap", "Lack of training or skill gaps · កង្វះការបណ្តុះបណ្តាល ឬជំនាញ"],
+        ["other", "Other (please describe) · ផ្សេងៗ (សូមពិពណ៌នា)"],
+      ] },
+      { id: "desired_change", kind: "textarea", required: false, section: "Priorities and budget · អាទិភាព និងថវិកា", en: "In 12 months, what would you like to be different?", kh: "ក្នុងរយៈពេល ១២ ខែ តើលោកអ្នកចង់ឃើញអ្វីផ្លាស់ប្តូរ?" },
+      { id: "disputes_2y", kind: "single", required: false, section: "Priorities and budget · អាទិភាព និងថវិកា", en: "Any labour disputes or staff complaints in the last 2 years?", kh: "មានវិវាទការងារ ឬបណ្តឹងពីបុគ្គលិកក្នុងរយៈពេល ២ ឆ្នាំចុងក្រោយដែរឬទេ?", options: [["yes", "Yes · មាន"], ["no", "No · គ្មាន"], ["prefer_in_person", "Prefer to discuss in person · សូមពិភាក្សាផ្ទាល់"]] },
+      { id: "support_type", kind: "single", required: true, section: "Priorities and budget · អាទិភាព និងថវិកា", en: "Preferred support", kh: "ប្រភេទជំនួយដែលពេញចិត្ត", options: [["one_off", "One-off project · គម្រោងតែម្តង"], ["monthly", "Monthly support · ជំនួយប្រចាំខែ"], ["not_sure", "Not sure · មិនប្រាកដ"]] },
+      { id: "budget", kind: "single", required: false, section: "Priorities and budget · អាទិភាព និងថវិកា", en: "Budget range", kh: "ថវិកាប្រហែល", options: [["under_300", "Under $300 · តិចជាង $300"], ["300_1000", "$300–1,000"], ["over_1000", "Over $1,000 · លើស $1,000"], ["not_sure", "Not sure · មិនប្រាកដ"]] },
+      { id: "timeline", kind: "single", required: true, section: "Priorities and budget · អាទិភាព និងថវិកា", en: "When do you need first results?", kh: "តើលោកអ្នកត្រូវការលទ្ធផលដំបូងនៅពេលណា?", options: [["within_1_month", "Within 1 month · ក្នុង ១ ខែ"], ["1_3_months", "1–3 months · ១–៣ ខែ"], ["later", "Later · ក្រោយនេះ"]] },
+
+      { id: null, kind: "section", en: "Documents and consent", kh: "ឯកសារ និងការយល់ព្រម" },
+
+      { id: null, kind: "multi", required: false, section: "Documents and consent · ឯកសារ និងការយល់ព្រម", en: "Which documents can you bring to the meeting?", kh: "តើលោកអ្នកអាចយកឯកសារអ្វីខ្លះមកកិច្ចប្រជុំ? សូមកុំបញ្ជូនឯកសារតាមទម្រង់នេះ" },
+      { id: "consent", kind: "consent", required: true, section: "Documents and consent · ឯកសារ និងការយល់ព្រម", en: "Consent", kh: "ការយល់ព្រម" },
+    ];
+  }
+
+  var DOC_DEFS = [
+    ["doc_org_chart", "Organization chart", "តារាងរចនាសម្ព័ន្ធក្រុមហ៊ុន"],
+    ["doc_contracts", "1–2 sample employment contracts, names removed", "គំរូកិច្ចសន្យាការងារ ១–២ (លុបឈ្មោះចេញ)"],
+    ["doc_work_rules", "Internal Work Rules or staff handbook", "បទបញ្ជាផ្ទៃក្នុង ឬសៀវភៅណែនាំបុគ្គលិក"],
+    ["doc_nssf", "NSSF registration document", "ឯកសារចុះបញ្ជី បសស"],
+    ["doc_payslip", "Sample payslip, name removed", "គំរូប័ណ្ណបើកប្រាក់ខែ (លុបឈ្មោះចេញ)"],
+  ];
+
+  var QUESTIONS = buildQuestions();
+  var TOTAL = QUESTIONS.length;
+  var BADGE_LETTERS = ["A", "B", "C", "D", "E", "F"];
+
+  var ICONS = {
+    clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>',
+    lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>',
+    arrowRight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+    arrowLeft: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>',
+    check: '<svg class="choice-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>',
+    checkSmall: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>',
+    section: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/></svg>',
+    replay: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.3-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.3 6.4L3 16"/><path d="M3 21v-5h5"/></svg>',
+  };
+
+  function escHtml(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  function makeConfetti() {
+    var colors = ["#8FBFB5", "#1B2D57", "#E5C27A", "#A5CDC4"];
+    var n = 16, dots = [];
+    for (var i = 0; i < n; i++) {
+      var angle = (360 / n) * i + (Math.random() * 18 - 9);
+      var dist = 70 + Math.random() * 65;
+      var rad = (angle * Math.PI) / 180;
+      var tx = Math.round(Math.cos(rad) * dist);
+      var ty = Math.round(Math.sin(rad) * dist);
+      var size = 4 + Math.round(Math.random() * 4);
+      var delay = 620 + Math.round(Math.random() * 160);
+      dots.push({ style: "--tx:" + tx + "px; --ty:" + ty + "px; width:" + size + "px; height:" + size + "px; background:" + colors[i % colors.length] + "; animation-delay:" + delay + "ms;" });
+    }
+    return dots;
+  }
+
+  var state = {
+    qIndex: 0,
+    showErrors: false,
+    committing: false,
+    submitting: false,
+    submitError: "",
+    confirmPlaying: true,
+    confetti: makeConfetti(),
+    formData: {
+      full_name: "", position: "", phone: "", email: "", meeting_language: "",
+      company_name: "", legal_form: "", industry: "", year_started: "", locations: "", growth_12m: "", plans_2y: "", decision_maker: "",
+      staff_fulltime: "", staff_parttime: "", staff_daily: "", staff_12m: "", leavers_12m: "", hard_roles: "", family_staff: "", hr_owner: "",
+      hr_molvt: "", hr_nssf: "", hr_contracts: "", hr_work_rules: "", hr_payslips: "", hr_seniority: "", hr_time_leave: "", hr_jds: "", hr_pay_rules: "", hr_performance: "", hr_onboarding: "", hr_discipline: "",
+      trigger: "", top_problems: [], top_problems_other: "", desired_change: "", disputes_2y: "", support_type: "", budget: "", timeline: "",
+      doc_org_chart: false, doc_contracts: false, doc_work_rules: false, doc_nssf: false, doc_payslip: false, consent: false,
+      website: "",
+    },
+  };
+
+  function isFieldEmpty(id, fd) {
+    if (id === "consent") return fd.consent !== true;
+    var v = fd[id];
+    if (Array.isArray(v)) return v.length === 0;
+    return v === undefined || v === null || String(v).trim() === "";
+  }
+
+  function update(id, value) { state.formData[id] = value; }
+  function toggleBool(id) { state.formData[id] = !state.formData[id]; render(); }
+
+  function toggleMultiselect(id, value, max) {
+    var current = state.formData[id] || [];
+    var next;
+    var i = current.indexOf(value);
+    if (i !== -1) {
+      next = current.filter(function (v) { return v !== value; });
+    } else {
+      if (max && current.length >= max) return;
+      next = current.concat([value]);
+    }
+    state.formData[id] = next;
+    render();
+  }
+
+  function replayConfirm() {
+    state.confirmPlaying = false;
+    render();
+    setTimeout(function () {
+      state.confirmPlaying = true;
+      state.confetti = makeConfetti();
+      render();
+    }, 60);
+  }
+
+  function start() {
+    if (state.committing) return;
+    state.committing = true;
+    state.showErrors = false;
+    render();
+    setTimeout(function () {
+      state.qIndex = 1;
+      state.committing = false;
+      render();
+    }, 180);
+  }
+
+  function back() {
+    if (state.committing) return;
+    state.qIndex = Math.max(0, state.qIndex - 1);
+    state.showErrors = false;
+    render();
+  }
+
+  function skip() {
+    if (state.committing) return;
+    state.qIndex = state.qIndex + 1;
+    state.showErrors = false;
+    render();
+  }
+
+  function answerAndAdvance(id, value) {
+    if (state.committing) return;
+    state.formData[id] = value;
+    state.committing = true;
+    state.showErrors = false;
+    render();
+    setTimeout(function () {
+      state.qIndex = state.qIndex + 1;
+      state.committing = false;
+      render();
+    }, 180);
+  }
+
+  function advanceAfterCommit() {
+    state.committing = true;
+    state.showErrors = false;
+    render();
+    setTimeout(function () {
+      state.qIndex = state.qIndex + 1;
+      state.committing = false;
+      render();
+    }, 180);
+  }
+
+  function submitForm() {
+    state.submitting = true;
+    state.submitError = "";
+    render();
+    var payload = Object.assign({}, state.formData);
+    fetch("/api/hr-intake", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (data) { return { res: res, data: data }; });
+      })
+      .then(function (result) {
+        if (!result.res.ok) {
+          state.submitting = false;
+          state.submitError = result.data.error || "Something went wrong. Please try again.";
+          render();
+          return;
+        }
+        state.submitting = false;
+        state.qIndex = state.qIndex + 1;
+        state.confirmPlaying = true;
+        state.confetti = makeConfetti();
+        render();
+      })
+      .catch(function () {
+        state.submitting = false;
+        state.submitError = "Network error. Please check your connection and try again.";
+        render();
+      });
+  }
+
+  function continueClick() {
+    if (state.committing || state.submitting) return;
+    var q = QUESTIONS[state.qIndex - 1];
+    if (q.required && (q.kind === "text" || q.kind === "textarea" || q.kind === "multiselect")) {
+      if (isFieldEmpty(q.id, state.formData)) { state.showErrors = true; render(); return; }
+    }
+    if (q.required && q.kind === "consent") {
+      if (state.formData.consent !== true) { state.showErrors = true; render(); return; }
+    }
+    if (state.qIndex === TOTAL) {
+      submitForm();
+      return;
+    }
+    advanceAfterCommit();
+  }
+
+  function render() {
+    var fd = state.formData;
+    var qIndex = state.qIndex;
+    var showErrors = state.showErrors;
+    var isIntro = qIndex === 0;
+    var isConfirm = qIndex === TOTAL + 1;
+    var isQuestion = !isIntro && !isConfirm;
+    var currentQ = isQuestion ? QUESTIONS[qIndex - 1] : null;
+    var progressPct = isIntro ? 0 : (isConfirm ? 100 : Math.round((qIndex / (TOTAL + 1)) * 100));
+    var committing = state.committing;
+
+    var html = "";
+    html += '<div class="header"><div class="header-inner">';
+    html += '<div class="brand-dot"></div><div class="brand-name">ThinkCareer</div>';
+    html += '<div class="brand-sub">HR Intake Form &middot; ទម្រង់ស្វែងយល់តម្រូវការ</div></div>';
+    if (isQuestion) {
+      html += '<div class="progress-track"><div class="progress-fill" style="width:' + progressPct + '%"></div></div>';
+    }
+    html += "</div>";
+
+    html += '<div class="container"><div class="card">';
+
+    if (isIntro) {
+      html += renderIntro(committing);
+    } else if (isQuestion) {
+      html += renderQuestion(currentQ, fd, showErrors, committing);
+    } else if (isConfirm) {
+      html += renderConfirm();
+    }
+
+    html += "</div></div>";
+
+    var app = document.getElementById("app");
+    app.innerHTML = html;
+    attachListeners(app, currentQ);
+  }
+
+  function renderIntro(committing) {
+    var btnClass = "btn btn-primary" + (committing ? " is-committing" : "");
+    return (
+      '<div class="step-anim">' +
+      '<h1 class="q-title-en">ThinkCareer HR Solutions &mdash; Intake Form</h1>' +
+      '<div class="q-title-kh" style="margin-bottom:8px">ទម្រង់ស្វែងយល់តម្រូវការធនធានមនុស្ស</div>' +
+      '<div class="intro-time">' + ICONS.clock + "<span>About 10 minutes &middot; ប្រហែល ១០ នាទី</span></div>" +
+      '<p class="intro-p" style="margin-top:14px">Thank you for your interest in ThinkCareer HR Solutions. One short question at a time &mdash; just tap to answer. Your answers help us make the most of your free first meeting.</p>' +
+      '<p class="intro-p-kh">សូមអរគុណចំពោះការចាប់អារម្មណ៍លើសេវាកម្មធនធានមនុស្សរបស់ ThinkCareer។ សំណួរនីមួយៗខ្លីៗ គ្រាន់តែចុចជ្រើសរើស។ ចម្លើយរបស់លោកអ្នកជួយឱ្យកិច្ចប្រជុំដំបូង (ឥតគិតថ្លៃ) មានប្រសិទ្ធភាពបំផុត។</p>' +
+      '<div class="intro-box"><div class="intro-box-title">' + ICONS.lock + "Confidentiality &middot; ការរក្សាការសម្ងាត់</div>" +
+      '<p class="intro-p">All information is kept confidential and used only to understand your HR needs. We will not share it without your written consent. Please do not include individual salaries or staff ID numbers.</p>' +
+      '<p class="intro-p-kh" style="margin-bottom:0">ព័ត៌មានទាំងអស់នឹងត្រូវរក្សាជាការសម្ងាត់ ហើយប្រើសម្រាប់តែការស្វែងយល់ពីតម្រូវការធនធានមនុស្សរបស់លោកអ្នកប៉ុណ្ណោះ។ យើងនឹងមិនចែករំលែកព័ត៌មាននេះទេ ប្រសិនបើគ្មានការយល់ព្រមជាលាយលក្ខណ៍អក្សរពីលោកអ្នក។ សូមកុំបញ្ចូលប្រាក់ខែរបស់បុគ្គលម្នាក់ៗ ឬលេខអត្តសញ្ញាណបុគ្គលិក។</p></div>' +
+      '<div class="nav-spacer"></div>' +
+      '<button type="button" class="' + btnClass + '" data-action="start"><span>Start &middot; ចាប់ផ្តើម</span>' + ICONS.arrowRight + "</button>" +
+      "</div>"
+    );
+  }
+
+  function renderQuestion(q, fd, showErrors, committing) {
+    var out = '<div class="step-anim">';
+    var canBack = state.qIndex > 0;
+
+    if (q.kind === "section") {
+      out += '<div class="section-icon">' + ICONS.section + "</div>";
+      out += '<h2 class="q-title-en">' + escHtml(q.en) + "</h2>";
+      out += '<div class="q-title-kh">' + q.kh + "</div>";
+      out += '<div class="nav-spacer"></div><div class="nav-row">';
+      if (canBack) out += '<button type="button" class="btn-back" data-action="back">' + ICONS.arrowLeft + "<span>Back</span></button>";
+      out += '<div class="nav-spacer"></div>';
+      out += '<button type="button" class="btn btn-primary' + (committing ? " is-committing" : "") + '" data-action="continue"><span>Continue &middot; បន្ត</span>' + ICONS.arrowRight + "</button>";
+      out += "</div></div>";
+      return out;
+    }
+
+    var err = false;
+    if (showErrors && q.required) {
+      if (q.kind === "text" || q.kind === "textarea" || q.kind === "multiselect") err = isFieldEmpty(q.id, fd);
+      else if (q.kind === "consent") err = fd.consent !== true;
+    }
+
+    out += '<div class="q-eyebrow-group">' + q.section + "</div>";
+    out += '<h2 class="q-title-en">' + escHtml(q.en) + (q.required ? '<span class="required-mark">*</span>' : "") + "</h2>";
+    out += '<div class="q-title-kh">' + q.kh + "</div>";
+
+    if (q.kind === "text") {
+      out += '<input type="' + (q.type || "text") + '" class="field-input' + (err ? " err" : "") + '" data-field="' + q.id + '" value="' + escHtml(fd[q.id] || "") + '">';
+      if (err) out += '<div class="error-text">This field is required &middot; ត្រូវការបំពេញ</div>';
+    } else if (q.kind === "textarea") {
+      out += '<textarea class="field-textarea' + (err ? " err" : "") + '" data-field="' + q.id + '">' + escHtml(fd[q.id] || "") + "</textarea>";
+      if (err) out += '<div class="error-text">This field is required &middot; ត្រូវការបំពេញ</div>';
+    } else if (q.kind === "single") {
+      var listClass = "choice-list" + (committing ? " is-committing" : "");
+      out += '<div class="' + listClass + '">';
+      q.options.forEach(function (pair, idx) {
+        var value = pair[0], label = pair[1];
+        var selected = fd[q.id] === value;
+        var cls = "choice-item" + (selected ? " is-selected" : "") + (selected && committing ? " is-committing" : "");
+        out += '<button type="button" class="' + cls + '" data-action="pick-single" data-field="' + q.id + '" data-value="' + escHtml(value) + '">';
+        out += '<span class="choice-badge">' + (BADGE_LETTERS[idx] || String(idx + 1)) + "</span>";
+        out += '<span class="choice-label">' + label + "</span>";
+        if (selected) out += ICONS.check;
+        out += "</button>";
+      });
+      out += "</div>";
+    } else if (q.kind === "multiselect") {
+      var selectedArr = fd[q.id] || [];
+      var atCap = q.maxSelect ? selectedArr.length >= q.maxSelect : false;
+      out += '<div class="ms-helper">' + (q.helper || "") + "</div>";
+      out += '<div class="multiselect-list">';
+      q.options.forEach(function (pair) {
+        var value = pair[0], label = pair[1];
+        var isSel = selectedArr.indexOf(value) !== -1;
+        var cls = "multiselect-item" + (isSel ? " is-selected" : "") + (!isSel && atCap ? " is-disabled" : "");
+        out += '<button type="button" class="' + cls + '" data-action="pick-multi" data-field="' + q.id + '" data-value="' + escHtml(value) + '" data-max="' + (q.maxSelect || "") + '">';
+        out += '<span class="ms-check">' + ICONS.checkSmall + "</span>";
+        out += '<span class="ms-label">' + label + "</span></button>";
+      });
+      out += "</div>";
+      if (selectedArr.indexOf("other") !== -1) {
+        out += '<input type="text" class="field-input ms-other-input" data-field="' + q.id + '_other" value="' + escHtml(fd[q.id + "_other"] || "") + '" placeholder="Please describe · សូមពិពណ៌នា">';
+      }
+      if (err) out += '<div class="error-text">Please choose at least one &middot; សូមជ្រើសរើសយ៉ាងហោចណាស់មួយ</div>';
+    } else if (q.kind === "multi") {
+      DOC_DEFS.forEach(function (def) {
+        var id = def[0], en = def[1], kh = def[2];
+        out += '<label class="doc-row"><input type="checkbox" data-action="toggle-bool" data-field="' + id + '"' + (fd[id] ? " checked" : "") + ">";
+        out += '<span><span class="doc-en">' + escHtml(en) + '</span><span class="doc-kh">' + kh + "</span></span></label>";
+      });
+    } else if (q.kind === "consent") {
+      out += '<div class="consent-box"><input type="checkbox" data-action="toggle-bool" data-field="consent"' + (fd.consent ? " checked" : "") + ">";
+      out += '<span><span class="doc-en">I agree that ThinkCareer may use this information to assess my HR needs, as described above.<span class="required-mark">*</span></span>';
+      out += '<span class="doc-kh">ខ្ញុំយល់ព្រមឱ្យ ThinkCareer ប្រើប្រាស់ព័ត៌មាននេះ ដើម្បីវាយតម្លៃតម្រូវការធនធានមនុស្សរបស់ខ្ញុំ ដូចបានរៀបរាប់ខាងលើ។</span>';
+      if (err) out += '<div class="error-text">Please confirm to continue &middot; សូមបញ្ជាក់ដើម្បីបន្ត</div>';
+      out += "</span></div>";
+      out += '<input type="text" class="hp-field" tabindex="-1" autocomplete="off" data-field="website" value="' + escHtml(fd.website || "") + '">';
+      if (state.submitError) out += '<div class="error-banner">' + escHtml(state.submitError) + "</div>";
+    }
+
+    var showSkip = q.kind === "single" && !q.required;
+    var showContinueBtn = q.kind === "text" || q.kind === "textarea" || q.kind === "multi" || q.kind === "consent" || q.kind === "multiselect";
+    var isLast = state.qIndex === TOTAL;
+    var continueLabel = q.kind === "consent" ? (state.submitting ? "Sending &middot; កំពុងបញ្ជូន…" : "Submit &middot; បញ្ជូន") : "Continue &middot; បន្ត";
+
+    out += '<div class="nav-spacer"></div><div class="nav-row">';
+    if (canBack) out += '<button type="button" class="btn-back" data-action="back">' + ICONS.arrowLeft + "<span>Back</span></button>";
+    out += '<div class="nav-spacer"></div>';
+    if (showSkip) out += '<button type="button" class="btn-skip" data-action="skip">Skip &middot; រំលង</button>';
+    if (showContinueBtn) {
+      var btnClass2 = "btn btn-primary" + (committing ? " is-committing" : "") + (isLast && state.submitting ? "" : "");
+      out += '<button type="button" class="' + btnClass2 + '" data-action="continue"' + (isLast && state.submitting ? " disabled" : "") + "><span>" + continueLabel + "</span>" + ICONS.arrowRight + "</button>";
+    }
+    out += "</div></div>";
+    return out;
+  }
+
+  function renderConfirm() {
+    var out = '<div class="step-anim">';
+    if (state.confirmPlaying) {
+      out += '<div class="cf-icon-wrap"><div class="cf-icon-ring"></div><div class="cf-icon-pulse"></div>';
+      out += '<div class="cf-icon-core"><svg class="cf-check-svg" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path class="cf-check-path" pathLength="1" d="M13 25 L20 32 L35 15"/></svg></div>';
+      out += '<div class="cf-confetti">';
+      state.confetti.forEach(function (dot) { out += '<span class="cf-dot" style="' + dot.style + '"></span>'; });
+      out += "</div></div>";
+      out += '<h2 class="q-title-en cf-rise cf-d1">Thank you!</h2>';
+      out += '<p class="q-title-kh cf-rise cf-d2" style="margin-bottom:18px">សូមអរគុណ!</p>';
+      out += '<p class="intro-p cf-rise cf-d3">We have received your form. ThinkCareer will contact you within 2 working days to book your free 60-minute first meeting.</p>';
+      out += '<p class="intro-p-kh cf-rise cf-d4">យើងបានទទួលទម្រង់របស់លោកអ្នកហើយ។ ThinkCareer នឹងទាក់ទងលោកអ្នកក្នុងរយៈពេល ២ ថ្ងៃធ្វើការ ដើម្បីកំណត់ពេលកិច្ចប្រជុំដំបូងរយៈពេល ៦០ នាទី ដោយឥតគិតថ្លៃ។</p>';
+    }
+    out += '<h3 style="font-family:var(--display); font-size:15px; color:var(--navy); margin:24px 0 4px;">What happens next &middot; ជំហានបន្ទាប់</h3>';
+    out += '<table class="next-table">';
+    out += '<tr><td class="step-num">1</td><td>Free 60-minute first meeting with your ThinkCareer consultant<span class="next-kh">កិច្ចប្រជុំដំបូងរយៈពេល ៦០ នាទី ជាមួយទីប្រឹក្សា ThinkCareer ដោយឥតគិតថ្លៃ</span></td></tr>';
+    out += '<tr><td class="step-num">2</td><td>Within 5 working days: a short summary of key findings and a proposal with options and fees<span class="next-kh">ក្នុងរយៈពេល ៥ ថ្ងៃធ្វើការ សេចក្តីសង្ខេបចំណុចសំខាន់ៗ និងសំណើសេវាកម្មដែលមានជម្រើស និងតម្លៃ</span></td></tr>';
+    out += "</table>";
+    out += '<p style="margin-top:24px; font-size:14px; color:var(--muted);">Contact &middot; ទំនាក់ទំនង: Adam (Udom Vuthy), ThinkCareer &middot; thinkcareers.net</p>';
+    out += '<button type="button" class="btn-back" style="margin-top:10px; padding-left:0;" data-action="replay">' + ICONS.replay + "<span>Replay &middot; លេងម្តងទៀត</span></button>";
+    out += "</div>";
+    return out;
+  }
+
+  function attachListeners(root, currentQ) {
+    root.querySelectorAll("[data-field]").forEach(function (el) {
+      if (el.type === "checkbox") return; // handled via data-action
+      el.addEventListener("input", function () { update(el.getAttribute("data-field"), el.value); });
+    });
+    root.querySelectorAll('[data-action="toggle-bool"]').forEach(function (el) {
+      el.addEventListener("change", function () { toggleBool(el.getAttribute("data-field")); });
+    });
+    root.querySelectorAll('[data-action="pick-single"]').forEach(function (el) {
+      el.addEventListener("click", function () { answerAndAdvance(el.getAttribute("data-field"), el.getAttribute("data-value")); });
+    });
+    root.querySelectorAll('[data-action="pick-multi"]').forEach(function (el) {
+      el.addEventListener("click", function () {
+        var max = parseInt(el.getAttribute("data-max"), 10) || 0;
+        toggleMultiselect(el.getAttribute("data-field"), el.getAttribute("data-value"), max);
+      });
+    });
+    var startBtn = root.querySelector('[data-action="start"]'); if (startBtn) startBtn.addEventListener("click", start);
+    var backBtn = root.querySelector('[data-action="back"]'); if (backBtn) backBtn.addEventListener("click", back);
+    var skipBtn = root.querySelector('[data-action="skip"]'); if (skipBtn) skipBtn.addEventListener("click", skip);
+    var continueBtn = root.querySelector('[data-action="continue"]'); if (continueBtn) continueBtn.addEventListener("click", continueClick);
+    var replayBtn = root.querySelector('[data-action="replay"]'); if (replayBtn) replayBtn.addEventListener("click", replayConfirm);
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
