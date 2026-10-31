@@ -36,5 +36,8 @@
   "redirects": [
     { "source": "/admin.html", "destination": "/", "permanent": false },
     { "source": "/admin", "destination": "/", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/hr-intake", "destination": "/hr-intake.html" }
   ]
 }
