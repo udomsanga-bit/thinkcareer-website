@@ -68,19 +68,22 @@ a{color:var(--link);}
 .brand-logo{width:34px; height:34px; border-radius:8px; flex-shrink:0; display:block; object-fit:cover;}
 .brand-name{font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:0.2px;}
 .brand-sub{font-size:13px; color:var(--on-navy-muted); margin-left:auto;}
-.progress-track{height:4px; background:rgba(255,255,255,0.18);}
+.progress-track{height:4px; background:rgba(255,255,255,0.18); overflow:hidden; opacity:1; transition:opacity .25s ease;}
+.progress-track.is-hidden{opacity:0;}
 .progress-fill{height:100%; background:var(--mint); transition:width .4s cubic-bezier(.22,1,.36,1);}
 
 .container{flex:1 1 auto; width:100%; max-width:720px; margin:0 auto; padding:30px 20px 70px; box-sizing:border-box;}
 .card{background:var(--bg); border-radius:var(--radius-lg); padding:clamp(22px,5vw,44px); box-shadow:0 1px 3px rgba(15,26,46,0.07),0 10px 28px rgba(15,26,46,0.06); box-sizing:border-box; overflow:hidden; min-height:420px; display:flex; flex-direction:column;}
 
 @keyframes stepIn{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
-.step-anim{animation:stepIn .28s cubic-bezier(.22,1,.36,1) both; flex:1 1 auto; display:flex; flex-direction:column;}
+@keyframes stepOut{ from{opacity:1; transform:translateY(0);} to{opacity:0; transform:translateY(-8px);} }
+.step-anim{animation:stepIn .32s cubic-bezier(.22,1,.36,1) both; flex:1 1 auto; display:flex; flex-direction:column;}
+.step-anim.is-leaving{animation:stepOut .17s cubic-bezier(.4,0,1,1) both; pointer-events:none;}
 @keyframes choiceIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
 @keyframes choicePulse{ 0%{transform:scale(1);} 45%{transform:scale(1.015);} 100%{transform:scale(1);} }
 @keyframes checkPop{ from{opacity:0; transform:scale(.4) rotate(-8deg);} to{opacity:1; transform:scale(1) rotate(0);} }
 @keyframes btnConfirmFlash{ 0%{filter:brightness(1);} 40%{filter:brightness(1.22);} 100%{filter:brightness(1);} }
-@media (prefers-reduced-motion: reduce){ .step-anim,.choice-item,.choice-check,.btn,.btn-back,.btn-skip{animation:none!important;} .progress-fill{transition:none;} .choice-item,.btn,.btn-back,.btn-skip{transition:none;} .btn::after{display:none;} .btn svg,.btn-back svg{transition:none; transform:none!important;} .choice-list.is-committing .choice-item:not(.is-selected){opacity:1!important;} .cf-icon-ring,.cf-icon-core,.cf-rise{animation:none!important; opacity:1!important; transform:none!important;} .cf-check-path{animation:none!important; stroke-dashoffset:0!important;} .cf-icon-pulse,.cf-confetti{display:none!important;} }
+@media (prefers-reduced-motion: reduce){ .step-anim,.choice-item,.choice-check,.btn,.btn-back,.btn-skip{animation:none!important;} .step-anim.is-leaving{display:none!important;} .progress-fill,.progress-track{transition:none;} .choice-item,.btn,.btn-back,.btn-skip{transition:none;} .btn::after{display:none;} .btn svg,.btn-back svg{transition:none; transform:none!important;} .choice-list.is-committing .choice-item:not(.is-selected){opacity:1!important;} .cf-icon-ring,.cf-icon-core,.cf-rise{animation:none!important; opacity:1!important; transform:none!important;} .cf-check-path{animation:none!important; stroke-dashoffset:0!important;} .cf-icon-pulse,.cf-confetti{display:none!important;} }
 
 .q-eyebrow-group{display:inline-flex; align-items:center; background:var(--mist); color:var(--accent); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:16px; width:fit-content;}
 .q-title-en{font-family:var(--display); font-size:24px; font-weight:700; color:var(--head); margin:0 0 7px; line-height:1.32;}
@@ -200,7 +203,17 @@ a{color:var(--link);}
 </style>
 </head>
 <body>
-<div class="page" id="app"></div>
+<div class="page" id="app">
+  <div class="header">
+    <div class="header-inner">
+      <img class="brand-logo" src="assets/logo.jpg" alt="ThinkCareer" width="34" height="34">
+      <div class="brand-name">ThinkCareer</div>
+      <div class="brand-sub">HR Intake Form &middot; ទម្រង់ស្វែងយល់តម្រូវការ</div>
+    </div>
+    <div class="progress-track is-hidden" id="progressTrack"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+  <div class="container"><div class="card" id="cardRoot"></div></div>
+</div>
 
 <script>
 (function () {
@@ -499,37 +512,33 @@ a{color:var(--link);}
     var progressPct = isIntro ? 0 : (isConfirm ? 100 : Math.round((qIndex / (TOTAL + 1)) * 100));
     var committing = state.committing;
 
-    var html = "";
-    html += '<div class="header"><div class="header-inner">';
-    html += '<img class="brand-logo" src="assets/logo.jpg" alt="ThinkCareer" width="34" height="34">';
-    html += '<div class="brand-name">ThinkCareer</div>';
-    html += '<div class="brand-sub">HR Intake Form &middot; ទម្រង់ស្វែងយល់តម្រូវការ</div></div>';
-    if (isQuestion) {
-      html += '<div class="progress-track"><div class="progress-fill" style="width:' + progressPct + '%"></div></div>';
-    }
-    html += "</div>";
+    // The header (logo, progress bar) is a persistent part of the page — only
+    // its width/visibility are updated in place, so the existing CSS
+    // transitions on them actually get to play instead of restarting cold
+    // every time the whole screen is rebuilt.
+    var progressFill = document.getElementById("progressFill");
+    var progressTrack = document.getElementById("progressTrack");
+    progressFill.style.width = progressPct + "%";
+    progressTrack.classList.toggle("is-hidden", !isQuestion);
 
-    html += '<div class="container"><div class="card">';
-
+    var cardHtml = "";
     if (isIntro) {
-      html += renderIntro(committing);
+      cardHtml = renderIntro(committing);
     } else if (isQuestion) {
-      html += renderQuestion(currentQ, fd, showErrors, committing);
+      cardHtml = renderQuestion(currentQ, fd, showErrors, committing);
     } else if (isConfirm) {
-      html += renderConfirm();
+      cardHtml = renderConfirm();
     }
 
-    html += "</div></div>";
-
-    var app = document.getElementById("app");
-    app.innerHTML = html;
-    attachListeners(app, currentQ);
+    var cardRoot = document.getElementById("cardRoot");
+    cardRoot.innerHTML = cardHtml;
+    attachListeners(cardRoot, currentQ);
   }
 
   function renderIntro(committing) {
     var btnClass = "btn btn-primary" + (committing ? " is-committing" : "");
     return (
-      '<div class="step-anim">' +
+      '<div class="step-anim' + (committing ? " is-leaving" : "") + '">' +
       '<h1 class="q-title-en">ThinkCareer HR Solutions &mdash; Intake Form</h1>' +
       '<div class="q-title-kh" style="margin-bottom:8px">ទម្រង់ស្វែងយល់តម្រូវការធនធានមនុស្ស</div>' +
       '<div class="intro-time">' + ICONS.clock + "<span>About 10 minutes &middot; ប្រហែល ១០ នាទី</span></div>" +
@@ -545,7 +554,7 @@ a{color:var(--link);}
   }
 
   function renderQuestion(q, fd, showErrors, committing) {
-    var out = '<div class="step-anim">';
+    var out = '<div class="step-anim' + (committing ? " is-leaving" : "") + '">';
     var canBack = state.qIndex > 0;
 
     if (q.kind === "section") {
