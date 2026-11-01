@@ -65,6 +65,9 @@ a{color:var(--link);}
 
 .header{position:sticky; top:0; z-index:20; background:var(--bar-bg); color:#fff;}
 .header-inner{padding:12px 24px; display:flex; align-items:center; gap:11px; flex-wrap:wrap; max-width:720px; margin:0 auto;}
+.brand-home{display:flex; align-items:center; gap:11px; text-decoration:none; color:inherit; border-radius:8px; transition:opacity .15s ease;}
+.brand-home:hover{opacity:.82;}
+.brand-home:focus-visible{outline:2px solid var(--mint); outline-offset:3px;}
 .brand-logo{width:34px; height:34px; border-radius:8px; flex-shrink:0; display:block; object-fit:cover;}
 .brand-name{font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:0.2px;}
 .brand-sub{font-size:13px; color:var(--on-navy-muted); margin-left:auto;}
@@ -207,8 +210,10 @@ a{color:var(--link);}
 <div class="page" id="app">
   <div class="header">
     <div class="header-inner">
-      <img class="brand-logo" src="assets/logo.jpg" alt="ThinkCareer" width="34" height="34">
-      <div class="brand-name">ThinkCareer</div>
+      <a class="brand-home" href="/" id="homeLink" aria-label="ThinkCareer home · ទំព័រដើម ThinkCareer">
+        <img class="brand-logo" src="assets/logo.jpg" alt="" width="34" height="34">
+        <div class="brand-name">ThinkCareer</div>
+      </a>
       <div class="brand-sub">HR Intake Form &middot; ទម្រង់ស្វែងយល់តម្រូវការ</div>
     </div>
     <div class="progress-track is-hidden" id="progressTrack"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
@@ -712,6 +717,22 @@ a{color:var(--link);}
     var skipBtn = root.querySelector('[data-action="skip"]'); if (skipBtn) skipBtn.addEventListener("click", skip);
     var continueBtn = root.querySelector('[data-action="continue"]'); if (continueBtn) continueBtn.addEventListener("click", continueClick);
     var replayBtn = root.querySelector('[data-action="replay"]'); if (replayBtn) replayBtn.addEventListener("click", replayConfirm);
+  }
+
+  // The logo/brand in the header is a persistent node (outside cardRoot,
+  // never rebuilt — see render()), so this listener is attached once here
+  // rather than on every render. It lets a visitor get back to the main
+  // site; if they've already started answering, confirm first so a stray
+  // click doesn't silently throw away everything they've entered.
+  var homeLink = document.getElementById("homeLink");
+  if (homeLink) {
+    homeLink.addEventListener("click", function (e) {
+      var isIntro = state.qIndex === 0;
+      var isConfirm = state.qIndex === TOTAL + 1;
+      if (isIntro || isConfirm) return;
+      var ok = window.confirm("Leave this form? Your answers won't be saved. · ចាកចេញពីទម្រង់នេះ? ចម្លើយរបស់អ្នកនឹងមិនត្រូវបានរក្សាទុកទេ។");
+      if (!ok) e.preventDefault();
+    });
   }
 
   render();
