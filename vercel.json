@@ -38,6 +38,7 @@
     { "source": "/admin", "destination": "/", "permanent": false }
   ],
   "rewrites": [
-    { "source": "/hr-intake", "destination": "/hr-intake.html" }
+    { "source": "/hr-intake", "destination": "/hr-intake.html" },
+    { "source": "/training-intake", "destination": "/training-intake.html" }
   ]
 }
