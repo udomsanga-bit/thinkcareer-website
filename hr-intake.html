@@ -91,6 +91,7 @@ a{color:var(--link);}
 .required-mark{color:var(--danger); margin-left:4px;}
 
 .field-input,.field-textarea{width:100%; min-height:48px; padding:13px 15px; border-radius:var(--radius-sm); border:1.5px solid var(--border-solid); font-size:16px; font-family:inherit; background:var(--bg); color:var(--ink); transition:border-color .15s ease, box-shadow .15s ease;}
+.field-input::placeholder,.field-textarea::placeholder{color:var(--muted); opacity:.75;}
 .field-input:focus,.field-textarea:focus{outline:none; border-color:var(--mint); box-shadow:0 0 0 3px rgba(143,191,181,0.3);}
 .field-input.err,.field-textarea.err{border-color:var(--danger);}
 .field-textarea{min-height:110px; resize:vertical;}
@@ -232,22 +233,22 @@ a{color:var(--link);}
 
   function buildQuestions() {
     return [
-      { id: "full_name", kind: "text", type: "text", required: true, section: "About you · អំពីលោកអ្នក", en: "Full name", kh: "ឈ្មោះពេញ" },
+      { id: "full_name", kind: "text", type: "text", required: true, placeholder: "e.g. Sok Dara · ឧ. សុខ ដារា", section: "About you · អំពីលោកអ្នក", en: "Full name", kh: "ឈ្មោះពេញ" },
       { id: "position", kind: "single", required: true, section: "About you · អំពីលោកអ្នក", en: "What is your position?", kh: "តួនាទី", options: [["owner", "Owner · ម្ចាស់"], ["cofounder", "Co-founder · សហស្ថាបនិក"], ["manager", "Manager · អ្នកគ្រប់គ្រង"], ["other", "Other · ផ្សេងៗ"]] },
-      { id: "phone", kind: "text", type: "tel", required: true, section: "About you · អំពីលោកអ្នក", en: "Phone / Telegram", kh: "លេខទូរស័ព្ទ / Telegram" },
-      { id: "email", kind: "text", type: "email", required: false, section: "About you · អំពីលោកអ្នក", en: "Email", kh: "អ៊ីមែល" },
+      { id: "phone", kind: "text", type: "tel", required: true, placeholder: "e.g. 012 345 678", section: "About you · អំពីលោកអ្នក", en: "Phone / Telegram", kh: "លេខទូរស័ព្ទ / Telegram" },
+      { id: "email", kind: "text", type: "email", required: false, placeholder: "e.g. name@example.com", section: "About you · អំពីលោកអ្នក", en: "Email", kh: "អ៊ីមែល" },
       { id: "meeting_language", kind: "single", required: true, section: "About you · អំពីលោកអ្នក", en: "Preferred meeting language", kh: "ភាសាដែលពេញចិត្តសម្រាប់កិច្ចប្រជុំ", options: [["khmer", "Khmer · ខ្មែរ"], ["english", "English · អង់គ្លេស"], ["either", "Either · ទាំងពីរ"]] },
 
       { id: null, kind: "section", en: "Your business", kh: "អំពីអាជីវកម្ម" },
 
-      { id: "company_name", kind: "text", type: "text", required: true, section: "Your business · អំពីអាជីវកម្ម", en: "Company name / trading name", kh: "ឈ្មោះក្រុមហ៊ុន / ឈ្មោះពាណិជ្ជកម្ម" },
+      { id: "company_name", kind: "text", type: "text", required: true, placeholder: "e.g. Golden Rice Co., Ltd", section: "Your business · អំពីអាជីវកម្ម", en: "Company name / trading name", kh: "ឈ្មោះក្រុមហ៊ុន / ឈ្មោះពាណិជ្ជកម្ម" },
       { id: "legal_form", kind: "single", required: true, section: "Your business · អំពីអាជីវកម្ម", en: "Legal form", kh: "ទម្រង់គតិយុត្ត", options: [["sole_proprietor", "Sole proprietor · សហគ្រាសឯកបុគ្គល"], ["co_ltd", "Co., Ltd · ក្រុមហ៊ុនឯកជនទទួលខុសត្រូវមានកម្រិត"], ["other", "Other · ផ្សេងៗ"], ["not_sure", "Not sure · មិនប្រាកដ"]] },
-      { id: "industry", kind: "textarea", required: true, section: "Your business · អំពីអាជីវកម្ម", en: "Industry and main products or services", kh: "វិស័យ និងផលិតផល ឬសេវាកម្មចម្បង" },
+      { id: "industry", kind: "textarea", required: true, placeholder: "e.g. Restaurant — Khmer food, dine-in and delivery · ឧ. ភោជនីយដ្ឋានអាហារខ្មែរ លក់តាមហាង និងដឹកជញ្ជូន", section: "Your business · អំពីអាជីវកម្ម", en: "Industry and main products or services", kh: "វិស័យ និងផលិតផល ឬសេវាកម្មចម្បង" },
       { id: "year_started", kind: "single", required: false, section: "Your business · អំពីអាជីវកម្ម", en: "Year started", kh: "ឆ្នាំចាប់ផ្តើមប្រតិបត្តិការ", options: [["before_2010", "Before 2010"], ["2010_2015", "2010–2015"], ["2016_2020", "2016–2020"], ["2021_2023", "2021–2023"], ["2024_2026", "2024–2026"], ["not_sure", "Not sure · មិនប្រាកដ"]] },
-      { id: "locations", kind: "text", type: "text", required: false, section: "Your business · អំពីអាជីវកម្ម", en: "Locations / branches", kh: "ទីតាំង / សាខា" },
+      { id: "locations", kind: "text", type: "text", required: false, placeholder: "e.g. Phnom Penh, 2 branches · ឧ. ភ្នំពេញ ២ សាខា", section: "Your business · អំពីអាជីវកម្ម", en: "Locations / branches", kh: "ទីតាំង / សាខា" },
       { id: "growth_12m", kind: "single", required: true, section: "Your business · អំពីអាជីវកម្ម", en: "Growth in the last 12 months", kh: "កំណើនក្នុងរយៈពេល ១២ ខែចុងក្រោយ", options: [["shrinking", "Shrinking · ថយចុះ"], ["flat", "Flat · ដដែល"], ["growing", "Growing · កើនឡើង"]] },
-      { id: "plans_2y", kind: "textarea", required: false, section: "Your business · អំពីអាជីវកម្ម", en: "Plans for the next 2 years", kh: "ផែនការសម្រាប់ ២ ឆ្នាំខាងមុខ" },
-      { id: "decision_maker", kind: "text", type: "text", required: true, section: "Your business · អំពីអាជីវកម្ម", en: "Who decides on hiring, pay and dismissal?", kh: "តើនរណាជាអ្នកសម្រេចលើការជ្រើសរើស ប្រាក់ខែ និងការបញ្ឈប់បុគ្គលិក?" },
+      { id: "plans_2y", kind: "textarea", required: false, placeholder: "e.g. Open a second branch, start delivery · ឧ. បើកសាខាទីពីរ ចាប់ផ្តើមសេវាដឹកជញ្ជូន", section: "Your business · អំពីអាជីវកម្ម", en: "Plans for the next 2 years", kh: "ផែនការសម្រាប់ ២ ឆ្នាំខាងមុខ" },
+      { id: "decision_maker", kind: "text", type: "text", required: true, placeholder: "e.g. The owner, or the General Manager · ឧ. ម្ចាស់អាជីវកម្ម", section: "Your business · អំពីអាជីវកម្ម", en: "Who decides on hiring, pay and dismissal?", kh: "តើនរណាជាអ្នកសម្រេចលើការជ្រើសរើស ប្រាក់ខែ និងការបញ្ឈប់បុគ្គលិក?" },
 
       { id: null, kind: "section", en: "Your team", kh: "ក្រុមការងារ" },
 
@@ -256,7 +257,7 @@ a{color:var(--link);}
       { id: "staff_daily", kind: "single", required: false, section: "Your team · ក្រុមការងារ", en: "Daily workers today", kh: "កម្មករប្រចាំថ្ងៃបច្ចុប្បន្ន", options: smallCountOptions() },
       { id: "staff_12m", kind: "single", required: false, section: "Your team · ក្រុមការងារ", en: "Expected staff in 12 months", kh: "ចំនួនបុគ្គលិករំពឹងទុកក្នុង ១២ ខែខាងមុខ", options: bigCountOptions() },
       { id: "leavers_12m", kind: "single", required: false, section: "Your team · ក្រុមការងារ", en: "Staff who left in the last 12 months", kh: "ចំនួនបុគ្គលិកដែលបានចាកចេញក្នុង ១២ ខែចុងក្រោយ", options: smallCountOptions() },
-      { id: "hard_roles", kind: "text", type: "text", required: false, section: "Your team · ក្រុមការងារ", en: "Roles that are hardest to fill", kh: "តួនាទីដែលពិបាកជ្រើសរើសបំផុត" },
+      { id: "hard_roles", kind: "text", type: "text", required: false, placeholder: "e.g. Sales staff, technicians · ឧ. បុគ្គលិកលក់, ជាងបច្ចេកទេស", section: "Your team · ក្រុមការងារ", en: "Roles that are hardest to fill", kh: "តួនាទីដែលពិបាកជ្រើសរើសបំផុត" },
       { id: "family_staff", kind: "single", required: false, section: "Your team · ក្រុមការងារ", en: "Any family members working in the business?", kh: "មានសមាជិកគ្រួសារធ្វើការក្នុងអាជីវកម្មដែរឬទេ?", options: [["yes", "Yes · មាន"], ["no", "No · គ្មាន"]] },
       { id: "hr_owner", kind: "single", required: true, section: "Your team · ក្រុមការងារ", en: "Who handles HR today?", kh: "តើនរណាជាអ្នកទទួលបន្ទុកការងារធនធានមនុស្សបច្ចុប្បន្ន?", options: [["owner", "Owner · ម្ចាស់"], ["admin_accountant", "Admin or accountant · បុគ្គលិករដ្ឋបាល ឬគណនេយ្យ"], ["hr_staff", "HR staff · បុគ្គលិកធនធានមនុស្ស"], ["outsourced", "Outsourced · ជួលក្រៅ"], ["nobody", "Nobody · គ្មាន"]] },
 
@@ -277,7 +278,7 @@ a{color:var(--link);}
 
       { id: null, kind: "section", en: "Priorities and budget", kh: "អាទិភាព និងថវិកា" },
 
-      { id: "trigger", kind: "textarea", required: true, section: "Priorities and budget · អាទិភាព និងថវិកា", en: "What made you look for HR help now?", kh: "ហេតុអ្វីបានជាលោកអ្នកស្វែងរកជំនួយផ្នែកធនធានមនុស្សនៅពេលនេះ?" },
+      { id: "trigger", kind: "textarea", required: true, placeholder: "e.g. Several staff resigned recently and we have no replacement plan · ឧ. បុគ្គលិកច្រើននាក់បានលាលែងពីការងារថ្មីៗនេះ", section: "Priorities and budget · អាទិភាព និងថវិកា", en: "What made you look for HR help now?", kh: "ហេតុអ្វីបានជាលោកអ្នកស្វែងរកជំនួយផ្នែកធនធានមនុស្សនៅពេលនេះ?" },
       { id: "top_problems", kind: "multiselect", required: true, maxSelect: 3, helper: "Choose up to 3 · ជ្រើសបានដល់ ៣", section: "Priorities and budget · អាទិភាព និងថវិកា", en: "Your top 3 people problems today", kh: "បញ្ហាធំៗទាក់ទងនឹងបុគ្គលិក ៣ ចំណុចបច្ចុប្បន្ន", options: [
         ["turnover", "High staff turnover · ការលាលែងពីការងាររបស់បុគ្គលិកច្រើន"],
         ["hiring", "Difficulty hiring the right people · ពិបាកក្នុងការជ្រើសរើសបុគ្គលិកដែលត្រឹមត្រូវ"],
@@ -291,7 +292,7 @@ a{color:var(--link);}
         ["training_gap", "Lack of training or skill gaps · កង្វះការបណ្តុះបណ្តាល ឬជំនាញ"],
         ["other", "Other (please describe) · ផ្សេងៗ (សូមពិពណ៌នា)"],
       ] },
-      { id: "desired_change", kind: "textarea", required: false, section: "Priorities and budget · អាទិភាព និងថវិកា", en: "In 12 months, what would you like to be different?", kh: "ក្នុងរយៈពេល ១២ ខែ តើលោកអ្នកចង់ឃើញអ្វីផ្លាស់ប្តូរ?" },
+      { id: "desired_change", kind: "textarea", required: false, placeholder: "e.g. Lower staff turnover and clearer job roles · ឧ. បន្ថយការលាលែងពីការងារ និងតួនាទីច្បាស់លាស់", section: "Priorities and budget · អាទិភាព និងថវិកា", en: "In 12 months, what would you like to be different?", kh: "ក្នុងរយៈពេល ១២ ខែ តើលោកអ្នកចង់ឃើញអ្វីផ្លាស់ប្តូរ?" },
       { id: "disputes_2y", kind: "single", required: false, section: "Priorities and budget · អាទិភាព និងថវិកា", en: "Any labour disputes or staff complaints in the last 2 years?", kh: "មានវិវាទការងារ ឬបណ្តឹងពីបុគ្គលិកក្នុងរយៈពេល ២ ឆ្នាំចុងក្រោយដែរឬទេ?", options: [["yes", "Yes · មាន"], ["no", "No · គ្មាន"], ["prefer_in_person", "Prefer to discuss in person · សូមពិភាក្សាផ្ទាល់"]] },
       { id: "support_type", kind: "single", required: true, section: "Priorities and budget · អាទិភាព និងថវិកា", en: "Preferred support", kh: "ប្រភេទជំនួយដែលពេញចិត្ត", options: [["one_off", "One-off project · គម្រោងតែម្តង"], ["monthly", "Monthly support · ជំនួយប្រចាំខែ"], ["not_sure", "Not sure · មិនប្រាកដ"]] },
       { id: "budget", kind: "single", required: false, section: "Priorities and budget · អាទិភាព និងថវិកា", en: "Budget range", kh: "ថវិកាប្រហែល", options: [["under_300", "Under $300 · តិចជាង $300"], ["300_1000", "$300–1,000"], ["over_1000", "Over $1,000 · លើស $1,000"], ["not_sure", "Not sure · មិនប្រាកដ"]] },
@@ -373,6 +374,28 @@ a{color:var(--link);}
     var v = fd[id];
     if (Array.isArray(v)) return v.length === 0;
     return v === undefined || v === null || String(v).trim() === "";
+  }
+
+  // Same pattern as the server's check in api/hr-intake.js, so a value that
+  // passes here will also pass on submit.
+  var EMAIL_RE = /^[^\s@<>"',;]+@[^\s@<>"',;]+\.[^\s@<>"',;]{2,}$/;
+  function isValidEmail(v) { return EMAIL_RE.test(String(v).trim()); }
+
+  // Returns null (no error), "required", or "invalid_email" for the current
+  // question — used both to block "Continue" and to decide which inline
+  // message to show, so an invalid email is caught on its own question
+  // instead of only surfacing at the very end, on submit.
+  function fieldErrorKind(q, fd) {
+    if (q.kind === "consent") return fd.consent !== true ? "required" : null;
+    if (q.id === "email") {
+      var v = fd.email;
+      if (v && String(v).trim() !== "" && !isValidEmail(v)) return "invalid_email";
+      return null;
+    }
+    if (q.kind === "text" || q.kind === "textarea" || q.kind === "multiselect") {
+      if (q.required && isFieldEmpty(q.id, fd)) return "required";
+    }
+    return null;
   }
 
   function update(id, value) { state.formData[id] = value; }
@@ -488,12 +511,7 @@ a{color:var(--link);}
   function continueClick() {
     if (state.committing || state.submitting) return;
     var q = QUESTIONS[state.qIndex - 1];
-    if (q.required && (q.kind === "text" || q.kind === "textarea" || q.kind === "multiselect")) {
-      if (isFieldEmpty(q.id, state.formData)) { state.showErrors = true; render(); return; }
-    }
-    if (q.required && q.kind === "consent") {
-      if (state.formData.consent !== true) { state.showErrors = true; render(); return; }
-    }
+    if (fieldErrorKind(q, state.formData)) { state.showErrors = true; render(); return; }
     if (state.qIndex === TOTAL) {
       submitForm();
       return;
@@ -569,21 +587,19 @@ a{color:var(--link);}
       return out;
     }
 
-    var err = false;
-    if (showErrors && q.required) {
-      if (q.kind === "text" || q.kind === "textarea" || q.kind === "multiselect") err = isFieldEmpty(q.id, fd);
-      else if (q.kind === "consent") err = fd.consent !== true;
-    }
+    var errKind = showErrors ? fieldErrorKind(q, fd) : null;
+    var err = !!errKind;
 
     out += '<div class="q-eyebrow-group">' + q.section + "</div>";
     out += '<h2 class="q-title-en">' + escHtml(q.en) + (q.required ? '<span class="required-mark">*</span>' : "") + "</h2>";
     out += '<div class="q-title-kh">' + q.kh + "</div>";
 
     if (q.kind === "text") {
-      out += '<input type="' + (q.type || "text") + '" class="field-input' + (err ? " err" : "") + '" data-field="' + q.id + '" value="' + escHtml(fd[q.id] || "") + '">';
-      if (err) out += '<div class="error-text">This field is required &middot; ត្រូវការបំពេញ</div>';
+      out += '<input type="' + (q.type || "text") + '" class="field-input' + (err ? " err" : "") + '" data-field="' + q.id + '" value="' + escHtml(fd[q.id] || "") + '"' + (q.placeholder ? ' placeholder="' + escHtml(q.placeholder) + '"' : "") + ">";
+      if (errKind === "required") out += '<div class="error-text">This field is required &middot; ត្រូវការបំពេញ</div>';
+      else if (errKind === "invalid_email") out += '<div class="error-text">Please enter a valid email address &middot; សូមបញ្ចូលអាសយដ្ឋានអ៊ីមែលឱ្យត្រឹមត្រូវ</div>';
     } else if (q.kind === "textarea") {
-      out += '<textarea class="field-textarea' + (err ? " err" : "") + '" data-field="' + q.id + '">' + escHtml(fd[q.id] || "") + "</textarea>";
+      out += '<textarea class="field-textarea' + (err ? " err" : "") + '" data-field="' + q.id + '"' + (q.placeholder ? ' placeholder="' + escHtml(q.placeholder) + '"' : "") + ">" + escHtml(fd[q.id] || "") + "</textarea>";
       if (err) out += '<div class="error-text">This field is required &middot; ត្រូវការបំពេញ</div>';
     } else if (q.kind === "single") {
       var listClass = "choice-list" + (committing ? " is-committing" : "");
