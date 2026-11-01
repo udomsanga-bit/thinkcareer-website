@@ -220,7 +220,7 @@ a{color:var(--link);}
         <img class="brand-logo" src="assets/logo.jpg" alt="" width="34" height="34">
         <div class="brand-name">ThinkCareer</div>
       </a>
-      <div class="brand-sub">Training Enquiry Form &middot; Training Enquiry Form [KH TODO]</div>
+      <div class="brand-sub">Training Enquiry Form &middot; ទម្រង់សាកសួរវគ្គបណ្តុះបណ្តាល</div>
     </div>
     <div class="progress-track is-hidden" id="progressTrack"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   </div>
@@ -250,42 +250,42 @@ a{color:var(--link);}
 
   function buildQuestions() {
     return [
-      { id: "full_name", kind: "text", type: "text", required: true, placeholder: "e.g. Sok Dara [KH TODO]", section: "About you [KH TODO]", en: "Full name", kh: "Full name [KH TODO]" },
-      { id: "position", kind: "single", required: true, section: "About you [KH TODO]", en: "What is your position?", kh: "What is your position? [KH TODO]", options: [["owner", "Owner [KH TODO]"], ["manager", "Manager [KH TODO]"], ["hr_lead", "HR / Training lead [KH TODO]"], ["other", "Other [KH TODO]"]] },
-      { id: "phone", kind: "text", type: "tel", required: true, placeholder: "e.g. 012 345 678", section: "About you [KH TODO]", en: "Phone / Telegram", kh: "Phone / Telegram [KH TODO]" },
-      { id: "email", kind: "text", type: "email", required: false, placeholder: "e.g. name@example.com", section: "About you [KH TODO]", en: "Email", kh: "Email [KH TODO]" },
-      { id: "meeting_language", kind: "single", required: true, section: "About you [KH TODO]", en: "Preferred language for the call", kh: "Preferred language for the call [KH TODO]", options: [["khmer", "Khmer [KH TODO]"], ["english", "English [KH TODO]"], ["either", "Either [KH TODO]"]] },
+      { id: "full_name", kind: "text", type: "text", required: true, placeholder: "e.g. Sok Dara · ឧ. សុខ ដារា", section: "About you · អំពីលោកអ្នក", en: "Full name", kh: "ឈ្មោះពេញ" },
+      { id: "position", kind: "single", required: true, section: "About you · អំពីលោកអ្នក", en: "What is your position?", kh: "តួនាទី", options: [["owner", "Owner · ម្ចាស់"], ["manager", "Manager · អ្នកគ្រប់គ្រង"], ["hr_lead", "HR / Training lead · ប្រធានផ្នែកធនធានមនុស្ស / បណ្តុះបណ្តាល"], ["other", "Other · ផ្សេងៗ"]] },
+      { id: "phone", kind: "text", type: "tel", required: true, placeholder: "e.g. 012 345 678", section: "About you · អំពីលោកអ្នក", en: "Phone / Telegram", kh: "លេខទូរស័ព្ទ / Telegram" },
+      { id: "email", kind: "text", type: "email", required: false, placeholder: "e.g. name@example.com", section: "About you · អំពីលោកអ្នក", en: "Email", kh: "អ៊ីមែល" },
+      { id: "meeting_language", kind: "single", required: true, section: "About you · អំពីលោកអ្នក", en: "Preferred language for the call", kh: "ភាសាដែលពេញចិត្តសម្រាប់ការហៅទូរស័ព្ទ", options: [["khmer", "Khmer · ខ្មែរ"], ["english", "English · អង់គ្លេស"], ["either", "Either · ទាំងពីរ"]] },
 
-      { id: null, kind: "section", en: "Your organisation", kh: "Your organisation [KH TODO]" },
+      { id: null, kind: "section", en: "Your organisation", kh: "អំពីស្ថាប័ន" },
 
-      { id: "company_name", kind: "text", type: "text", required: true, placeholder: "e.g. Golden Rice Co., Ltd", section: "Your organisation [KH TODO]", en: "Company name / trading name", kh: "Company name / trading name [KH TODO]" },
-      { id: "industry", kind: "textarea", required: true, placeholder: "e.g. Restaurant chain — dine-in and delivery [KH TODO]", section: "Your organisation [KH TODO]", en: "Industry and main products or services", kh: "Industry and main products or services [KH TODO]" },
-      { id: "staff_fulltime", kind: "single", required: true, section: "Your organisation [KH TODO]", en: "Full-time staff today", kh: "Full-time staff today [KH TODO]", options: bigCountOptions() },
+      { id: "company_name", kind: "text", type: "text", required: true, placeholder: "e.g. Golden Rice Co., Ltd", section: "Your organisation · អំពីស្ថាប័ន", en: "Company name / trading name", kh: "ឈ្មោះក្រុមហ៊ុន / ឈ្មោះពាណិជ្ជកម្ម" },
+      { id: "industry", kind: "textarea", required: true, placeholder: "e.g. Restaurant chain — dine-in and delivery · ឧ. បណ្តាញភោជនីយដ្ឋាន លក់តាមហាង និងដឹកជញ្ជូន", section: "Your organisation · អំពីស្ថាប័ន", en: "Industry and main products or services", kh: "វិស័យ និងផលិតផល ឬសេវាកម្មចម្បង" },
+      { id: "staff_fulltime", kind: "single", required: true, section: "Your organisation · អំពីស្ថាប័ន", en: "Full-time staff today", kh: "បុគ្គលិកពេញម៉ោងបច្ចុប្បន្ន", options: bigCountOptions() },
 
-      { id: null, kind: "section", en: "Training interest", kh: "Training interest [KH TODO]" },
+      { id: null, kind: "section", en: "Training interest", kh: "ចំណាប់អារម្មណ៍លើការបណ្តុះបណ្តាល" },
 
-      { id: "programmes", kind: "multiselect", required: true, maxSelect: 4, helper: "Choose all that apply [KH TODO]", section: "Training interest [KH TODO]", en: "Which training(s) are you interested in?", kh: "Which training(s) are you interested in? [KH TODO]", options: [
-        ["tot", "Training of the Trainers (ToT) [KH TODO]"],
-        ["correspondence", "Business Correspondence in the AI Era [KH TODO]"],
-        ["first_time_manager", "First-Time Manager Training [KH TODO]"],
-        ["ai_tools", "AI Tools for Office Work Efficiency [KH TODO]"],
-        ["other", "Other (please describe) [KH TODO]"],
+      { id: "programmes", kind: "multiselect", required: true, maxSelect: 4, helper: "Choose all that apply · ជ្រើសរើសទាំងអស់ដែលត្រូវនឹងអ្នក", section: "Training interest · ចំណាប់អារម្មណ៍លើការបណ្តុះបណ្តាល", en: "Which training(s) are you interested in?", kh: "តើលោកអ្នកចាប់អារម្មណ៍លើវគ្គបណ្តុះបណ្តាលមួយណាខ្លះ?", options: [
+        ["tot", "Training of the Trainers (ToT) · វគ្គបណ្តុះបណ្តាលគ្រូបង្គោល"],
+        ["correspondence", "Business Correspondence in the AI Era · ទំនាក់ទំនងអាជីវកម្មក្នុងយុគសម័យ AI"],
+        ["first_time_manager", "First-Time Manager Training · វគ្គបណ្តុះបណ្តាលសម្រាប់អ្នកគ្រប់គ្រងថ្មី"],
+        ["ai_tools", "AI Tools for Office Work Efficiency · ឧបករណ៍ AI សម្រាប់បង្កើនប្រសិទ្ធភាពការងារការិយាល័យ"],
+        ["other", "Other (please describe) · ផ្សេងៗ (សូមពិពណ៌នា)"],
       ] },
-      { id: "programmes_other", kind: "text", type: "text", required: false, placeholder: "e.g. Customer service skills [KH TODO]", section: "Training interest [KH TODO]", en: "Other training — please describe", kh: "Other training — please describe [KH TODO]" },
-      { id: "audience", kind: "text", type: "text", required: true, placeholder: "e.g. 10 branch managers [KH TODO]", section: "Training interest [KH TODO]", en: "Who would attend?", kh: "Who would attend? [KH TODO]" },
-      { id: "group_size", kind: "single", required: true, section: "Training interest [KH TODO]", en: "Expected number of participants", kh: "Expected number of participants [KH TODO]", options: [["1_5", "1–5"], ["6_15", "6–15"], ["16_30", "16–30"], ["30_plus", "30+"]] },
-      { id: "format_pref", kind: "single", required: true, section: "Training interest [KH TODO]", en: "Preferred format", kh: "Preferred format [KH TODO]", options: [["in_person", "In-person, at our office [KH TODO]"], ["online", "Online [KH TODO]"], ["hybrid", "Either / hybrid [KH TODO]"]] },
-      { id: "training_language", kind: "single", required: true, section: "Training interest [KH TODO]", en: "Preferred training language", kh: "Preferred training language [KH TODO]", options: [["khmer", "Khmer [KH TODO]"], ["english", "English [KH TODO]"], ["either", "Either [KH TODO]"]] },
+      { id: "programmes_other", kind: "text", type: "text", required: false, placeholder: "e.g. Customer service skills · ឧ. ជំនាញសេវាកម្មអតិថិជន", section: "Training interest · ចំណាប់អារម្មណ៍លើការបណ្តុះបណ្តាល", en: "Other training — please describe", kh: "វគ្គបណ្តុះបណ្តាលផ្សេងទៀត — សូមពិពណ៌នា" },
+      { id: "audience", kind: "text", type: "text", required: true, placeholder: "e.g. 10 branch managers · ឧ. អ្នកគ្រប់គ្រងសាខា ១០ នាក់", section: "Training interest · ចំណាប់អារម្មណ៍លើការបណ្តុះបណ្តាល", en: "Who would attend?", kh: "តើនរណានឹងចូលរួម?" },
+      { id: "group_size", kind: "single", required: true, section: "Training interest · ចំណាប់អារម្មណ៍លើការបណ្តុះបណ្តាល", en: "Expected number of participants", kh: "ចំនួនអ្នកចូលរួមប៉ាន់ស្មាន", options: [["1_5", "1–5"], ["6_15", "6–15"], ["16_30", "16–30"], ["30_plus", "30+"]] },
+      { id: "format_pref", kind: "single", required: true, section: "Training interest · ចំណាប់អារម្មណ៍លើការបណ្តុះបណ្តាល", en: "Preferred format", kh: "ទម្រង់ដែលពេញចិត្ត", options: [["in_person", "In-person, at our office · ជួបផ្ទាល់ នៅការិយាល័យរបស់យើង"], ["online", "Online · អនឡាញ"], ["hybrid", "Either / hybrid · ទាំងពីរ / កូនកាត់"]] },
+      { id: "training_language", kind: "single", required: true, section: "Training interest · ចំណាប់អារម្មណ៍លើការបណ្តុះបណ្តាល", en: "Preferred training language", kh: "ភាសាដែលពេញចិត្តសម្រាប់ការបណ្តុះបណ្តាល", options: [["khmer", "Khmer · ខ្មែរ"], ["english", "English · អង់គ្លេស"], ["either", "Either · ទាំងពីរ"]] },
 
-      { id: null, kind: "section", en: "Goals, timing and budget", kh: "Goals, timing and budget [KH TODO]" },
+      { id: null, kind: "section", en: "Goals, timing and budget", kh: "គោលដៅ ពេលវេលា និងថវិកា" },
 
-      { id: "goal", kind: "textarea", required: true, placeholder: "e.g. Fewer customer complaints about rude or slow service [KH TODO]", section: "Goals, timing and budget [KH TODO]", en: "What outcome are you hoping for from this training?", kh: "What outcome are you hoping for from this training? [KH TODO]" },
-      { id: "timing", kind: "single", required: true, section: "Goals, timing and budget [KH TODO]", en: "When would you like to run this?", kh: "When would you like to run this? [KH TODO]", options: [["within_1_month", "Within 1 month [KH TODO]"], ["1_3_months", "1–3 months [KH TODO]"], ["flexible", "Flexible / not sure [KH TODO]"]] },
-      { id: "budget", kind: "single", required: false, section: "Goals, timing and budget [KH TODO]", en: "Budget range", kh: "Budget range [KH TODO]", options: [["under_300", "Under $300"], ["300_800", "$300–800"], ["over_800", "Over $800"], ["not_sure", "Not sure [KH TODO]"]] },
+      { id: "goal", kind: "textarea", required: true, placeholder: "e.g. Fewer customer complaints about rude or slow service · ឧ. បន្ថយបណ្តឹងអតិថិជនអំពីសេវាមិនគួរសម ឬយឺតយ៉ាវ", section: "Goals, timing and budget · គោលដៅ ពេលវេលា និងថវិកា", en: "What outcome are you hoping for from this training?", kh: "តើលោកអ្នកសង្ឃឹមថានឹងទទួលបានលទ្ធផលអ្វីពីការបណ្តុះបណ្តាលនេះ?" },
+      { id: "timing", kind: "single", required: true, section: "Goals, timing and budget · គោលដៅ ពេលវេលា និងថវិកា", en: "When would you like to run this?", kh: "តើលោកអ្នកចង់រៀបចំការបណ្តុះបណ្តាលនេះនៅពេលណា?", options: [["within_1_month", "Within 1 month · ក្នុង ១ ខែ"], ["1_3_months", "1–3 months · ១–៣ ខែ"], ["flexible", "Flexible / not sure · អាចផ្លាស់ប្តូរបាន / មិនប្រាកដ"]] },
+      { id: "budget", kind: "single", required: false, section: "Goals, timing and budget · គោលដៅ ពេលវេលា និងថវិកា", en: "Budget range", kh: "ថវិកាប្រហែល", options: [["under_300", "Under $300 · តិចជាង $300"], ["300_800", "$300–800"], ["over_800", "Over $800 · លើស $800"], ["not_sure", "Not sure · មិនប្រាកដ"]] },
 
-      { id: null, kind: "section", en: "Consent", kh: "Consent [KH TODO]" },
+      { id: null, kind: "section", en: "Consent", kh: "ការយល់ព្រម" },
 
-      { id: "consent", kind: "consent", required: true, section: "Consent [KH TODO]", en: "Consent", kh: "Consent [KH TODO]" },
+      { id: "consent", kind: "consent", required: true, section: "Consent · ការយល់ព្រម", en: "Consent", kh: "ការយល់ព្រម" },
     ];
   }
 
@@ -541,13 +541,13 @@ a{color:var(--link);}
     return (
       '<div class="step-anim' + (committing ? " is-leaving" : "") + '">' +
       '<h1 class="q-title-en">ThinkCareer Corporate Training &mdash; Enquiry Form</h1>' +
-      '<div class="q-title-kh" style="margin-bottom:8px">ThinkCareer Corporate Training &mdash; Enquiry Form [KH TODO]</div>' +
-      '<div class="intro-time">' + ICONS.clock + "<span>About 6 minutes &middot; About 6 minutes [KH TODO]</span></div>" +
+      '<div class="q-title-kh" style="margin-bottom:8px">ទម្រង់សាកសួរអំពីការបណ្តុះបណ្តាលសាជីវកម្ម</div>' +
+      '<div class="intro-time">' + ICONS.clock + "<span>About 6 minutes &middot; ប្រហែល ៦ នាទី</span></div>" +
       '<p class="intro-p" style="margin-top:14px">Thank you for your interest in ThinkCareer Corporate Training. One short question at a time &mdash; just tap to answer. Your answers help us put together a training proposal that actually fits your team.</p>' +
-      '<p class="intro-p-kh">Thank you for your interest in ThinkCareer Corporate Training. One short question at a time &mdash; just tap to answer. Your answers help us put together a training proposal that actually fits your team. [KH TODO]</p>' +
-      '<div class="intro-box"><div class="intro-box-title">' + ICONS.lock + "Confidentiality &middot; Confidentiality [KH TODO]</div>" +
+      '<p class="intro-p-kh">សូមអរគុណចំពោះការចាប់អារម្មណ៍លើវគ្គបណ្តុះបណ្តាលសាជីវកម្មរបស់ ThinkCareer។ សំណួរនីមួយៗខ្លីៗ គ្រាន់តែចុចជ្រើសរើស។ ចម្លើយរបស់លោកអ្នកជួយឱ្យយើងរៀបចំសំណើវគ្គបណ្តុះបណ្តាលដែលសមស្របនឹងក្រុមការងាររបស់អ្នកបំផុត។</p>' +
+      '<div class="intro-box"><div class="intro-box-title">' + ICONS.lock + "Confidentiality &middot; ការរក្សាការសម្ងាត់</div>" +
       '<p class="intro-p">All information is kept confidential and used only to prepare your training proposal. We will not share it without your written consent.</p>' +
-      '<p class="intro-p-kh" style="margin-bottom:0">All information is kept confidential and used only to prepare your training proposal. We will not share it without your written consent. [KH TODO]</p></div>' +
+      '<p class="intro-p-kh" style="margin-bottom:0">ព័ត៌មានទាំងអស់នឹងត្រូវរក្សាជាការសម្ងាត់ ហើយប្រើសម្រាប់តែការរៀបចំសំណើវគ្គបណ្តុះបណ្តាលរបស់លោកអ្នកប៉ុណ្ណោះ។ យើងនឹងមិនចែករំលែកព័ត៌មាននេះទេ ប្រសិនបើគ្មានការយល់ព្រមជាលាយលក្ខណ៍អក្សរពីលោកអ្នក។</p></div>' +
       '<div class="nav-spacer"></div>' +
       '<button type="button" class="' + btnClass + '" data-action="start"><span>Start &middot; ចាប់ផ្តើម</span>' + ICONS.arrowRight + "</button>" +
       "</div>"
@@ -625,7 +625,7 @@ a{color:var(--link);}
     } else if (q.kind === "consent") {
       out += '<div class="consent-box"><input type="checkbox" data-action="toggle-bool" data-field="consent"' + (fd.consent ? " checked" : "") + ">";
       out += '<span><span class="doc-en">I agree that ThinkCareer may use this information to prepare a training proposal, as described above.<span class="required-mark">*</span></span>';
-      out += '<span class="doc-kh">I agree that ThinkCareer may use this information to prepare a training proposal, as described above. [KH TODO]</span>';
+      out += '<span class="doc-kh">ខ្ញុំយល់ព្រមឱ្យ ThinkCareer ប្រើប្រាស់ព័ត៌មាននេះ ដើម្បីរៀបចំសំណើវគ្គបណ្តុះបណ្តាល ដូចបានរៀបរាប់ខាងលើ។</span>';
       if (err) out += '<div class="error-text">Please confirm to continue &middot; សូមបញ្ជាក់ដើម្បីបន្ត</div>';
       out += "</span></div>";
       out += '<input type="text" class="hp-field" tabindex="-1" autocomplete="off" data-field="website" value="' + escHtml(fd.website || "") + '">';
@@ -660,14 +660,14 @@ a{color:var(--link);}
       out += '<h2 class="q-title-en cf-rise cf-d1">Thank you!</h2>';
       out += '<p class="q-title-kh cf-rise cf-d2" style="margin-bottom:18px">សូមអរគុណ!</p>';
       out += '<p class="intro-p cf-rise cf-d3">We have received your enquiry. ThinkCareer will contact you within 2 working days to discuss your training needs and arrange a free 30-minute call.</p>';
-      out += '<p class="intro-p-kh cf-rise cf-d4">We have received your enquiry. ThinkCareer will contact you within 2 working days to discuss your training needs and arrange a free 30-minute call. [KH TODO]</p>';
+      out += '<p class="intro-p-kh cf-rise cf-d4">យើងបានទទួលការសាកសួររបស់អ្នកហើយ។ ក្រុមការងារ ThinkCareer នឹងទាក់ទងអ្នកក្នុងរយៈពេល ២ ថ្ងៃធ្វើការ ដើម្បីពិភាក្សាអំពីតម្រូវការបណ្តុះបណ្តាលរបស់អ្នក និងរៀបចំការហៅទូរស័ព្ទឥតគិតថ្លៃរយៈពេល ៣០ នាទី។</p>';
     }
     out += '<h3 style="font-family:var(--display); font-size:15px; color:var(--head); margin:24px 0 4px;">What happens next &middot; ជំហានបន្ទាប់</h3>';
     out += '<table class="next-table">';
-    out += '<tr><td class="step-num">1</td><td>Free 30-minute call to understand your team and training goals<span class="next-kh">Free 30-minute call to understand your team and training goals [KH TODO]</span></td></tr>';
-    out += '<tr><td class="step-num">2</td><td>Within 5 working days: a proposal with content outline, format and fees<span class="next-kh">Within 5 working days: a proposal with content outline, format and fees [KH TODO]</span></td></tr>';
+    out += '<tr><td class="step-num">1</td><td>Free 30-minute call to understand your team and training goals<span class="next-kh">ការហៅទូរស័ព្ទឥតគិតថ្លៃរយៈពេល ៣០ នាទី ដើម្បីស្វែងយល់ពីក្រុមការងារ និងគោលដៅបណ្តុះបណ្តាលរបស់អ្នក</span></td></tr>';
+    out += '<tr><td class="step-num">2</td><td>Within 5 working days: a proposal with content outline, format and fees<span class="next-kh">ក្នុងរយៈពេល ៥ ថ្ងៃធ្វើការ៖ សំណើមួយដែលមានគ្រោងខ្លឹមសារ ទម្រង់ និងថ្លៃសេវា</span></td></tr>';
     out += "</table>";
-    out += '<p style="margin-top:24px; font-size:14px; color:var(--muted);">Contact &middot; Contact [KH TODO]: Adam (Udom Vuthy), ThinkCareer &middot; thinkcareers.net</p>';
+    out += '<p style="margin-top:24px; font-size:14px; color:var(--muted);">Contact &middot; ទំនាក់ទំនង: Adam (Udom Vuthy), ThinkCareer &middot; thinkcareers.net</p>';
     out += '<button type="button" class="btn-back" style="margin-top:10px; padding-left:0;" data-action="replay">' + ICONS.replay + "<span>Replay &middot; លេងម្តងទៀត</span></button>";
     out += "</div>";
     return out;
