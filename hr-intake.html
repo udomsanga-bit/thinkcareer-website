@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#1B2D57">
 <title>HR Solutions Intake Form — ThinkCareer</title>
 <link rel="canonical" href="https://www.thinkcareers.net/hr-intake">
 <link rel="icon" href="assets/favicon.ico">
@@ -12,6 +13,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
+  /* Same tokens as thinkcareers.net (index.html) — kept in sync so this page
+     matches the rest of the site in both light and dark mode. */
   --navy:#1B2D57;
   --navy-deep:#14224A;
   --mint:#8FBFB5;
@@ -25,6 +28,17 @@
   --border-solid:#E1E6EF;
   --danger:#B3261E;
   --danger-soft:#FBEAE8;
+  /* Theme-aware tokens: these are the ones that actually flip in dark mode.
+     --navy/--mint stay fixed (same philosophy as the live site) because they
+     only ever sit on their own dark surfaces; anything that sits on --mist or
+     --bg uses one of these instead so it keeps enough contrast at night. */
+  --head:#1B2D57;
+  --accent:#1F6B5C;
+  --action:#1B2D57;
+  --action-hover:#14224A;
+  --action-fg:#FFFFFF;
+  --link:#1B2D57;
+  --bar-bg:#1B2D57;
   --radius-sm:8px;
   --radius-md:12px;
   --radius-lg:18px;
@@ -32,36 +46,47 @@
   --sans:"Kantumruy Pro","Noto Sans Khmer",system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){ --bg:#0C1426; --mist:#1A2748; --ink:#EEF3FB; --muted:#AAB7CD; --border-solid:#28365A; color-scheme:dark; }
+  :root:not([data-theme="light"]){
+    --bg:#0C1426; --mist:#1A2748; --ink:#EEF3FB; --muted:#AAB7CD; --border-solid:#28365A; --danger-soft:#2A1216;
+    --head:#F4F6FB; --accent:#8FD0C0; --action:#8FBFB5; --action-hover:#A5CDC4; --action-fg:#0C1426; --link:#8FBFB5;
+    --navy-deep:#0A1120; --bar-bg:#0F1830; color-scheme:dark;
+  }
 }
-:root[data-theme="dark"]{ --bg:#0C1426; --mist:#1A2748; --ink:#EEF3FB; --muted:#AAB7CD; --border-solid:#28365A; color-scheme:dark; }
+:root[data-theme="dark"]{
+  --bg:#0C1426; --mist:#1A2748; --ink:#EEF3FB; --muted:#AAB7CD; --border-solid:#28365A; --danger-soft:#2A1216;
+  --head:#F4F6FB; --accent:#8FD0C0; --action:#8FBFB5; --action-hover:#A5CDC4; --action-fg:#0C1426; --link:#8FBFB5;
+  --navy-deep:#0A1120; --bar-bg:#0F1830; color-scheme:dark;
+}
 
 *{box-sizing:border-box;}
 body{margin:0; font-family:var(--sans); font-size:16px; background:var(--bg); color:var(--ink);}
-a{color:var(--navy);}
+a{color:var(--link);}
 .page{min-height:100vh; display:flex; flex-direction:column;}
 
-.header{position:sticky; top:0; z-index:20; background:var(--navy); color:#fff;}
-.header-inner{padding:14px 24px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; max-width:720px; margin:0 auto;}
-.brand-dot{width:9px; height:9px; border-radius:50%; background:var(--mint); flex-shrink:0;}
+.header{position:sticky; top:0; z-index:20; background:var(--bar-bg); color:#fff;}
+.header-inner{padding:12px 24px; display:flex; align-items:center; gap:11px; flex-wrap:wrap; max-width:720px; margin:0 auto;}
+.brand-logo{width:34px; height:34px; border-radius:8px; flex-shrink:0; display:block; object-fit:cover;}
 .brand-name{font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:0.2px;}
 .brand-sub{font-size:13px; color:var(--on-navy-muted); margin-left:auto;}
-.progress-track{height:4px; background:rgba(255,255,255,0.18);}
+.progress-track{height:4px; background:rgba(255,255,255,0.18); overflow:hidden; opacity:1; transition:opacity .25s ease;}
+.progress-track.is-hidden{opacity:0;}
 .progress-fill{height:100%; background:var(--mint); transition:width .4s cubic-bezier(.22,1,.36,1);}
 
 .container{flex:1 1 auto; width:100%; max-width:720px; margin:0 auto; padding:30px 20px 70px; box-sizing:border-box;}
 .card{background:var(--bg); border-radius:var(--radius-lg); padding:clamp(22px,5vw,44px); box-shadow:0 1px 3px rgba(15,26,46,0.07),0 10px 28px rgba(15,26,46,0.06); box-sizing:border-box; overflow:hidden; min-height:420px; display:flex; flex-direction:column;}
 
 @keyframes stepIn{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
-.step-anim{animation:stepIn .28s cubic-bezier(.22,1,.36,1) both; flex:1 1 auto; display:flex; flex-direction:column;}
+@keyframes stepOut{ from{opacity:1; transform:translateY(0);} to{opacity:0; transform:translateY(-8px);} }
+.step-anim{animation:stepIn .32s cubic-bezier(.22,1,.36,1) both; flex:1 1 auto; display:flex; flex-direction:column;}
+.step-anim.is-leaving{animation:stepOut .17s cubic-bezier(.4,0,1,1) both; pointer-events:none;}
 @keyframes choiceIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
 @keyframes choicePulse{ 0%{transform:scale(1);} 45%{transform:scale(1.015);} 100%{transform:scale(1);} }
 @keyframes checkPop{ from{opacity:0; transform:scale(.4) rotate(-8deg);} to{opacity:1; transform:scale(1) rotate(0);} }
-@keyframes btnConfirmFlash{ 0%{background:var(--navy);} 40%{background:var(--mint);} 100%{background:var(--navy);} }
-@media (prefers-reduced-motion: reduce){ .step-anim,.choice-item,.choice-check,.btn,.btn-back,.btn-skip{animation:none!important;} .progress-fill{transition:none;} .choice-item,.btn,.btn-back,.btn-skip{transition:none;} .btn::after{display:none;} .btn svg,.btn-back svg{transition:none; transform:none!important;} .choice-list.is-committing .choice-item:not(.is-selected){opacity:1!important;} .cf-icon-ring,.cf-icon-core,.cf-rise{animation:none!important; opacity:1!important; transform:none!important;} .cf-check-path{animation:none!important; stroke-dashoffset:0!important;} .cf-icon-pulse,.cf-confetti{display:none!important;} }
+@keyframes btnConfirmFlash{ 0%{filter:brightness(1);} 40%{filter:brightness(1.22);} 100%{filter:brightness(1);} }
+@media (prefers-reduced-motion: reduce){ .step-anim,.choice-item,.choice-check,.btn,.btn-back,.btn-skip{animation:none!important;} .step-anim.is-leaving{display:none!important;} .progress-fill,.progress-track{transition:none;} .choice-item,.btn,.btn-back,.btn-skip{transition:none;} .btn::after{display:none;} .btn svg,.btn-back svg{transition:none; transform:none!important;} .choice-list.is-committing .choice-item:not(.is-selected){opacity:1!important;} .cf-icon-ring,.cf-icon-core,.cf-rise{animation:none!important; opacity:1!important; transform:none!important;} .cf-check-path{animation:none!important; stroke-dashoffset:0!important;} .cf-icon-pulse,.cf-confetti{display:none!important;} }
 
-.q-eyebrow-group{display:inline-flex; align-items:center; background:var(--mist); color:var(--navy); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:16px; width:fit-content;}
-.q-title-en{font-family:var(--display); font-size:24px; font-weight:700; color:var(--navy); margin:0 0 7px; line-height:1.32;}
+.q-eyebrow-group{display:inline-flex; align-items:center; background:var(--mist); color:var(--accent); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:16px; width:fit-content;}
+.q-title-en{font-family:var(--display); font-size:24px; font-weight:700; color:var(--head); margin:0 0 7px; line-height:1.32;}
 .q-title-kh{font-size:15px; color:var(--muted); margin:0 0 28px; line-height:1.65;}
 .required-mark{color:var(--danger); margin-left:4px;}
 
@@ -83,21 +108,21 @@ a{color:var(--navy);}
 .choice-list .choice-item:nth-child(6){animation-delay:175ms;}
 .choice-item:hover{border-color:var(--mint-hover); background:var(--mist);}
 .choice-item:active{transform:scale(0.99);}
-.choice-item.is-selected{border-color:var(--navy); background:var(--mist);}
+.choice-item.is-selected{border-color:var(--action); background:var(--mist);}
 .choice-item.is-committing{animation:choicePulse .22s ease .1s;}
 .choice-list.is-committing .choice-item:not(.is-selected){opacity:.4; pointer-events:none; transition:opacity .15s ease;}
-.choice-badge{width:30px; height:30px; border-radius:50%; background:var(--mist); color:var(--navy); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0;}
-.choice-item.is-selected .choice-badge{background:var(--navy); color:var(--on-navy);}
+.choice-badge{width:30px; height:30px; border-radius:50%; background:var(--mist); color:var(--accent); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0;}
+.choice-item.is-selected .choice-badge{background:var(--action); color:var(--action-fg);}
 .choice-label{flex:1 1 auto; line-height:1.4;}
-.choice-check{width:19px; height:19px; flex-shrink:0; color:var(--navy); animation:checkPop .22s cubic-bezier(.34,1.56,.64,1) both;}
+.choice-check{width:19px; height:19px; flex-shrink:0; color:var(--accent); animation:checkPop .22s cubic-bezier(.34,1.56,.64,1) both;}
 
 .doc-row{display:flex; align-items:flex-start; gap:12px; padding:13px 0; border-bottom:1px solid var(--mist); cursor:pointer;}
-.doc-row input{margin-top:3px; width:19px; height:19px; accent-color:var(--navy); flex-shrink:0;}
+.doc-row input{margin-top:3px; width:19px; height:19px; accent-color:var(--action); flex-shrink:0;}
 .doc-en{display:block; font-weight:500; color:var(--ink); font-size:15px;}
 .doc-kh{display:block; font-size:13px; color:var(--muted); margin-top:2px;}
 
 .consent-box{background:var(--mist); border:1px solid var(--border-solid); border-radius:var(--radius-md); padding:18px; display:flex; gap:12px; align-items:flex-start; margin-top:4px;}
-.consent-box input{margin-top:3px; width:19px; height:19px; accent-color:var(--navy); flex-shrink:0;}
+.consent-box input{margin-top:3px; width:19px; height:19px; accent-color:var(--action); flex-shrink:0;}
 
 .nav-row{display:flex; align-items:center; margin-top:30px; gap:10px;}
 .nav-spacer{flex:1 1 auto;}
@@ -107,28 +132,28 @@ a{color:var(--navy);}
 .btn:active{transform:scale(0.97);}
 .btn svg{width:16px; height:16px; transition:transform .18s ease;}
 .btn:hover svg{transform:translateX(3px);}
-.btn-primary{background:var(--navy); color:#fff;}
-.btn-primary:hover{background:var(--navy-deep);}
+.btn-primary{background:var(--action); color:var(--action-fg);}
+.btn-primary:hover{background:var(--action-hover);}
 .btn.is-committing{animation:choicePulse .22s ease, btnConfirmFlash .5s ease; pointer-events:none;}
 .btn[disabled]{opacity:.65; pointer-events:none;}
 .btn-back{background:none; border:none; color:var(--muted); font-size:14.5px; cursor:pointer; font-family:inherit; display:inline-flex; align-items:center; gap:6px; padding:10px 6px; transition:color .15s ease, transform .1s ease;}
-.btn-back:hover{color:var(--navy);}
+.btn-back:hover{color:var(--head);}
 .btn-back:active{transform:scale(0.96);}
 .btn-back svg{width:16px; height:16px; transition:transform .18s ease;}
 .btn-back:hover svg{transform:translateX(-3px);}
 .btn-skip{background:none; border:none; color:var(--muted); font-size:14.5px; cursor:pointer; font-family:inherit; text-decoration:underline; padding:10px 6px; transition:color .15s ease, transform .1s ease;}
-.btn-skip:hover{color:var(--navy);}
+.btn-skip:hover{color:var(--head);}
 .btn-skip:active{transform:scale(0.96);}
 
 .multiselect-list{display:flex; flex-direction:column; gap:10px;}
 .multiselect-item{width:100%; display:flex; align-items:center; gap:14px; text-align:left; padding:14px 16px; border-radius:var(--radius-md); border:1.5px solid var(--border-solid); background:var(--bg); font-family:inherit; font-size:15px; color:var(--ink); cursor:pointer; transition:border-color .15s ease, background .15s ease, transform .08s ease, opacity .15s ease;}
 .multiselect-item:hover{border-color:var(--mint-hover); background:var(--mist);}
 .multiselect-item:active{transform:scale(0.99);}
-.multiselect-item.is-selected{border-color:var(--navy); background:var(--mist);}
+.multiselect-item.is-selected{border-color:var(--action); background:var(--mist);}
 .multiselect-item.is-disabled{opacity:.4; pointer-events:none;}
 .ms-check{width:20px; height:20px; border-radius:5px; border:1.5px solid var(--border-solid); flex-shrink:0; display:flex; align-items:center; justify-content:center; background:var(--bg);}
-.multiselect-item.is-selected .ms-check{background:var(--navy); border-color:var(--navy);}
-.ms-check svg{width:13px; height:13px; color:#fff; opacity:0; transition:opacity .12s ease;}
+.multiselect-item.is-selected .ms-check{background:var(--action); border-color:var(--action);}
+.ms-check svg{width:13px; height:13px; color:var(--action-fg); opacity:0; transition:opacity .12s ease;}
 .multiselect-item.is-selected .ms-check svg{opacity:1;}
 .ms-label{flex:1 1 auto; line-height:1.4;}
 .ms-helper{font-size:13px; color:var(--muted); margin:-6px 0 16px;}
@@ -136,10 +161,10 @@ a{color:var(--navy);}
 
 .cf-icon-wrap{position:relative; width:110px; height:110px; margin:4px auto 26px;}
 .cf-icon-ring{position:absolute; inset:0; border-radius:50%; background:var(--mist); opacity:0; transform:scale(.4); animation:cfRingIn .42s cubic-bezier(.34,1.56,.64,1) .05s both;}
-.cf-icon-core{position:absolute; inset:14px; border-radius:50%; background:var(--navy); opacity:0; transform:scale(.3); animation:cfCoreIn .4s cubic-bezier(.34,1.56,.64,1) .22s both; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 26px rgba(27,45,87,.28);}
+.cf-icon-core{position:absolute; inset:14px; border-radius:50%; background:var(--action); opacity:0; transform:scale(.3); animation:cfCoreIn .4s cubic-bezier(.34,1.56,.64,1) .22s both; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 26px rgba(27,45,87,.28);}
 .cf-icon-pulse{position:absolute; inset:14px; border-radius:50%; border:2px solid var(--mint); opacity:0; animation:cfPulseRing 1s cubic-bezier(.2,.6,.2,1) .95s both;}
 .cf-check-svg{width:46px; height:46px;}
-.cf-check-path{fill:none; stroke:var(--on-navy); stroke-width:4.5; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:1; stroke-dashoffset:1; animation:cfDrawCheck .5s cubic-bezier(.65,0,.35,1) .62s forwards;}
+.cf-check-path{fill:none; stroke:var(--action-fg); stroke-width:4.5; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:1; stroke-dashoffset:1; animation:cfDrawCheck .5s cubic-bezier(.65,0,.35,1) .62s forwards;}
 .cf-confetti{position:absolute; inset:0; pointer-events:none;}
 .cf-dot{position:absolute; top:50%; left:50%; border-radius:50%; opacity:0; animation:cfBurst .95s cubic-bezier(.19,1,.22,1) both;}
 .cf-rise{opacity:0; transform:translateY(10px); animation:cfRiseIn .42s ease both;}
@@ -159,26 +184,36 @@ a{color:var(--navy);}
 }
 
 .section-icon{width:58px; height:58px; border-radius:50%; background:var(--mist); display:flex; align-items:center; justify-content:center; margin-bottom:22px;}
-.section-icon svg{width:27px; height:27px; color:var(--navy);}
+.section-icon svg{width:27px; height:27px; color:var(--accent);}
 
 .intro-p{font-size:15.5px; line-height:1.6; color:var(--ink); margin:0 0 12px;}
 .intro-p-kh{font-size:14.5px; line-height:1.7; color:var(--muted); margin:0 0 20px;}
 .intro-box{background:var(--mist); border-radius:var(--radius-md); padding:18px; margin:20px 0 28px;}
-.intro-box-title{font-weight:700; color:var(--navy); font-size:14px; margin-bottom:6px; display:flex; align-items:center; gap:6px;}
+.intro-box-title{font-weight:700; color:var(--accent); font-size:14px; margin-bottom:6px; display:flex; align-items:center; gap:6px;}
 .intro-box-title svg{width:15px; height:15px; flex-shrink:0;}
 .intro-time{display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); margin:14px 0 0;}
 .intro-time svg{width:14px; height:14px; flex-shrink:0;}
 
 .next-table{width:100%; border-collapse:collapse; margin-top:16px;}
 .next-table td{padding:12px 0; border-bottom:1px solid var(--mist); font-size:14px; vertical-align:top;}
-.next-table td.step-num{width:28px; font-weight:700; color:var(--navy);}
+.next-table td.step-num{width:28px; font-weight:700; color:var(--head);}
 .next-kh{color:var(--muted); display:block; margin-top:3px;}
 
 .hp-field{position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;}
 </style>
 </head>
 <body>
-<div class="page" id="app"></div>
+<div class="page" id="app">
+  <div class="header">
+    <div class="header-inner">
+      <img class="brand-logo" src="assets/logo.jpg" alt="ThinkCareer" width="34" height="34">
+      <div class="brand-name">ThinkCareer</div>
+      <div class="brand-sub">HR Intake Form &middot; ទម្រង់ស្វែងយល់តម្រូវការ</div>
+    </div>
+    <div class="progress-track is-hidden" id="progressTrack"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+  <div class="container"><div class="card" id="cardRoot"></div></div>
+</div>
 
 <script>
 (function () {
@@ -477,36 +512,33 @@ a{color:var(--navy);}
     var progressPct = isIntro ? 0 : (isConfirm ? 100 : Math.round((qIndex / (TOTAL + 1)) * 100));
     var committing = state.committing;
 
-    var html = "";
-    html += '<div class="header"><div class="header-inner">';
-    html += '<div class="brand-dot"></div><div class="brand-name">ThinkCareer</div>';
-    html += '<div class="brand-sub">HR Intake Form &middot; ទម្រង់ស្វែងយល់តម្រូវការ</div></div>';
-    if (isQuestion) {
-      html += '<div class="progress-track"><div class="progress-fill" style="width:' + progressPct + '%"></div></div>';
-    }
-    html += "</div>";
+    // The header (logo, progress bar) is a persistent part of the page — only
+    // its width/visibility are updated in place, so the existing CSS
+    // transitions on them actually get to play instead of restarting cold
+    // every time the whole screen is rebuilt.
+    var progressFill = document.getElementById("progressFill");
+    var progressTrack = document.getElementById("progressTrack");
+    progressFill.style.width = progressPct + "%";
+    progressTrack.classList.toggle("is-hidden", !isQuestion);
 
-    html += '<div class="container"><div class="card">';
-
+    var cardHtml = "";
     if (isIntro) {
-      html += renderIntro(committing);
+      cardHtml = renderIntro(committing);
     } else if (isQuestion) {
-      html += renderQuestion(currentQ, fd, showErrors, committing);
+      cardHtml = renderQuestion(currentQ, fd, showErrors, committing);
     } else if (isConfirm) {
-      html += renderConfirm();
+      cardHtml = renderConfirm();
     }
 
-    html += "</div></div>";
-
-    var app = document.getElementById("app");
-    app.innerHTML = html;
-    attachListeners(app, currentQ);
+    var cardRoot = document.getElementById("cardRoot");
+    cardRoot.innerHTML = cardHtml;
+    attachListeners(cardRoot, currentQ);
   }
 
   function renderIntro(committing) {
     var btnClass = "btn btn-primary" + (committing ? " is-committing" : "");
     return (
-      '<div class="step-anim">' +
+      '<div class="step-anim' + (committing ? " is-leaving" : "") + '">' +
       '<h1 class="q-title-en">ThinkCareer HR Solutions &mdash; Intake Form</h1>' +
       '<div class="q-title-kh" style="margin-bottom:8px">ទម្រង់ស្វែងយល់តម្រូវការធនធានមនុស្ស</div>' +
       '<div class="intro-time">' + ICONS.clock + "<span>About 10 minutes &middot; ប្រហែល ១០ នាទី</span></div>" +
@@ -522,7 +554,7 @@ a{color:var(--navy);}
   }
 
   function renderQuestion(q, fd, showErrors, committing) {
-    var out = '<div class="step-anim">';
+    var out = '<div class="step-anim' + (committing ? " is-leaving" : "") + '">';
     var canBack = state.qIndex > 0;
 
     if (q.kind === "section") {
@@ -631,7 +663,7 @@ a{color:var(--navy);}
       out += '<p class="intro-p cf-rise cf-d3">We have received your form. ThinkCareer will contact you within 2 working days to book your free 60-minute first meeting.</p>';
       out += '<p class="intro-p-kh cf-rise cf-d4">យើងបានទទួលទម្រង់របស់លោកអ្នកហើយ។ ThinkCareer នឹងទាក់ទងលោកអ្នកក្នុងរយៈពេល ២ ថ្ងៃធ្វើការ ដើម្បីកំណត់ពេលកិច្ចប្រជុំដំបូងរយៈពេល ៦០ នាទី ដោយឥតគិតថ្លៃ។</p>';
     }
-    out += '<h3 style="font-family:var(--display); font-size:15px; color:var(--navy); margin:24px 0 4px;">What happens next &middot; ជំហានបន្ទាប់</h3>';
+    out += '<h3 style="font-family:var(--display); font-size:15px; color:var(--head); margin:24px 0 4px;">What happens next &middot; ជំហានបន្ទាប់</h3>';
     out += '<table class="next-table">';
     out += '<tr><td class="step-num">1</td><td>Free 60-minute first meeting with your ThinkCareer consultant<span class="next-kh">កិច្ចប្រជុំដំបូងរយៈពេល ៦០ នាទី ជាមួយទីប្រឹក្សា ThinkCareer ដោយឥតគិតថ្លៃ</span></td></tr>';
     out += '<tr><td class="step-num">2</td><td>Within 5 working days: a short summary of key findings and a proposal with options and fees<span class="next-kh">ក្នុងរយៈពេល ៥ ថ្ងៃធ្វើការ សេចក្តីសង្ខេបចំណុចសំខាន់ៗ និងសំណើសេវាកម្មដែលមានជម្រើស និងតម្លៃ</span></td></tr>';
