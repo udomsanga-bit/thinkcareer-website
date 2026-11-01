@@ -204,6 +204,12 @@ a{color:var(--link);}
 .next-kh{color:var(--muted); display:block; margin-top:3px;}
 
 .hp-field{position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;}
+
+.page-footer{padding:8px 20px 36px; text-align:center;}
+.footer-home-btn{display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:999px; border:1.5px solid var(--border-solid); background:var(--bg); color:var(--head); font-family:inherit; font-size:14.5px; font-weight:600; text-decoration:none; cursor:pointer; transition:border-color .15s ease, background .15s ease, transform .08s ease;}
+.footer-home-btn:hover{border-color:var(--mint-hover); background:var(--mist);}
+.footer-home-btn:active{transform:scale(0.97);}
+.footer-home-btn svg{width:16px; height:16px; flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -219,6 +225,12 @@ a{color:var(--link);}
     <div class="progress-track is-hidden" id="progressTrack"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   </div>
   <div class="container"><div class="card" id="cardRoot"></div></div>
+  <footer class="page-footer">
+    <a class="footer-home-btn" href="/" id="homeFooterLink">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      <span>Go back to homepage &middot; ត្រឡប់ទៅទំព័រដើម</span>
+    </a>
+  </footer>
 </div>
 
 <script>
@@ -719,21 +731,23 @@ a{color:var(--link);}
     var replayBtn = root.querySelector('[data-action="replay"]'); if (replayBtn) replayBtn.addEventListener("click", replayConfirm);
   }
 
-  // The logo/brand in the header is a persistent node (outside cardRoot,
-  // never rebuilt — see render()), so this listener is attached once here
-  // rather than on every render. It lets a visitor get back to the main
-  // site; if they've already started answering, confirm first so a stray
-  // click doesn't silently throw away everything they've entered.
-  var homeLink = document.getElementById("homeLink");
-  if (homeLink) {
-    homeLink.addEventListener("click", function (e) {
-      var isIntro = state.qIndex === 0;
-      var isConfirm = state.qIndex === TOTAL + 1;
-      if (isIntro || isConfirm) return;
-      var ok = window.confirm("Leave this form? Your answers won't be saved. · ចាកចេញពីទម្រង់នេះ? ចម្លើយរបស់អ្នកនឹងមិនត្រូវបានរក្សាទុកទេ។");
-      if (!ok) e.preventDefault();
-    });
+  // The logo/brand in the header and the "Go back to homepage" link in the
+  // footer are both persistent nodes (outside cardRoot, never rebuilt — see
+  // render()), so their listeners are attached once here rather than on
+  // every render. Either one lets a visitor get back to the main site; if
+  // they've already started answering, confirm first so a stray click
+  // doesn't silently throw away everything they've entered.
+  function confirmLeaveIfNeeded(e) {
+    var isIntro = state.qIndex === 0;
+    var isConfirm = state.qIndex === TOTAL + 1;
+    if (isIntro || isConfirm) return;
+    var ok = window.confirm("Leave this form? Your answers won't be saved. · ចាកចេញពីទម្រង់នេះ? ចម្លើយរបស់អ្នកនឹងមិនត្រូវបានរក្សាទុកទេ។");
+    if (!ok) e.preventDefault();
   }
+  var homeLink = document.getElementById("homeLink");
+  if (homeLink) homeLink.addEventListener("click", confirmLeaveIfNeeded);
+  var homeFooterLink = document.getElementById("homeFooterLink");
+  if (homeFooterLink) homeFooterLink.addEventListener("click", confirmLeaveIfNeeded);
 
   render();
 })();
