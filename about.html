@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About Us | ThinkCareers - High-Performance Career Strategy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: { extend: {
+      colors: {
+        "primary": "#091f4f", "background-alt": "#F4F0E8", "outline": "#757680",
+        "on-surface-variant": "#45464f", "tertiary-container": "#483500", "secondary": "#316858",
+        "on-secondary-fixed": "#002018", "surface-bright": "#f9f9f9",
+        "secondary-container": "#b2ecd8", "tertiary-fixed": "#ffdf9b",
+        "on-tertiary-fixed-variant": "#5a4302", "surface-container-high": "#e8e8e8",
+        "outline-variant": "#c5c6d0", "on-tertiary-fixed": "#251a00",
+        "on-primary-fixed-variant": "#334576", "on-primary-container": "#8e9fd7",
+        "primary-fixed-dim": "#b3c5ff", "on-primary-fixed": "#011849",
+        "surface-container-highest": "#e2e2e2", "inverse-surface": "#2f3131",
+        "on-error-container": "#93000a", "on-error": "#ffffff",
+        "surface-container": "#eeeeee", "error": "#ba1a1a",
+        "surface-container-lowest": "#ffffff", "primary-container": "#233566",
+        "background": "#f9f9f9", "deep-slate": "#0F1A2E",
+        "surface-container-low": "#f3f3f4", "surface-variant": "#e2e2e2",
+        "inverse-primary": "#b3c5ff", "on-secondary-fixed-variant": "#165041",
+        "tertiary": "#2e2000", "on-primary": "#ffffff", "on-tertiary": "#ffffff",
+        "on-secondary": "#ffffff", "secondary-fixed": "#b5eeda",
+        "surface": "#f9f9f9", "secondary-fixed-dim": "#9ad2bf",
+        "on-tertiary-container": "#bc9d57", "tertiary-fixed-dim": "#e4c278",
+        "on-background": "#1a1c1c", "error-container": "#ffdad6",
+        "success-green": "#2D6A4F", "inverse-on-surface": "#f0f1f1",
+        "error-red": "#D90429", "primary-fixed": "#dbe1ff",
+        "on-surface": "#1a1c1c", "surface-dim": "#dadada", "surface-tint": "#4b5c90",
+        "on-secondary-container": "#366c5c"
+      },
+      borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+      spacing: { "sm": "12px", "margin-desktop": "auto", "base": "8px", "gutter": "16px", "xs": "4px", "md": "24px", "margin-mobile": "20px", "lg": "40px", "xl": "64px" },
+      fontFamily: { "headline-lg": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "label-md": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "label-lg": ["Inter"], "headline-xl": ["Plus Jakarta Sans"], "body-lg": ["Inter"] },
+      fontSize: {
+        "headline-lg": ["32px", {"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],
+        "headline-lg-mobile": ["28px", {"lineHeight":"34px","fontWeight":"700"}],
+        "body-sm": ["14px", {"lineHeight":"20px","fontWeight":"400"}],
+        "label-md": ["12px", {"lineHeight":"16px","fontWeight":"500"}],
+        "headline-md": ["24px", {"lineHeight":"32px","fontWeight":"600"}],
+        "body-md": ["16px", {"lineHeight":"24px","fontWeight":"400"}],
+        "label-lg": ["14px", {"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"600"}],
+        "headline-xl": ["40px", {"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],
+        "body-lg": ["18px", {"lineHeight":"28px","fontWeight":"400"}]
+      }
+    }}
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .reveal-hidden { opacity: 0; transform: translateY(30px); transition: opacity 1s cubic-bezier(0.4,0,0.2,1), transform 1s cubic-bezier(0.4,0,0.2,1); will-change: opacity,transform; }
+  .reveal-slide-right { opacity: 0; transform: translateX(40px); transition: opacity 1s cubic-bezier(0.4,0,0.2,1), transform 1s cubic-bezier(0.4,0,0.2,1); will-change: opacity,transform; }
+  .reveal-visible { opacity: 1 !important; transform: translate(0,0) !important; }
+  .delay-100 { transition-delay: 100ms; } .delay-200 { transition-delay: 200ms; } .delay-300 { transition-delay: 300ms; }
+  .pillar-card { transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease; }
+  .pillar-card:hover { transform: scale(1.02); }
+  .pillar-card:hover .pillar-icon { transform: translateY(-4px); transition: transform 0.3s ease; }
+  .btn-premium { transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .btn-premium:hover { transform: scale(1.05); }
+  @media (prefers-reduced-motion: reduce) { .reveal-hidden, .reveal-slide-right, .pillar-card, .btn-premium { transition: none !important; transform: none !important; opacity: 1 !important; } }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased">
+
+<!-- Nav -->
+<nav class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-sm border-b border-outline-variant shadow-sm">
+  <div class="flex justify-between items-center max-w-7xl mx-auto px-gutter sm:px-lg h-20">
+    <a href="index.html" class="font-headline-md text-headline-md font-bold text-primary">ThinkCareers</a>
+    <div class="hidden md:flex items-center gap-md lg:gap-xl">
+      <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-all duration-200 px-sm py-xs rounded" href="index.html#programs">Programs</a>
+      <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-all duration-200 px-sm py-xs rounded" href="coaching.html">Coaching</a>
+      <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-all duration-200 px-sm py-xs rounded" href="success-stories.html">Success Stories</a>
+      <a class="font-label-lg text-label-lg text-primary border-b-2 border-primary pb-1" href="about.html">About Us</a>
+    </div>
+    <a href="index.html#contact" class="bg-primary text-on-primary px-gutter sm:px-xl py-sm rounded font-label-lg text-label-lg active:scale-95 duration-150 ease-in-out transition-all btn-premium whitespace-nowrap">Get Started</a>
+  </div>
+</nav>
+
+<main class="pt-20">
+
+  <!-- Mission Hero -->
+  <section class="bg-surface-container-low py-lg sm:py-xl px-gutter sm:px-lg overflow-hidden">
+    <div class="max-w-4xl mx-auto text-center py-lg sm:py-xl reveal-hidden">
+      <h1 class="font-headline-lg-mobile sm:font-headline-xl text-headline-lg-mobile sm:text-headline-xl text-primary mb-md">Redefining Career Strategy</h1>
+      <p class="font-body-md sm:font-body-lg text-body-md sm:text-body-lg text-on-surface-variant max-w-3xl mx-auto leading-relaxed">
+        Career progression isn't a game of luck. We've decoded the predictable science of professional growth, merging high-performance psychology with data-driven strategic planning for the modern executive.
+      </p>
+      <div class="mt-lg sm:mt-xl flex justify-center">
+        <div class="h-1.5 w-20 bg-secondary rounded-full"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy Section -->
+  <section class="py-lg sm:py-xl px-gutter sm:px-lg bg-background overflow-hidden">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-lg lg:gap-xl items-center">
+      <div class="order-2 lg:order-1 reveal-hidden">
+        <span class="text-secondary font-label-lg text-label-lg uppercase tracking-widest block mb-sm">Our Philosophy</span>
+        <h2 class="font-headline-lg-mobile sm:font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-deep-slate mb-md">Career by Design, Not by Accident.</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-md leading-relaxed">
+          Most professionals navigate their careers reactively, responding to external opportunities rather than architecting them. Our methodology treats your career as a high-stakes enterprise.
+        </p>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          By applying rigorous strategic frameworks, competitive analysis, and systematic networking, we ensure your trajectory is defined by your vision, not by corporate chance.
+        </p>
+      </div>
+      <div class="order-1 lg:order-2 rounded-xl overflow-hidden shadow-lg aspect-[16/10] lg:aspect-square relative reveal-hidden delay-200">
+        <img alt="Strategic Office Space" class="object-cover w-full h-full" src="assets/hero-portrait.jpg"/>
+        <div class="absolute inset-0 bg-primary/5"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meet the Strategist -->
+  <section class="py-lg sm:py-xl px-gutter sm:px-lg bg-background-alt overflow-hidden">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-lg lg:gap-xl items-center">
+      <div class="lg:col-span-5 md:max-w-md lg:max-w-none mx-auto w-full relative reveal-hidden">
+        <div class="hidden sm:block absolute -top-4 -left-4 w-24 h-24 border-t-4 border-l-4 border-secondary"></div>
+        <div class="rounded-lg overflow-hidden shadow-xl bg-white p-2 sm:p-4">
+          <img alt="Udom Vathy" class="w-full h-auto rounded grayscale hover:grayscale-0 transition-all duration-700" src="assets/hero-portrait.jpg"/>
+        </div>
+      </div>
+      <div class="lg:col-span-7 md:pl-gutter lg:pl-xl reveal-slide-right delay-200">
+        <h2 class="font-headline-lg-mobile sm:font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-primary mb-xs">Udom Vathy</h2>
+        <p class="text-secondary font-label-lg text-label-lg mb-md">Founder &amp; Chief Strategist</p>
+        <div class="space-y-sm sm:space-y-md mb-lg">
+          <div class="flex items-start gap-sm">
+            <span class="material-symbols-outlined text-secondary flex-shrink-0" style="font-variation-settings: 'FILL' 1;">school</span>
+            <p class="font-body-md text-body-md text-on-surface">Chevening Scholar &amp; London School of Economics (LSE) Alumnus</p>
+          </div>
+          <div class="flex items-start gap-sm">
+            <span class="material-symbols-outlined text-secondary flex-shrink-0" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+            <p class="font-body-md text-body-md text-on-surface">10+ Years of High-Level Career &amp; Management Strategy</p>
+          </div>
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant italic mb-lg border-l-4 border-secondary pl-md">
+          "The gap between where you are and where you want to be isn't just about hard work; it's about the precision of your strategic engine. We build that engine."
+        </p>
+        <a href="coaching.html" class="inline-block w-full sm:w-auto bg-primary text-on-primary px-xl py-sm rounded-lg font-label-lg text-label-lg hover:shadow-lg transition-all active:scale-95 btn-premium text-center">
+          Work with Udom
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Pillars -->
+  <section class="py-lg sm:py-xl px-gutter sm:px-lg bg-background overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-lg sm:mb-xl reveal-hidden">
+        <h2 class="font-headline-lg-mobile sm:font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-deep-slate">The ThinkCareers Pillars</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-sm">A unified framework for professional excellence.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter sm:gap-lg">
+        <div class="pillar-card bg-surface-container-lowest p-gutter sm:p-xl rounded-xl border border-outline-variant hover:shadow-lg transition-all reveal-hidden delay-100">
+          <div class="pillar-icon w-14 h-14 sm:w-16 sm:h-16 bg-primary-container/10 flex items-center justify-center rounded-full mb-md">
+            <span class="material-symbols-outlined text-primary text-3xl sm:text-4xl">psychology</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-primary mb-sm">Think</h3>
+          <p class="font-body-sm sm:font-body-md text-body-sm sm:text-body-md text-on-surface-variant">Internalizing a strategic mindset. We deconstruct psychological barriers and replace them with the cognitive frameworks used by top 1% performers.</p>
+        </div>
+        <div class="pillar-card bg-surface-container-lowest p-gutter sm:p-xl rounded-xl border border-outline-variant hover:shadow-lg transition-all reveal-hidden delay-200">
+          <div class="pillar-icon w-14 h-14 sm:w-16 sm:h-16 bg-secondary-container/30 flex items-center justify-center rounded-full mb-md">
+            <span class="material-symbols-outlined text-secondary text-3xl sm:text-4xl">architecture</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-primary mb-sm">Plan</h3>
+          <p class="font-body-sm sm:font-body-md text-body-sm sm:text-body-md text-on-surface-variant">Architecting your roadmap. Data-backed career mapping, personal branding audits, and market positioning designed for maximum leverage.</p>
+        </div>
+        <div class="pillar-card bg-surface-container-lowest p-gutter sm:p-xl rounded-xl border border-outline-variant hover:shadow-lg transition-all sm:col-span-2 lg:col-span-1 reveal-hidden delay-300">
+          <div class="pillar-icon w-14 h-14 sm:w-16 sm:h-16 bg-tertiary-fixed/30 flex items-center justify-center rounded-full mb-md">
+            <span class="material-symbols-outlined text-tertiary text-3xl sm:text-4xl">military_tech</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-primary mb-sm">Lead</h3>
+          <p class="font-body-sm sm:font-body-md text-body-sm sm:text-body-md text-on-surface-variant">Executing with authority. Mastering high-stakes negotiation, network dominance, and long-term legacy building within your industry.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="w-full mt-lg sm:mt-xl bg-background-alt py-lg sm:py-xl">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg max-w-7xl mx-auto px-gutter sm:px-lg py-lg">
+    <div class="col-span-1">
+      <div class="font-headline-md text-headline-md font-bold text-primary mb-md">ThinkCareers</div>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">High-performance career strategy for ambitious professionals.</p>
+    </div>
+    <div class="flex flex-col gap-sm">
+      <h4 class="font-label-md text-label-md text-primary uppercase tracking-wider mb-xs">Platform</h4>
+      <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="index.html#programs">Programs</a>
+      <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="coaching.html">Coaching</a>
+      <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="success-stories.html">Success Stories</a>
+    </div>
+    <div class="flex flex-col gap-sm">
+      <h4 class="font-label-md text-label-md text-primary uppercase tracking-wider mb-xs">Company</h4>
+      <a class="font-body-sm text-body-sm text-primary font-bold" href="about.html">About Us</a>
+      <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="index.html#contact">Contact</a>
+      <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+    </div>
+    <div class="flex flex-col gap-sm">
+      <h4 class="font-label-md text-label-md text-primary uppercase tracking-wider mb-xs">Connect</h4>
+      <div class="flex gap-md">
+        <a class="text-on-surface-variant hover:text-primary transition-all" href="#"><span class="material-symbols-outlined">share</span></a>
+        <a class="text-on-surface-variant hover:text-primary transition-all" href="#"><span class="material-symbols-outlined">mail</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-gutter sm:px-lg border-t border-outline-variant mt-lg pt-md pb-xl">
+    <p class="font-body-sm text-body-sm text-on-surface-variant text-center">© 2024 ThinkCareers. High-performance career strategy for ambitious professionals.</p>
+  </div>
+</footer>
+
+<script>
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+  document.querySelectorAll('.reveal-hidden, .reveal-slide-right').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

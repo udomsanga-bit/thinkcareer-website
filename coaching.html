@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Coaching | ThinkCareers - Elite One-on-One Career Strategy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: { extend: {
+      colors: {
+        "on-secondary-fixed-variant": "#165041", "on-background": "#1a1c1c", "on-secondary": "#ffffff",
+        "surface-container": "#eeeeee", "primary-fixed": "#dbe1ff", "deep-slate": "#0F1A2E",
+        "tertiary": "#2e2000", "success-green": "#2D6A4F", "surface-container-highest": "#e2e2e2",
+        "surface-container-high": "#e8e8e8", "inverse-on-surface": "#f0f1f1",
+        "tertiary-fixed": "#ffdf9b", "outline": "#757680", "on-tertiary-fixed": "#251a00",
+        "inverse-surface": "#2f3131", "error-container": "#ffdad6", "surface-dim": "#dadada",
+        "error-red": "#D90429", "surface-container-lowest": "#ffffff", "background": "#f9f9f9",
+        "background-alt": "#F4F0E8", "surface": "#f9f9f9", "surface-variant": "#e2e2e2",
+        "on-secondary-container": "#366c5c", "primary-container": "#233566",
+        "on-tertiary-fixed-variant": "#5a4302", "on-tertiary-container": "#bc9d57",
+        "on-primary-container": "#8e9fd7", "secondary": "#316858", "tertiary-fixed-dim": "#e4c278",
+        "on-primary": "#ffffff", "on-error-container": "#93000a", "secondary-container": "#b2ecd8",
+        "primary-fixed-dim": "#b3c5ff", "outline-variant": "#c5c6d0",
+        "inverse-primary": "#b3c5ff", "on-error": "#ffffff", "on-surface": "#1a1c1c",
+        "surface-bright": "#f9f9f9", "secondary-fixed-dim": "#9ad2bf",
+        "secondary-fixed": "#b5eeda", "surface-container-low": "#f3f3f4",
+        "on-surface-variant": "#45464f", "on-primary-fixed": "#011849", "error": "#ba1a1a",
+        "surface-tint": "#4b5c90", "on-tertiary": "#ffffff", "tertiary-container": "#483500",
+        "on-primary-fixed-variant": "#334576", "primary": "#091f4f", "on-secondary-fixed": "#002018"
+      },
+      borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+      spacing: { "gutter": "16px", "base": "8px", "xl": "64px", "sm": "12px", "md": "24px", "margin-desktop": "auto", "lg": "40px", "margin-mobile": "20px", "xs": "4px" },
+      fontFamily: {
+        "body-md": ["Inter"], "headline-lg-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"],
+        "headline-lg": ["Plus Jakarta Sans"], "label-lg": ["Inter"], "headline-xl": ["Plus Jakarta Sans"],
+        "headline-md": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "label-md": ["Inter"]
+      },
+      fontSize: {
+        "body-md": ["16px", {"lineHeight":"24px","fontWeight":"400"}],
+        "headline-lg-mobile": ["28px", {"lineHeight":"34px","fontWeight":"700"}],
+        "body-sm": ["14px", {"lineHeight":"20px","fontWeight":"400"}],
+        "headline-lg": ["32px", {"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],
+        "label-lg": ["14px", {"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"600"}],
+        "headline-xl": ["40px", {"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],
+        "headline-md": ["24px", {"lineHeight":"32px","fontWeight":"600"}],
+        "body-lg": ["18px", {"lineHeight":"28px","fontWeight":"400"}],
+        "label-md": ["12px", {"lineHeight":"16px","fontWeight":"500"}]
+      }
+    }}
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .premium-shadow { box-shadow: 0px 4px 20px rgba(35,53,102,0.08); }
+  .sage-gradient { background: linear-gradient(135deg, #316858 0%, #165041 100%); }
+  .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.4,0,0.2,1); will-change: transform,opacity; }
+  .reveal-on-scroll.visible { opacity: 1; transform: translateY(0); }
+  @keyframes pulse-subtle {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(45,106,79,0.4); }
+    70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(45,106,79,0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(45,106,79,0); }
+  }
+  .animate-pulse-custom { animation: pulse-subtle 3s infinite ease-in-out; }
+  .hero-stagger-1 { transition-delay: 100ms; } .hero-stagger-2 { transition-delay: 250ms; }
+  .hero-stagger-3 { transition-delay: 400ms; } .hero-stagger-4 { transition-delay: 550ms; }
+  @media (prefers-reduced-motion: reduce) { .reveal-on-scroll, .animate-pulse-custom { transition: none !important; animation: none !important; opacity: 1 !important; transform: none !important; } }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden scroll-smooth">
+
+<!-- Nav -->
+<nav class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant shadow-sm h-20 flex items-center">
+  <div class="flex justify-between items-center max-w-7xl mx-auto px-margin-mobile md:px-lg w-full">
+    <a class="font-headline-md text-headline-md font-bold text-primary" href="index.html">ThinkCareers</a>
+    <div class="hidden md:flex items-center gap-lg">
+      <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-all duration-200 px-3 py-2 rounded" href="index.html#programs">Programs</a>
+      <a class="font-label-lg text-label-lg text-primary border-b-2 border-primary pb-1" href="coaching.html">Coaching</a>
+      <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-all duration-200 px-3 py-2 rounded" href="success-stories.html">Success Stories</a>
+      <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-all duration-200 px-3 py-2 rounded" href="about.html">About Us</a>
+    </div>
+    <a href="#tiers" class="bg-primary text-on-primary px-md py-3 rounded-lg font-label-lg text-label-lg hover:opacity-90 active:scale-95 transition-all duration-150">Get Started</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="pt-xl mt-20 relative overflow-hidden bg-white">
+  <div class="max-w-7xl mx-auto px-margin-mobile md:px-lg py-xl flex flex-col md:flex-row items-center gap-xl">
+    <div class="flex-1 space-y-md">
+      <div class="reveal-on-scroll hero-stagger-1 inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-md text-label-md uppercase tracking-wider">
+        <span class="material-symbols-outlined text-[16px]">verified</span>Premium Performance
+      </div>
+      <h1 class="reveal-on-scroll hero-stagger-2 font-headline-xl text-headline-lg-mobile md:text-headline-xl text-primary max-w-2xl leading-tight">Elite One-on-One Coaching</h1>
+      <p class="reveal-on-scroll hero-stagger-3 font-body-lg text-body-md md:text-body-lg text-on-surface-variant max-w-xl">
+        High-performance career strategy designed for ambitious professionals. We transform mid-to-senior level careers through rigorous psychological and tactical frameworks.
+      </p>
+      <div class="reveal-on-scroll hero-stagger-4 flex flex-wrap gap-4 pt-4">
+        <a href="#tiers" class="flex-1 sm:flex-none bg-primary text-on-primary px-xl py-4 rounded-lg font-label-lg text-label-lg premium-shadow hover:opacity-90 transition-all text-center">Book a Consultation</a>
+        <a href="#framework" class="flex-1 sm:flex-none border-2 border-primary text-primary px-xl py-4 rounded-lg font-label-lg text-label-lg hover:bg-surface-container-low transition-all text-center">View Framework</a>
+      </div>
+    </div>
+    <div class="reveal-on-scroll hero-stagger-3 flex-1 w-full relative mt-lg md:mt-0">
+      <div class="aspect-square bg-background-alt rounded-2xl overflow-hidden premium-shadow relative group">
+        <img alt="Executive Workspace" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="assets/hero-portrait.jpg"/>
+        <div class="absolute inset-0 bg-primary/5"></div>
+      </div>
+      <div class="animate-pulse-custom absolute -bottom-4 md:-bottom-6 -left-4 md:-left-6 bg-white p-sm md:p-md rounded-xl shadow-xl border border-outline-variant">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full sage-gradient flex items-center justify-center text-white">
+            <span class="material-symbols-outlined text-[20px] md:text-[24px]">trending_up</span>
+          </div>
+          <div>
+            <p class="font-label-lg text-label-md md:text-label-lg text-primary">Success Rate</p>
+            <p class="font-headline-md text-headline-md text-primary">98%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Strategic Framework -->
+<section class="bg-background-alt py-xl" id="framework">
+  <div class="max-w-7xl mx-auto px-margin-mobile md:px-lg">
+    <div class="text-center mb-xl">
+      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-4">The Strategic Framework</h2>
+      <div class="h-1 w-20 bg-secondary mx-auto rounded-full"></div>
+      <p class="font-body-md text-body-md text-on-surface-variant mt-4 max-w-2xl mx-auto">Our four-phase methodology ensures your career evolution is grounded in data, psychology, and executive excellence.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md relative">
+      <div class="hidden lg:block absolute top-12 left-0 w-full h-[2px] bg-outline-variant z-0"></div>
+      <div class="reveal-on-scroll relative z-10 bg-white p-md md:p-lg rounded-xl border border-outline-variant premium-shadow hover:translate-y-[-4px] transition-all duration-300" style="transition-delay:100ms">
+        <div class="w-16 h-16 rounded-full bg-white border-2 border-secondary flex items-center justify-center text-secondary mb-4 mx-auto sm:mx-0"><span class="material-symbols-outlined text-3xl">psychology</span></div>
+        <h3 class="font-headline-md text-[20px] text-primary mb-2 text-center sm:text-left">01. Assessment</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant text-center sm:text-left">Comprehensive audit of your professional DNA, psychological drivers, and market positioning.</p>
+      </div>
+      <div class="reveal-on-scroll relative z-10 bg-white p-md md:p-lg rounded-xl border border-outline-variant premium-shadow hover:translate-y-[-4px] transition-all duration-300" style="transition-delay:250ms">
+        <div class="w-16 h-16 rounded-full bg-white border-2 border-secondary flex items-center justify-center text-secondary mb-4 mx-auto sm:mx-0"><span class="material-symbols-outlined text-3xl">map</span></div>
+        <h3 class="font-headline-md text-[20px] text-primary mb-2 text-center sm:text-left">02. Strategy</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant text-center sm:text-left">Bespoke roadmap development targeting high-yield opportunities and executive networking.</p>
+      </div>
+      <div class="reveal-on-scroll relative z-10 bg-white p-md md:p-lg rounded-xl border border-outline-variant premium-shadow hover:translate-y-[-4px] transition-all duration-300" style="transition-delay:400ms">
+        <div class="w-16 h-16 rounded-full bg-white border-2 border-secondary flex items-center justify-center text-secondary mb-4 mx-auto sm:mx-0"><span class="material-symbols-outlined text-3xl">rocket_launch</span></div>
+        <h3 class="font-headline-md text-[20px] text-primary mb-2 text-center sm:text-left">03. Implementation</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant text-center sm:text-left">Active execution including interview mastery, narrative refinement, and offer negotiation.</p>
+      </div>
+      <div class="reveal-on-scroll relative z-10 bg-white p-md md:p-lg rounded-xl border border-outline-variant premium-shadow hover:translate-y-[-4px] transition-all duration-300" style="transition-delay:550ms">
+        <div class="w-16 h-16 rounded-full bg-white border-2 border-secondary flex items-center justify-center text-secondary mb-4 mx-auto sm:mx-0"><span class="material-symbols-outlined text-3xl">insights</span></div>
+        <h3 class="font-headline-md text-[20px] text-primary mb-2 text-center sm:text-left">04. Review</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant text-center sm:text-left">Continuous performance monitoring and recalibration to ensure long-term career resilience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Founder -->
+<section class="py-xl bg-white">
+  <div class="max-w-7xl mx-auto px-margin-mobile md:px-lg">
+    <div class="reveal-on-scroll flex flex-col lg:flex-row items-stretch bg-primary-container rounded-3xl overflow-hidden shadow-2xl">
+      <div class="lg:w-1/2 min-h-[400px] md:min-h-[500px]">
+        <img alt="Udom Vathy" class="w-full h-full object-cover object-top" src="assets/hero-portrait.jpg"/>
+      </div>
+      <div class="lg:w-1/2 p-md md:p-xl lg:pr-24 flex flex-col justify-center text-white">
+        <div class="inline-block self-start px-4 py-1 rounded-full bg-secondary text-on-secondary font-label-md text-label-md mb-6 uppercase tracking-wider">THE FOUNDER</div>
+        <h2 class="font-headline-xl text-headline-lg-mobile md:text-headline-xl mb-4">Udom Vathy</h2>
+        <p class="font-body-lg text-body-md md:text-body-lg text-primary-fixed mb-8 leading-relaxed">
+          As a Chevening Scholar and LSE alumnus, Udom bridges the gap between academic rigor and real-world executive placement. His strategy is defined by a deep understanding of global hiring ecosystems.
+        </p>
+        <div class="grid grid-cols-2 gap-4 md:gap-md mb-8">
+          <div><p class="font-headline-md text-headline-md text-secondary-fixed">10+ Years</p><p class="font-label-lg text-label-lg text-on-primary-container opacity-80 uppercase">Experience</p></div>
+          <div><p class="font-headline-md text-headline-md text-secondary-fixed">500+</p><p class="font-label-lg text-label-lg text-on-primary-container opacity-80 uppercase">Successes</p></div>
+          <div><p class="font-headline-md text-headline-md text-secondary-fixed">LSE</p><p class="font-label-lg text-label-lg text-on-primary-container opacity-80 uppercase">Alumnus</p></div>
+          <div><p class="font-headline-md text-headline-md text-secondary-fixed">Fellow</p><p class="font-label-lg text-label-lg text-on-primary-container opacity-80 uppercase">Chevening</p></div>
+        </div>
+        <a href="about.html" class="flex items-center gap-2 font-label-lg text-label-lg text-secondary-fixed hover:text-white transition-colors group">
+          Read full professional bio <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Outcomes -->
+<section class="py-xl bg-background" id="outcomes">
+  <div class="max-w-7xl mx-auto px-margin-mobile md:px-lg">
+    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-xl text-center">Tangible Outcomes</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md md:gap-lg">
+      <div class="reveal-on-scroll bg-white p-lg rounded-xl border border-outline-variant premium-shadow" style="transition-delay:100ms">
+        <p class="font-headline-xl text-headline-xl text-secondary mb-2 metric-value" data-value="25%">0%</p>
+        <h4 class="font-label-lg text-label-lg text-primary uppercase mb-4 tracking-tight">Salary Growth</h4>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Average increase achieved by clients within 6 months of coaching completion.</p>
+        <div class="w-full bg-surface-container rounded-full h-1.5 mt-4"><div class="metric-bar bg-secondary h-1.5 rounded-full transition-all duration-1000 w-0" data-width="25%"></div></div>
+      </div>
+      <div class="reveal-on-scroll bg-white p-lg rounded-xl border border-outline-variant premium-shadow" style="transition-delay:200ms">
+        <p class="font-headline-xl text-headline-xl text-secondary mb-2 metric-value" data-value="40%">0%</p>
+        <h4 class="font-label-lg text-label-lg text-primary uppercase mb-4 tracking-tight">Faster Promotion</h4>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Reduction in time-to-promotion through strategic internal positioning.</p>
+        <div class="w-full bg-surface-container rounded-full h-1.5 mt-4"><div class="metric-bar bg-secondary h-1.5 rounded-full transition-all duration-1000 w-0" data-width="40%"></div></div>
+      </div>
+      <div class="reveal-on-scroll bg-white p-lg rounded-xl border border-outline-variant premium-shadow" style="transition-delay:300ms">
+        <p class="font-headline-xl text-headline-xl text-secondary mb-2">Global</p>
+        <h4 class="font-label-lg text-label-lg text-primary uppercase mb-4 tracking-tight">Elite Network</h4>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Direct introductions to decision-makers across London and Singapore hubs.</p>
+      </div>
+      <div class="reveal-on-scroll bg-white p-lg rounded-xl border border-outline-variant premium-shadow" style="transition-delay:400ms">
+        <p class="font-headline-xl text-headline-xl text-secondary mb-2">Mastery</p>
+        <h4 class="font-label-lg text-label-lg text-primary uppercase mb-4 tracking-tight">Exec Presence</h4>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Psychological preparation for board-level leadership communications.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Service Tiers -->
+<section class="py-xl bg-white" id="tiers">
+  <div class="max-w-7xl mx-auto px-margin-mobile md:px-lg">
+    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-xl text-center">Coaching Investment</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-md md:gap-xl max-w-5xl mx-auto items-stretch">
+      <div class="reveal-on-scroll p-md md:p-xl rounded-2xl border border-outline-variant bg-white premium-shadow flex flex-col hover:scale-[1.02] transition-transform duration-300">
+        <h3 class="font-headline-md text-headline-md text-primary mb-2">Single Strategy</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Intensive 90-minute deep dive to solve a specific career bottleneck.</p>
+        <div class="space-y-4 flex-1 mb-8">
+          <div class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary">check_circle</span><span class="font-body-md text-body-md">Personalized Career Audit</span></div>
+          <div class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary">check_circle</span><span class="font-body-md text-body-md">Negotiation Tactics Briefing</span></div>
+          <div class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary">check_circle</span><span class="font-body-md text-body-md">1-Week Follow-up Support</span></div>
+        </div>
+        <a href="index.html#contact" class="block w-full border-2 border-primary text-primary py-4 rounded-lg font-label-lg text-label-lg hover:bg-surface-container-low transition-all text-center">Inquire for Pricing</a>
+      </div>
+      <div class="reveal-on-scroll p-md md:p-xl mt-lg md:mt-0 rounded-2xl border-t-4 border-t-secondary bg-background-alt premium-shadow flex flex-col relative md:scale-105 z-10 hover:scale-[1.07] transition-transform duration-300">
+        <div class="absolute -top-4 right-8 bg-secondary text-white px-4 py-1 rounded-full font-label-md text-label-md">RECOMMENDED</div>
+        <h3 class="font-headline-md text-headline-md text-primary mb-2">Long-term Retainer</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Ongoing strategic partnership for radical career transformation (3-6 Months).</p>
+        <div class="space-y-4 flex-1 mb-8">
+          <div class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary">check_circle</span><span class="font-body-md text-body-md">Unlimited Strategy Sessions</span></div>
+          <div class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary">check_circle</span><span class="font-body-md text-body-md">Full Executive Brand Rebuild</span></div>
+          <div class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary">check_circle</span><span class="font-body-md text-body-md">Direct Access Messaging (24/7)</span></div>
+          <div class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary">check_circle</span><span class="font-body-md text-body-md">Network Introduction Concierge</span></div>
+        </div>
+        <a href="index.html#contact" class="block w-full bg-primary text-on-primary py-4 rounded-lg font-label-lg text-label-lg hover:opacity-90 transition-all text-center">Apply for Intake</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="py-xl bg-background">
+  <div class="max-w-3xl mx-auto px-margin-mobile md:px-lg">
+    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-xl text-center">Frequently Asked Questions</h2>
+    <div class="space-y-md">
+      <details class="group bg-white rounded-xl border border-outline-variant">
+        <summary class="flex justify-between items-center p-md cursor-pointer list-none">
+          <span class="font-label-lg text-label-md md:text-label-lg text-primary pr-4">How do I know if I'm ready for coaching?</span>
+          <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+        </summary>
+        <div class="p-md pt-0 text-on-surface-variant font-body-md">Coaching is for professionals who have already achieved success but feel they are hitting an invisible ceiling. If you are looking for more than just a resume review—if you want to master executive presence and strategic growth—you are ready.</div>
+      </details>
+      <details class="group bg-white rounded-xl border border-outline-variant">
+        <summary class="flex justify-between items-center p-md cursor-pointer list-none">
+          <span class="font-label-lg text-label-md md:text-label-lg text-primary pr-4">What is the success rate for salary negotiations?</span>
+          <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+        </summary>
+        <div class="p-md pt-0 text-on-surface-variant font-body-md">Over 90% of our clients who follow the implementation phase report a significant increase in their total compensation package, averaging 25%.</div>
+      </details>
+      <details class="group bg-white rounded-xl border border-outline-variant">
+        <summary class="flex justify-between items-center p-md cursor-pointer list-none">
+          <span class="font-label-lg text-label-md md:text-label-lg text-primary pr-4">Can sessions be conducted remotely?</span>
+          <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+        </summary>
+        <div class="p-md pt-0 text-on-surface-variant font-body-md">Yes, we utilize high-definition video conferencing to work with clients globally, including professionals in London, New York, Singapore, and Dubai.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-xl bg-white">
+  <div class="reveal-on-scroll max-w-5xl mx-auto px-margin-mobile md:px-lg text-center">
+    <div class="bg-background-alt rounded-3xl p-lg md:p-xl">
+      <h2 class="font-headline-xl text-headline-lg-mobile md:text-headline-xl text-primary mb-4">Start Your Transformation</h2>
+      <p class="font-body-lg text-body-md md:text-body-lg text-on-surface-variant mb-xl max-w-2xl mx-auto">Space is limited to ensure high-quality, personalized attention. Reserve your initial consultation today.</p>
+      <form class="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto">
+        <input class="flex-1 rounded-lg border-outline-variant focus:border-primary focus:ring-primary p-4 font-body-md" placeholder="Professional email" type="email"/>
+        <button class="bg-primary text-on-primary px-xl py-4 rounded-lg font-label-lg text-label-lg hover:opacity-90 transition-all" type="submit">Send Inquiry</button>
+      </form>
+      <p class="mt-6 font-body-sm text-body-sm text-on-surface-variant">Response time: Usually within 24 business hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-background-alt w-full mt-xl py-xl">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-lg max-w-7xl mx-auto px-margin-mobile md:px-lg">
+    <div class="col-span-1 sm:col-span-2 md:col-span-1">
+      <h2 class="font-headline-md text-headline-md font-bold text-primary mb-4">ThinkCareers</h2>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 ThinkCareers. High-performance career strategy for ambitious professionals.</p>
+    </div>
+    <div>
+      <h4 class="font-label-lg text-label-lg text-primary mb-4">Services</h4>
+      <ul class="space-y-2">
+        <li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="coaching.html">Executive Coaching</a></li>
+        <li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="index.html#programs">Career Strategy</a></li>
+        <li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Workshop Programs</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-lg text-label-lg text-primary mb-4">Company</h4>
+      <ul class="space-y-2">
+        <li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="about.html">About Us</a></li>
+        <li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="success-stories.html">Success Stories</a></li>
+        <li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-lg text-label-lg text-primary mb-4">Social</h4>
+      <div class="flex gap-4">
+        <a class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all" href="#"><span class="material-symbols-outlined">link</span></a>
+        <a class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = { threshold: 0.2, rootMargin: '0px 0px -100px 0px' };
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          const bars = entry.target.querySelectorAll('.metric-bar');
+          bars.forEach(bar => { bar.style.width = bar.getAttribute('data-width'); });
+          const values = entry.target.querySelectorAll('.metric-value');
+          values.forEach(val => {
+            const targetStr = val.getAttribute('data-value');
+            if (targetStr && targetStr.includes('%')) {
+              const target = parseInt(targetStr);
+              if (!isNaN(target)) animateValue(val, 0, target, 1500);
+            }
+          });
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    function animateValue(obj, start, end, duration) {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const ease = 1 - (1 - progress) * (1 - progress);
+        obj.innerHTML = Math.floor(ease * (end - start) + start) + "%";
+        if (progress < 1) window.requestAnimationFrame(step);
+      };
+      window.requestAnimationFrame(step);
+    }
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObserver.observe(el));
+    setTimeout(() => {
+      document.querySelectorAll('header .reveal-on-scroll').forEach(el => el.classList.add('visible'));
+    }, 150);
+  });
+</script>
+</body>
+</html>
